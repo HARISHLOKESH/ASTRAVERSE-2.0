@@ -27,6 +27,7 @@ class AstraverseApp {
 
   initDOM() {
     // Nav & Mode
+    this.brandHomeBtn = document.getElementById('brandHomeBtn');
     this.modeHierarchyBtn = document.getElementById('btnModeHierarchy');
     this.modeConstellationsBtn = document.getElementById('btnModeConstellations');
     this.hierarchySection = document.getElementById('hierarchyExplorerSection');
@@ -79,6 +80,17 @@ class AstraverseApp {
   }
 
   initEventListeners() {
+    // Brand Logo/Title click -> Go Home (The Universe)
+    if (this.brandHomeBtn) {
+      this.brandHomeBtn.addEventListener('click', () => this.goHome());
+      this.brandHomeBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.goHome();
+        }
+      });
+    }
+
     // Mode Switcher: Cosmic Hierarchy vs Constellations
     this.modeHierarchyBtn.addEventListener('click', () => this.switchMode('hierarchy'));
     this.modeConstellationsBtn.addEventListener('click', () => this.switchMode('constellations'));
@@ -146,27 +158,55 @@ class AstraverseApp {
     });
   }
 
+  goHome() {
+    audioEngine.playLevelTransition();
+    this.searchQuery = '';
+    if (this.searchInput) this.searchInput.value = '';
+    this.activeCategoryFilter = 'all';
+    this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
+    this.currentParentId = 'universe';
+    this.breadcrumbs = [{ id: 'universe', name: 'The Universe', level: 'universe' }];
+    this.switchMode('hierarchy');
+  }
+
   switchMode(mode) {
     this.currentMode = mode;
     audioEngine.playLevelTransition();
 
     if (mode === 'hierarchy') {
       this.modeHierarchyBtn.classList.add('active');
+      this.modeHierarchyBtn.setAttribute('aria-pressed', 'true');
       this.modeConstellationsBtn.classList.remove('active');
+      this.modeConstellationsBtn.setAttribute('aria-pressed', 'false');
       this.hierarchySection.classList.add('active');
       this.constellationsSection.classList.remove('active');
       this.render();
     } else {
       this.modeConstellationsBtn.classList.add('active');
+      this.modeConstellationsBtn.setAttribute('aria-pressed', 'true');
       this.modeHierarchyBtn.classList.remove('active');
+      this.modeHierarchyBtn.setAttribute('aria-pressed', 'false');
       this.constellationsSection.classList.add('active');
       this.hierarchySection.classList.remove('active');
+      this.renderBreadcrumbs();
       this.renderConstellations();
     }
   }
 
   jumpToLevel(level) {
     audioEngine.playLevelTransition();
+
+    // Switch back to hierarchy mode if in constellations
+    if (this.currentMode !== 'hierarchy') {
+      this.currentMode = 'hierarchy';
+      this.modeHierarchyBtn.classList.add('active');
+      this.modeHierarchyBtn.setAttribute('aria-pressed', 'true');
+      this.modeConstellationsBtn.classList.remove('active');
+      this.modeConstellationsBtn.setAttribute('aria-pressed', 'false');
+      this.hierarchySection.classList.add('active');
+      this.constellationsSection.classList.remove('active');
+    }
+
     if (level === 'universe') {
       this.currentParentId = 'universe';
       this.breadcrumbs = [{ id: 'universe', name: 'The Universe', level: 'universe' }];
@@ -179,31 +219,33 @@ class AstraverseApp {
       this.currentParentId = 'milky-way';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way', level: 'galaxy' }
+        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' }
       ];
     } else if (level === 'stars') {
       this.currentParentId = 'solar-system';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way', level: 'galaxy' },
-        { id: 'solar-system', name: 'Solar System', level: 'system' }
+        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' },
+        { id: 'solar-system', name: 'The Solar System', level: 'system' }
       ];
     } else if (level === 'planets') {
       this.currentParentId = 'solar-system';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way', level: 'galaxy' },
-        { id: 'solar-system', name: 'Solar System', level: 'system' }
+        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' },
+        { id: 'solar-system', name: 'The Solar System', level: 'system' }
       ];
     } else if (level === 'moons') {
       this.currentParentId = 'jupiter';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way', level: 'galaxy' },
-        { id: 'solar-system', name: 'Solar System', level: 'system' },
+        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' },
+        { id: 'solar-system', name: 'The Solar System', level: 'system' },
         { id: 'jupiter', name: 'Jupiter', level: 'planet' }
       ];
     }
+    this.searchQuery = '';
+    if (this.searchInput) this.searchInput.value = '';
     this.activeCategoryFilter = 'all';
     this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
     this.render();
@@ -217,36 +259,77 @@ class AstraverseApp {
       level: item.category
     });
     this.currentParentId = item.id;
+    this.searchQuery = '';
+    if (this.searchInput) this.searchInput.value = '';
     this.activeCategoryFilter = 'all';
     this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
     this.render();
   }
 
   navigateToBreadcrumb(index) {
-    if (index === this.breadcrumbs.length - 1) return;
     audioEngine.playLevelTransition();
+
+    // Ensure we switch to hierarchy mode if currently in constellations mode
+    if (this.currentMode !== 'hierarchy') {
+      this.currentMode = 'hierarchy';
+      this.modeHierarchyBtn.classList.add('active');
+      this.modeHierarchyBtn.setAttribute('aria-pressed', 'true');
+      this.modeConstellationsBtn.classList.remove('active');
+      this.modeConstellationsBtn.setAttribute('aria-pressed', 'false');
+      this.hierarchySection.classList.add('active');
+      this.constellationsSection.classList.remove('active');
+    }
+
     this.breadcrumbs = this.breadcrumbs.slice(0, index + 1);
     this.currentParentId = this.breadcrumbs[this.breadcrumbs.length - 1].id;
+    this.searchQuery = '';
+    if (this.searchInput) this.searchInput.value = '';
+    this.activeCategoryFilter = 'all';
+    this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
     this.render();
   }
 
   renderBreadcrumbs() {
     this.breadcrumbContainer.innerHTML = '';
+
+    if (this.currentMode === 'constellations') {
+      // In Constellations mode, show path with Home link
+      const homeEl = document.createElement('div');
+      homeEl.className = 'breadcrumb-item';
+      homeEl.innerHTML = `
+        <button class="breadcrumb-btn" title="Return to Cosmic Home">The Universe</button>
+        <span class="breadcrumb-separator">›</span>
+      `;
+      homeEl.querySelector('.breadcrumb-btn').addEventListener('click', () => {
+        this.goHome();
+      });
+      this.breadcrumbContainer.appendChild(homeEl);
+
+      const constEl = document.createElement('div');
+      constEl.className = 'breadcrumb-item active';
+      constEl.innerHTML = `
+        <button class="breadcrumb-btn" disabled>Constellations Sky Chart</button>
+      `;
+      this.breadcrumbContainer.appendChild(constEl);
+
+      this.levelButtons.forEach(btn => btn.classList.remove('active'));
+      return;
+    }
+
+    // In Hierarchy mode, render each level
     this.breadcrumbs.forEach((crumb, idx) => {
       const isLast = idx === this.breadcrumbs.length - 1;
       const itemEl = document.createElement('div');
       itemEl.className = `breadcrumb-item ${isLast ? 'active' : ''}`;
 
       itemEl.innerHTML = `
-        <button class="breadcrumb-btn" ${isLast ? 'disabled' : ''}>${crumb.name}</button>
+        <button class="breadcrumb-btn" title="Go to ${crumb.name}">${crumb.name}</button>
         ${!isLast ? '<span class="breadcrumb-separator">›</span>' : ''}
       `;
 
-      if (!isLast) {
-        itemEl.querySelector('.breadcrumb-btn').addEventListener('click', () => {
-          this.navigateToBreadcrumb(idx);
-        });
-      }
+      itemEl.querySelector('.breadcrumb-btn').addEventListener('click', () => {
+        this.navigateToBreadcrumb(idx);
+      });
 
       this.breadcrumbContainer.appendChild(itemEl);
     });

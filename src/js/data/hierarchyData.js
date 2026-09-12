@@ -28,7 +28,7 @@ export const hierarchyData = {
       { name: "Cold Dark Matter", percentage: 26.8, color: "#3b82f6" },
       { name: "Ordinary Atomic Matter", percentage: 4.9, color: "#00f0ff" }
     ],
-    image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/universe.jpg",
     color: "#6366f1",
     tagline: "Home to an estimated 2 trillion galaxies and over 1 septillion stars.",
     description: "The observable universe is a spherical volume of space extending 46.5 billion light-years in every direction from Earth. Light from beyond this horizon has not had sufficient time to reach us since the Big Bang 13.8 billion years ago due to the accelerating cosmic expansion.",
@@ -68,7 +68,7 @@ export const hierarchyData = {
         { name: "Stars & Stellar Remnants", percentage: 8, color: "#ffd700" },
         { name: "Interstellar Gas & Dust", percentage: 2, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/milky-way.jpg",
       color: "#00f0ff",
       tagline: "Contains 100–400 billion stars and at least 100 billion planets.",
       description: "The Milky Way is a majestic barred spiral galaxy with four major spiral arms: Perseus, Scutum-Centaurus, Sagittarius, and Norma. At its dense core lies Sagittarius A*, a supermassive black hole with a mass 4.15 million times that of our Sun.",
@@ -106,7 +106,7 @@ export const hierarchyData = {
         { name: "Stars (~1 Trillion)", percentage: 10, color: "#ffd700" },
         { name: "Gas & Dust", percentage: 2, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/andromeda.jpg",
       color: "#a855f7",
       tagline: "The largest galaxy in our Local Group, containing approximately 1 trillion stars.",
       description: "Messier 31, the Andromeda Galaxy, is the nearest major spiral galaxy to the Milky Way. Visible to the naked eye under dark skies, it spans six times the diameter of the full Moon in the sky and has a double supermassive core.",
@@ -144,7 +144,7 @@ export const hierarchyData = {
         { name: "Stars (~40 Billion)", percentage: 11, color: "#ffd700" },
         { name: "Interstellar Gas & Dust", percentage: 4, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/triangulum.jpg",
       color: "#38bdf8",
       tagline: "A pinwheel stellar nursery containing the colossal nebula NGC 604.",
       description: "Triangulum is a clean, classic spiral galaxy devoid of a central bar or supermassive black hole. Its spiral arms are ablaze with vigorous star formation, boasting some of the largest ionized hydrogen clouds known.",
@@ -181,7 +181,7 @@ export const hierarchyData = {
         { name: "Dark Matter", percentage: 22, color: "#6366f1" },
         { name: "Gas & Dust", percentage: 8, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/whirlpool.jpg",
       color: "#ec4899",
       tagline: "Famous for its sweeping spiral arms and companion galaxy NGC 5195.",
       description: "Located in the constellation Canes Venatici, the Whirlpool Galaxy is the textbook example of a grand-design spiral galaxy. Its pronounced spiral structure is fueled by gravitational interaction with its smaller neighbor, NGC 5195.",
@@ -218,7 +218,7 @@ export const hierarchyData = {
         { name: "Dark Matter", percentage: 30, color: "#6366f1" },
         { name: "Outer Dust Ring", percentage: 5, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/sombrero.jpg",
       color: "#f59e0b",
       tagline: "Distinguished by an enormous central bulge and a striking equatorial dust lane.",
       description: "The Sombrero Galaxy sits on the border of Virgo and Corvus. Seen nearly edge-on, it features a massive central stellar bulge and a prominent, symmetrical dark absorption lane of interstellar dust encircling the rim.",
@@ -255,7 +255,7 @@ export const hierarchyData = {
         { name: "Stars & Supernova Remnants", percentage: 35, color: "#ffd700" },
         { name: "Dark Matter", percentage: 10, color: "#6366f1" }
       ],
-      image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/lmc.jpg",
       color: "#10b981",
       tagline: "Home to 30 Doradus (the Tarantula Nebula) and Supernova 1987A.",
       description: "The Large Magellanic Cloud is the brightest satellite galaxy of the Milky Way, easily visible to the unaided eye from the Southern Hemisphere. It is experiencing extreme tidal distortion and star formation triggered by our galaxy's gravitational pull.",
@@ -295,7 +295,7 @@ export const hierarchyData = {
         { name: "Gas Giants (Jupiter/Saturn)", percentage: 1.4, color: "#f59e0b" },
         { name: "Ice Giants & Terrestrial Worlds", percentage: 0.6, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/solar-system.jpg",
       color: "#f59e0b",
       tagline: "8 major planets, 5 dwarf planets, 290+ moons, and countless comets and asteroids.",
       description: "Formed 4.6 billion years ago from the gravitational collapse of a giant interstellar molecular cloud, the Solar System is dominated gravitationally by our host star, the Sun. The inner system contains four rocky terrestrial planets, followed by the asteroid belt, four outer giants, the Kuiper belt, and the distant Oort cloud.",
@@ -332,7 +332,7 @@ export const hierarchyData = {
         { name: "Central Ultra-Cool Dwarf", percentage: 99.9, color: "#ef4444" },
         { name: "7 Terrestrial Rocky Planets", percentage: 0.1, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1545156521-77bd85671d30?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/trappist-1-system.jpg",
       color: "#ef4444",
       tagline: "The highest number of Earth-sized planets ever found in a single planetary system.",
       description: "Discovered in 2017 in the constellation Aquarius, TRAPPIST-1 hosts seven temperate rocky planets (b, c, d, e, f, g, and h) packed into an orbit smaller than Mercury's orbit around the Sun. Three to four of these worlds lie within the circumstellar habitable zone.",
@@ -370,7 +370,7 @@ export const hierarchyData = {
         { name: "Toliman (Alpha Cen B)", percentage: 43, color: "#f59e0b" },
         { name: "Proxima Centauri (Alpha Cen C)", percentage: 6, color: "#ef4444" }
       ],
-      image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/alpha-centauri-system.jpg",
       color: "#38bdf8",
       tagline: "Nearest star system to Earth; target of the Breakthrough Starshot interstellar initiative.",
       description: "Alpha Centauri is a gravitationally bound triple star system in the southern constellation of Centaurus. It comprises a close binary pair of Sun-like stars (Alpha Centauri A and B) and a distant, faint red dwarf companion, Proxima Centauri.",
@@ -407,7 +407,7 @@ export const hierarchyData = {
         { name: "Rocky Super-Earths (b-f)", percentage: 0.1, color: "#38bdf8" },
         { name: "Gas Giants (g-h)", percentage: 0.1, color: "#f59e0b" }
       ],
-      image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/kepler-90-system.jpg",
       color: "#818cf8",
       tagline: "An 8-planet planetary system discovered in part by Google AI neural networks.",
       description: "Located in the northern constellation Draco, Kepler-90 is a G-type main-sequence star notable for having eight transiting exoplanets. The eighth planet, Kepler-90i, was detected using deep learning algorithms trained on NASA Kepler transit light curves.",
@@ -444,7 +444,7 @@ export const hierarchyData = {
         { name: "Red Dwarf Companion", percentage: 29, color: "#ef4444" },
         { name: "5 Exoplanets (b, c, d, e, f)", percentage: 1, color: "#38bdf8" }
       ],
-      image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/55-cancri-system.jpg",
       color: "#06b6d4",
       tagline: "Five confirmed exoplanets ranging from molten super-Earths to gas giants.",
       description: "55 Cancri is a binary star system in Cancer. The primary star, Copernicus, hosts five known exoplanets, including the ultra-short-period super-Earth Janssen (55 Cancri e), which orbits so close to its star that its surface is a sea of molten lava.",
@@ -485,7 +485,7 @@ export const hierarchyData = {
         { name: "Oxygen (O)", percentage: 0.77, color: "#38bdf8" },
         { name: "Carbon & Iron (C, Fe)", percentage: 0.92, color: "#f59e0b" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/sun.jpg",
       color: "#ffd700",
       tagline: "Fuses 600 million metric tons of hydrogen into helium every second.",
       description: "The Sun is a middle-aged yellow dwarf star that produces energy via thermonuclear fusion in its core. Its gravitational grip orchestrates the orbits of all planets, dwarf worlds, and comets in the Solar System, while its solar wind dictates space weather throughout the heliosphere.",
@@ -523,7 +523,7 @@ export const hierarchyData = {
         { name: "Helium", percentage: 24, color: "#f59e0b" },
         { name: "Heavy Elements", percentage: 1, color: "#38bdf8" }
       ],
-      image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/proxima-centauri.jpg",
       color: "#ef4444",
       tagline: "A dim, turbulent red dwarf with an expected lifespan of 4 trillion years.",
       description: "Proxima Centauri is an M-class red dwarf star in Centaurus. Because of its low fusion rate, it will burn hydrogen for up to 4 trillion years—hundreds of times longer than the current age of the universe. However, it is a flare star that regularly unleashes catastrophic UV and X-ray flares.",
@@ -560,7 +560,7 @@ export const hierarchyData = {
         { name: "Helium", percentage: 25, color: "#ffd700" },
         { name: "Metals (Fe, Ni)", percentage: 1, color: "#e2e8f0" }
       ],
-      image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/sirius-a.jpg",
       color: "#67e8f9",
       tagline: "Shining with apparent magnitude -1.46, twice as bright as Canopus.",
       description: "Known since antiquity as the 'Dog Star', Sirius A dominates the winter sky in the northern hemisphere and summer sky in the southern hemisphere. It shines 25 times more luminous than the Sun and is orbited by Sirius B ('The Pup'), the first white dwarf ever recognized.",
@@ -597,7 +597,7 @@ export const hierarchyData = {
         { name: "Helium & Carbon Shell", percentage: 22, color: "#f97316" },
         { name: "Oxygen, Neon, Iron Core", percentage: 8, color: "#eab308" }
       ],
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/betelgeuse.jpg",
       color: "#f97316",
       tagline: "If placed at the center of our Solar System, its surface would swallow Jupiter.",
       description: "Betelgeuse is a pulsing red supergiant star marking the right shoulder of the hunter Orion. It has exhausted the hydrogen in its core and is destined to explode as a Type II core-collapse supernova within the next 100,000 years.",
@@ -634,7 +634,7 @@ export const hierarchyData = {
         { name: "Helium", percentage: 25, color: "#f59e0b" },
         { name: "Heavy Elements", percentage: 1, color: "#38bdf8" }
       ],
-      image: "https://images.unsplash.com/photo-1545156521-77bd85671d30?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/trappist-1-star.jpg",
       color: "#dc2626",
       tagline: "Radiates only 0.05% as much luminous light as our Sun, mostly in the infrared.",
       description: "TRAPPIST-1 is an ultra-cool red dwarf at the lower mass limit for sustained hydrogen fusion. If it were just 10% less massive, it would have failed to ignite nuclear fusion and become a brown dwarf.",
@@ -672,7 +672,7 @@ export const hierarchyData = {
         { name: "Iron Core", percentage: 70, color: "#e2e8f0" },
         { name: "Silicate Mantle & Crust", percentage: 30, color: "#94a3b8" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/mercury.jpg",
       color: "#94a3b8",
       tagline: "The fastest planet, racing around the Sun at 47 km/s.",
       description: "Mercury is the smallest planet in the Solar System and the closest to the Sun. It possesses a huge metallic iron core that makes up nearly 75% of its radius. With virtually no atmosphere to regulate temperature, it undergoes the most extreme thermal swings of any planet.",
@@ -708,7 +708,7 @@ export const hierarchyData = {
         { name: "Nitrogen (N₂)", percentage: 3.5, color: "#00f0ff" },
         { name: "Sulfuric Acid Clouds", percentage: 0.1, color: "#ffd700" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/venus.jpg",
       color: "#f59e0b",
       tagline: "A day on Venus is longer than its entire year.",
       description: "Venus is shrouded in thick, reflective clouds of toxic sulfuric acid. Its crushing atmosphere of carbon dioxide generates a runaway greenhouse effect, yielding surface temperatures hot enough to melt lead and atmospheric pressure 92 times greater than Earth's sea level.",
@@ -745,7 +745,7 @@ export const hierarchyData = {
         { name: "Argon (Ar)", percentage: 0.93, color: "#818cf8" },
         { name: "CO₂ & Trace Gases", percentage: 0.04, color: "#a855f7" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/earth.jpg",
       color: "#00f0ff",
       tagline: "The only known astronomical world harboring liquid oceans and flourishing life.",
       description: "Earth is the third planet from the Sun, the densest planet in the Solar System, and the only world confirmed to harbor active plate tectonics, abundant surface liquid water, and a protective magnetosphere shielding an oxygen-rich atmosphere.",
@@ -783,7 +783,7 @@ export const hierarchyData = {
         { name: "Argon (Ar)", percentage: 1.6, color: "#a855f7" },
         { name: "Oxygen & Water Vapor", percentage: 0.38, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/mars.jpg",
       color: "#ef4444",
       tagline: "Home to Olympus Mons, the largest volcano in the Solar System.",
       description: "Mars gets its reddish hue from iron oxide (rust) widespread across its regolith. Though currently a frigid desert with a tenuous atmosphere, mineralogical evidence proves it was once warm and wet, carved by rivers, deltas, and lakes billions of years ago.",
@@ -819,7 +819,7 @@ export const hierarchyData = {
         { name: "Helium (He)", percentage: 10.2, color: "#ffd700" },
         { name: "Methane, Ammonia, Water", percentage: 0.1, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/jupiter.jpg",
       color: "#f59e0b",
       tagline: "More massive than all other planets in the Solar System combined.",
       description: "Jupiter is an immense gas giant world wrapped in swirling ammonia clouds and atmospheric jet streams. Beneath its deep atmosphere, extreme pressures compress hydrogen gas into a glowing ocean of liquid metallic hydrogen that generates an colossal magnetic field.",
@@ -855,7 +855,7 @@ export const hierarchyData = {
         { name: "Helium (He)", percentage: 3.25, color: "#ffd700" },
         { name: "Methane & Ammonia", percentage: 0.45, color: "#38bdf8" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/saturn.jpg",
       color: "#eab308",
       tagline: "Its density is lower than water—it would literally float in a giant cosmic bathtub.",
       description: "Saturn is famed for its breathtaking, razor-thin ring system spanning 282,000 km across yet averaging only 10 meters in thickness. The rings consist of trillions of water ice fragments ranging from dust grains to boulder-sized icebergs.",
@@ -891,7 +891,7 @@ export const hierarchyData = {
         { name: "Methane (CH₄)", percentage: 2.3, color: "#00f0ff" },
         { name: "Water, Ammonia & Ice Mantle", percentage: 15.2, color: "#67e8f9" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/uranus.jpg",
       color: "#22d3ee",
       tagline: "Rotates on its side with an extreme axial tilt of 97.8 degrees.",
       description: "Uranus is an ice giant dominated by heavy volatile 'ices' of water, ammonia, and methane over a rocky silicate core. Atmospheric methane gas absorbs red light and reflects blue-green photons, giving Uranus its serene cyan tint.",
@@ -927,7 +927,7 @@ export const hierarchyData = {
         { name: "Water & Ammonia Ice", percentage: 18.5, color: "#38bdf8" },
         { name: "Methane (gives deep blue color)", percentage: 1.5, color: "#60a5fa" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/neptune.jpg",
       color: "#3b82f6",
       tagline: "Features supersonic winds that scream through the atmosphere at over 2,100 km/h.",
       description: "Neptune is the most distant major planet in the Solar System. Intense internal heat engines drive the most violent weather systems in the Solar System, including supersonic storms and fleeting dark vortexes such as the Great Dark Spot.",
@@ -962,7 +962,7 @@ export const hierarchyData = {
         { name: "Silicate Rock Core", percentage: 70, color: "#a8a29e" },
         { name: "Nitrogen & Water Ice Mantle", percentage: 30, color: "#e0f2fe" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/pluto.jpg",
       color: "#cbd5e1",
       tagline: "Features Sputnik Planitia, a 1,000-km-wide glacier of churning nitrogen ice.",
       description: "Reclassified as a dwarf planet by the IAU in 2006, Pluto is a complex world featuring towering water-ice mountains, glacial plains of frozen nitrogen and carbon monoxide, and a tenuous blue atmospheric haze.",
@@ -998,7 +998,7 @@ export const hierarchyData = {
         { name: "Silicate Mantle", percentage: 40, color: "#78716c" },
         { name: "Water / Volatile Layer", percentage: 10, color: "#38bdf8" }
       ],
-      image: "https://images.unsplash.com/photo-1545156521-77bd85671d30?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/trappist-1e.jpg",
       color: "#0284c7",
       tagline: "Possesses an Earth Similarity Index (ESI) of 0.85, one of the highest known.",
       description: "TRAPPIST-1e orbits squarely in the habitable zone of its ultra-cool red dwarf star. It receives roughly 66% as much stellar radiation as Earth gets from the Sun, making liquid surface oceans physically plausible under the right atmospheric shielding.",
@@ -1033,7 +1033,7 @@ export const hierarchyData = {
         { name: "Rock & Iron Core", percentage: 90, color: "#64748b" },
         { name: "Possible Surface Ocean", percentage: 10, color: "#06b6d4" }
       ],
-      image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/proxima-centauri-b.jpg",
       color: "#0ea5e9",
       tagline: "Located only 4.246 light-years away, in the habitable zone of Proxima Centauri.",
       description: "Discovered in 2016 by the European Southern Observatory, Proxima b is the nearest known alien world outside our Solar System. It orbits within the star's liquid-water habitable zone, though its proximity subjects it to severe stellar wind flares.",
@@ -1069,7 +1069,7 @@ export const hierarchyData = {
         { name: "Carbon & Diamond Mantle", percentage: 25, color: "#38bdf8" },
         { name: "CO / CO₂ Volatile Atmosphere", percentage: 10, color: "#fbbf24" }
       ],
-      image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/55-cancri-e.jpg",
       color: "#f97316",
       tagline: "A fiery super-Earth where skies rain molten glass and rock.",
       description: "Janssen (55 Cancri e) is an inferno super-Earth orbiting so dangerously close to its parent star that its dayside is a continuous ocean of glowing liquid lava. In 2024, JWST detected atmospheric carbon monoxide and carbon dioxide outgassing from its magma sea.",
@@ -1108,7 +1108,7 @@ export const hierarchyData = {
         { name: "Olivine & Pyroxene Mantle", percentage: 30, color: "#94a3b8" },
         { name: "Small Metallic Iron Core", percentage: 5, color: "#64748b" }
       ],
-      image: "https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/moon.jpg",
       color: "#e2e8f0",
       tagline: "The only celestial body beyond Earth where humans have walked.",
       description: "Formed approximately 4.51 billion years ago from the debris of a catastrophic collision between the proto-Earth and a Mars-sized planet named Theia, the Moon is locked in synchronous rotation, presenting the same cratered face to Earth at all times.",
@@ -1144,7 +1144,7 @@ export const hierarchyData = {
         { name: "Silicate Rock Interior", percentage: 45, color: "#94a3b8" },
         { name: "Water Ice Outer Shell (15–25 km)", percentage: 15, color: "#e0f2fe" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/europa.jpg",
       color: "#38bdf8",
       tagline: "Harbors more liquid water beneath its ice than all of Earth's oceans combined.",
       description: "Europa is the smoothest solid object in the Solar System, crisscrossed by striking reddish-brown fracture bands called lineae. Strong tidal flexure from Jupiter's gravitational field warms its interior, keeping an ocean 60 to 150 km deep perpetually liquid beneath an ice crust.",
@@ -1181,7 +1181,7 @@ export const hierarchyData = {
         { name: "Methane & Ethane (CH₄)", percentage: 4.9, color: "#38bdf8" },
         { name: "Water-Ice Crust & Subsurface Ocean", percentage: 50, color: "#00f0ff" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/titan.jpg",
       color: "#f59e0b",
       tagline: "The only moon with a dense atmosphere and liquid bodies on its surface.",
       description: "Titan is the second-largest moon in the Solar System and the only world other than Earth known to have active liquid lakes, rivers, and rain on its surface. However, due to the frigid -179 °C temperature, the rain and seas consist of liquid methane and ethane rather than water.",
@@ -1217,7 +1217,7 @@ export const hierarchyData = {
         { name: "Global Subsurface Saline Ocean", percentage: 30, color: "#00f0ff" },
         { name: "Silicate Rocky Core with Hydrothermal Vents", percentage: 20, color: "#94a3b8" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/enceladus.jpg",
       color: "#e0f2fe",
       tagline: "Cryovolcanoes spray plumes of water, salt, and complex organic molecules into space.",
       description: "Enceladus is the most reflective body in the Solar System, coated in fresh, sparkling white snow. At its south pole, active fractures called 'tiger stripes' erupt supersonic geysers of salty water, silica nanoparticles, and organic molecules fed by hydrothermal vents at the ocean floor.",
@@ -1253,7 +1253,7 @@ export const hierarchyData = {
         { name: "Silicate Mantle", percentage: 40, color: "#64748b" },
         { name: "Liquid Iron-Nickel Core", percentage: 10, color: "#cbd5e1" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/ganymede.jpg",
       color: "#94a3b8",
       tagline: "The only moon in the Solar System known to generate its own intrinsic magnetic field.",
       description: "Ganymede is the largest moon in the Solar System. If it orbited the Sun instead of Jupiter, it would be classified as a major planet. Its molten liquid iron core drives a dynamo that produces an intrinsic magnetosphere that interacts with Jupiter's vast radiation belt.",
@@ -1289,7 +1289,7 @@ export const hierarchyData = {
         { name: "Iron-Sulfur Core", percentage: 20, color: "#b45309" },
         { name: "Sulfur & SO₂ Frost Crust", percentage: 10, color: "#f59e0b" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/io.jpg",
       color: "#eab308",
       tagline: "Boasts over 400 active volcanoes erupting molten sulfur plumes 500 km into space.",
       description: "Io is caught in a ferocious gravitational tug-of-war between Jupiter and neighboring moons Europa and Ganymede. The resulting tidal friction generates immense internal tidal heating, turning Io into a volcanic hellscape with vast lakes of liquid lava and towering sulfur geysers.",
@@ -1325,7 +1325,7 @@ export const hierarchyData = {
         { name: "Water Ice Mantle", percentage: 25, color: "#e0f2fe" },
         { name: "Metallic & Rocky Core", percentage: 20, color: "#64748b" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/triton.jpg",
       color: "#0284c7",
       tagline: "Shoots plumes of vaporized nitrogen 8 km into its delicate atmosphere.",
       description: "Triton is unique among large planetary moons for its retrograde orbit, moving in the opposite direction of Neptune's rotation. This proves it was originally an independent dwarf planet in the Kuiper Belt (similar to Pluto) gravitationally captured by Neptune eons ago.",
@@ -1361,7 +1361,7 @@ export const hierarchyData = {
         { name: "Rock & Silicate Core", percentage: 38, color: "#64748b" },
         { name: "Tholin Hydrocarbon Polar Cap (Mordor Macula)", percentage: 2, color: "#b91c1c" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/charon.jpg",
       color: "#94a3b8",
       tagline: "So large relative to Pluto that the barycenter lies in the empty space between them.",
       description: "Charon is the largest of Pluto's five moons. Because Charon has more than 11% of Pluto's mass, the gravitational center of mass (barycenter) lies outside Pluto's surface, making them a true binary dwarf planet system.",
@@ -1396,7 +1396,7 @@ export const hierarchyData = {
         { name: "Carbonaceous Chondrite Rock", percentage: 80, color: "#78716c" },
         { name: "Water Ice Porous Pockets", percentage: 20, color: "#38bdf8" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/phobos.jpg",
       color: "#a8a29e",
       tagline: "Closer to its primary planet than any other moon in the Solar System.",
       description: "Phobos is a potato-shaped, heavily cratered body orbiting Mars at an altitude of just 6,000 km. It is dominated by Stickney crater, an impact basin 9 km wide that came close to shattering the moon entirely.",
@@ -1432,7 +1432,7 @@ export const hierarchyData = {
         { name: "Hidden Young Subsurface Ocean", percentage: 10, color: "#00f0ff" },
         { name: "Silicate Core", percentage: 5, color: "#94a3b8" }
       ],
-      image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/mimas.jpg",
       color: "#cbd5e1",
       tagline: "Features Herschel crater, giving it the iconic look of the fictional Death Star.",
       description: "Mimas is a small icy moon of Saturn famous for the gigantic impact crater Herschel, which measures 130 km across—nearly one-third the moon's entire diameter. In 2024, libration analysis revealed that Mimas surprisingly conceals a geologically young ocean 20–30 km beneath its battered ice.",

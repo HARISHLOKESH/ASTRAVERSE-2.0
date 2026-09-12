@@ -3,28 +3,155 @@
 .constellation-card {
   position: relative;
   background: radial-gradient(circle at 80% 20%, rgba(30, 27, 75, 0.4) 0%, rgba(10, 15, 30, 0.8) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.25);
   border-radius: 20px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
 }
 
 .constellation-card:hover {
-  transform: translateY(-6px);
   border-color: rgba(56, 189, 248, 0.6);
-  box-shadow: 0 16px 40px -10px rgba(56, 189, 248, 0.3), 0 0 25px rgba(56, 189, 248, 0.15);
+  box-shadow: 0 18px 40px -10px rgba(56, 189, 248, 0.35), 0 0 25px rgba(56, 189, 248, 0.2);
+}
+
+/* Astrophotography Media Banner */
+.constellation-media {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: #060914;
+}
+
+.constellation-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.constellation-card:hover .constellation-img {
+  transform: scale(1.08);
+}
+
+.constellation-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 5, 12, 0.15) 0%,
+    rgba(3, 5, 12, 0.5) 60%,
+    rgba(10, 15, 30, 0.95) 100%
+  );
+  z-index: 1;
+}
+
+.constellation-badge-top {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(30, 27, 75, 0.6);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #bae6fd;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.constellation-stars-count {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 4;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+}
+
+.constellation-stars-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.82rem;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.c-stars-label {
+  font-weight: 600;
+  color: var(--cyan-glow);
+  white-space: nowrap;
+}
+
+.c-stars-list {
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-explore-constellation {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1rem;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-explore-constellation:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(168, 85, 247, 0.4));
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.btn-explore-constellation svg {
+  transition: transform 0.2s ease;
+}
+
+.btn-explore-constellation:hover svg {
+  transform: translateX(3px);
 }
 
 .constellation-card-inner {
-  padding: 1.6rem 1.6rem 1.4rem 1.6rem;
+  padding: 1.25rem 1.4rem 1.4rem 1.4rem;
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 100%;
+  flex: 1;
 }
 
 /* Celestial Symbol Halo Background */

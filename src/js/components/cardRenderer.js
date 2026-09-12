@@ -142,24 +142,37 @@ export function createConstellationCard(constellation, onSelect) {
   card.className = 'constellation-card';
   card.dataset.id = constellation.id;
 
+  const topStars = constellation.majorStars.slice(0, 3).map(s => s.name).join(', ');
+
   card.innerHTML = `
+    <div class="card-glass-layer"></div>
+    <div class="card-glare"></div>
+
+    <div class="constellation-media">
+      <img src="${constellation.image}" alt="${constellation.name} star field" loading="lazy" class="constellation-img" />
+      <div class="constellation-gradient-overlay"></div>
+      <span class="constellation-badge-top">
+        <span class="c-symbol-icon">${constellation.symbol}</span> ${constellation.family || 'Constellation'}
+      </span>
+      <span class="constellation-stars-count">✨ ${constellation.stars ? constellation.stars.length : 7} Stars</span>
+    </div>
+
     <div class="constellation-card-inner">
       <div class="constellation-symbol-halo">${constellation.symbol}</div>
       <div class="constellation-card-header">
         <span class="constellation-symbol">${constellation.symbol}</span>
         <div class="constellation-titles">
           <h3 class="constellation-name">${constellation.name}</h3>
-          <span class="constellation-latin">${constellation.latinName} • ${constellation.englishName}</span>
+          <span class="constellation-latin">${constellation.latinName} • "${constellation.englishName}"</span>
         </div>
       </div>
 
-      <div class="constellation-star-badge">
-        <span>✨ ${constellation.stars ? constellation.stars.length : 7} Key Stars</span>
-        <span>•</span>
-        <span>${constellation.hemisphere.split(' ')[0]}</span>
-      </div>
-
       <p class="constellation-desc">${constellation.tagline}</p>
+
+      <div class="constellation-stars-preview">
+        <span class="c-stars-label">🌟 Main Stars:</span>
+        <span class="c-stars-list">${topStars}</span>
+      </div>
 
       <div class="constellation-meta-row">
         <div class="c-meta-item">
@@ -167,16 +180,47 @@ export function createConstellationCard(constellation, onSelect) {
           <span class="c-val">${constellation.bestViewing.months.split(' ')[0]}</span>
         </div>
         <div class="c-meta-item">
-          <span class="c-label">Alpha Star</span>
-          <span class="c-val">${constellation.majorStars[0]?.name || 'Alpha'}</span>
+          <span class="c-label">Location</span>
+          <span class="c-val">${constellation.hemisphere.split(' ')[0]}</span>
         </div>
       </div>
 
       <div class="constellation-card-footer">
-        <span class="view-chart-hint">Inspect Celestial Chart →</span>
+        <button class="btn-explore-constellation" aria-label="Explore star chart of ${constellation.name}">
+          <span>Inspect Star Chart</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
     </div>
   `;
+
+  // 3D Tilt Interaction for Constellation Cards
+  const handleMouseMove = (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    const glare = card.querySelector('.card-glare');
+    if (glare) {
+      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(56, 189, 248, 0.2) 0%, rgba(255,255,255,0) 65%)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+    const glare = card.querySelector('.card-glare');
+    if (glare) {
+      glare.style.background = 'transparent';
+    }
+  };
+
+  card.addEventListener('mousemove', handleMouseMove);
+  card.addEventListener('mouseleave', handleMouseLeave);
 
   card.addEventListener('click', () => {
     if (onSelect) onSelect(constellation);

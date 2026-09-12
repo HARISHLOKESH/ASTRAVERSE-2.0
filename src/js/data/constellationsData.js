@@ -43,7 +43,7 @@ export const constellationsData = [
       "The sword hanging below Orion's belt is not a single star, but houses the great Orion Nebula (M42), where thousands of new stars are currently being born.",
       "Betelgeuse is nearing the end of its life and will detonate as a spectacular supernova within the next 100,000 years."
     ],
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/orion.jpg",
     stars: [
       { id: "betelgeuse", name: "Betelgeuse", x: 28, y: 22, mag: 1.2, color: "#f97316" },
       { id: "bellatrix", name: "Bellatrix", x: 72, y: 24, mag: 1.6, color: "#93c5fd" },
@@ -108,7 +108,7 @@ export const constellationsData = [
       "Mizar and its companion Alcor form a famous naked-eye optical double star used in ancient Persia and Arabia as an eye acuity test.",
       "Most stars of the Big Dipper belong to the Ursa Major Moving Group, moving together through space like a stellar stream."
     ],
-    image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/ursa-major.jpg",
     stars: [
       { id: "dubhe", name: "Dubhe", x: 74, y: 28, mag: 1.8, color: "#fbbf24" },
       { id: "merak", name: "Merak", x: 73, y: 55, mag: 2.3, color: "#93c5fd" },
@@ -168,7 +168,7 @@ export const constellationsData = [
       "Gamma Cassiopeiae spins so fast (400 km/s) that it bulges at the equator and flings disks of glowing hydrogen gas into orbit.",
       "From Alpha Centauri, our Sun would appear as a bright magnitude 0.5 star located in the constellation of Cassiopeia!"
     ],
-    image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/cassiopeia.jpg",
     stars: [
       { id: "caph", name: "Caph (β)", x: 16, y: 35, mag: 2.3, color: "#fef08a" },
       { id: "schedar", name: "Schedar (α)", x: 34, y: 56, mag: 2.2, color: "#fb923c" },
@@ -224,7 +224,7 @@ export const constellationsData = [
       "Antares is so colossal that if placed at the Sun's position, its outer atmosphere would engulf the orbits of Mercury, Venus, Earth, and Mars.",
       "Polynesian navigators revered Scorpius as 'The Magic Fishhook of Maui', used by demigod Maui to pull the Hawaiian Islands up from the ocean floor."
     ],
-    image: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/scorpius.jpg",
     stars: [
       { id: "graffias", name: "Graffias", x: 25, y: 15, mag: 2.6, color: "#93c5fd" },
       { id: "dschubba", name: "Dschubba", x: 22, y: 28, mag: 2.3, color: "#93c5fd" },
@@ -286,7 +286,7 @@ export const constellationsData = [
       "The Crab Nebula (M1) contains a rapidly spinning pulsar at its core, rotating 30 times per second.",
       "Pioneer 10 is currently cruising in the direction of Aldebaran and will pass near it in roughly 2 million years."
     ],
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/taurus.jpg",
     stars: [
       { id: "pleiades", name: "Pleiades (M45)", x: 22, y: 25, mag: 1.4, color: "#67e8f9" },
       { id: "aldebaran", name: "Aldebaran (Eye)", x: 50, y: 55, mag: 0.8, color: "#f97316" },
@@ -341,7 +341,7 @@ export const constellationsData = [
       "Albireo is considered one of the most beautiful double stars in amateur astronomy, displaying vivid topaz-gold and sapphire-blue contrasting stellar components.",
       "Cygnus X-1 was the subject of a famous scientific wager between Stephen Hawking and Kip Thorne over whether it was truly a black hole."
     ],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/cygnus.jpg",
     stars: [
       { id: "deneb", name: "Deneb (Tail)", x: 50, y: 16, mag: 1.2, color: "#ffffff" },
       { id: "sadr", name: "Sadr (Heart)", x: 50, y: 42, mag: 2.2, color: "#fef08a" },
@@ -395,7 +395,7 @@ export const constellationsData = [
       "Sirius B, orbiting Sirius A, was the very first white dwarf star discovered in astronomy (1862).",
       "Canis Major also contains VY Canis Majoris, an extreme red hypergiant star with a diameter 1,400 times that of the Sun."
     ],
-    image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/canis-major.jpg",
     stars: [
       { id: "sirius", name: "Sirius (Nose)", x: 40, y: 22, mag: -1.4, color: "#67e8f9" },
       { id: "murzim", name: "Murzim (Paw)", x: 24, y: 30, mag: 2.0, color: "#93c5fd" },
@@ -451,7 +451,7 @@ export const constellationsData = [
       "Due to axial precession of Earth over 2,000 years, the vernal equinox has actually drifted into Pisces.",
       "An exoplanet roughly 1.8 times the mass of Jupiter orbits the orange giant star Hamal."
     ],
-    image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/aries.jpg",
     stars: [
       { id: "hamal", name: "Hamal (α)", x: 68, y: 32, mag: 2.0, color: "#fb923c" },
       { id: "sheratan", name: "Sheratan (β)", x: 48, y: 46, mag: 2.6, color: "#93c5fd" },
@@ -503,7 +503,7 @@ export const constellationsData = [
       "Castor is actually a complex gravitational sextuple system composed of three pairs of spectroscopic binary stars.",
       "The Geminid meteor shower radiates from Gemini every December, producing up to 120 multicolored meteors per hour."
     ],
-    image: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/gemini.jpg",
     stars: [
       { id: "castor", name: "Castor (Head 1)", x: 32, y: 18, mag: 1.6, color: "#93c5fd" },
       { id: "pollux", name: "Pollux (Head 2)", x: 50, y: 22, mag: 1.1, color: "#fb923c" },
@@ -558,7 +558,7 @@ export const constellationsData = [
       "The Beehive Cluster was recorded by Aratus in 260 BC as a meteorological indicator: if Praesepe was dimmed by haze, rain was imminent.",
       "In 2004, 55 Cancri e, an exoplanet orbiting within Cancer, became one of the first confirmed super-Earths."
     ],
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/cancer.jpg",
     stars: [
       { id: "beehive", name: "Beehive Cluster (M44)", x: 50, y: 50, mag: 3.1, color: "#67e8f9" },
       { id: "asellus-bor", name: "Asellus Bor. (γ)", x: 52, y: 36, mag: 4.6, color: "#93c5fd" },
@@ -611,7 +611,7 @@ export const constellationsData = [
       "The Leonid meteor shower radiates from Leo every November, historically producing storm outbursts with thousands of shooting stars per hour.",
       "Regulus lies virtually on the ecliptic; the Moon and planets regularly occult (pass in front of) it."
     ],
-    image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/leo.jpg",
     stars: [
       { id: "regulus", name: "Regulus (α)", x: 28, y: 68, mag: 1.4, color: "#67e8f9" },
       { id: "algieba", name: "Algieba (γ)", x: 38, y: 44, mag: 2.0, color: "#fbbf24" },
@@ -676,7 +676,7 @@ export const constellationsData = [
       "Contains more Messier deep sky objects (15) than any other constellation in the sky.",
       "The famous 'Wow! Signal' received by the Big Ear radio telescope in 1977 originated from the direction of Sagittarius."
     ],
-    image: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/sagittarius.jpg",
     stars: [
       { id: "kaus-bor", name: "Kaus Bor. (Lid)", x: 48, y: 24, mag: 2.8, color: "#fbbf24" },
       { id: "kaus-med", name: "Kaus Med. (Spout)", x: 38, y: 46, mag: 2.7, color: "#fb923c" },
@@ -737,7 +737,7 @@ export const constellationsData = [
       "The top-left corner star of the Great Square, Alpheratz, officially belongs to Andromeda (Alpha Andromedae).",
       "Enif has been observed undergoing dramatic eruptive flares that increase its luminosity fivefold within minutes."
     ],
-    image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/constellations/pegasus.jpg",
     stars: [
       { id: "scheat", name: "Scheat (β)", x: 38, y: 30, mag: 2.4, color: "#f97316" },
       { id: "markab", name: "Markab (α)", x: 36, y: 64, mag: 2.5, color: "#93c5fd" },
