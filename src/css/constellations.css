@@ -1,0 +1,312 @@
+/* ASTRAVERSE 2.0 - Constellation Star Chart & Visual Styles */
+
+.constellation-card {
+  position: relative;
+  background: radial-gradient(circle at 80% 20%, rgba(30, 27, 75, 0.4) 0%, rgba(10, 15, 30, 0.8) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+}
+
+.constellation-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 16px 40px -10px rgba(56, 189, 248, 0.3), 0 0 25px rgba(56, 189, 248, 0.15);
+}
+
+.constellation-card-inner {
+  padding: 1.6rem 1.6rem 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+/* Celestial Symbol Halo Background */
+.constellation-symbol-halo {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 6.5rem;
+  opacity: 0.08;
+  pointer-events: none;
+  font-family: serif;
+  user-select: none;
+  transition: all 0.4s ease;
+}
+
+.constellation-card:hover .constellation-symbol-halo {
+  opacity: 0.18;
+  transform: scale(1.1) rotate(5deg);
+  color: var(--cyan-glow);
+}
+
+/* Header */
+.constellation-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.constellation-symbol {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
+}
+
+.constellation-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.constellation-name {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.constellation-latin {
+  font-size: 0.78rem;
+  color: var(--cyan-glow);
+  font-weight: 500;
+}
+
+.constellation-star-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+  font-weight: 500;
+}
+
+.constellation-desc {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Metadata Row */
+.constellation-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: auto;
+  margin-bottom: 1.1rem;
+}
+
+.c-meta-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.45rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.c-val {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.constellation-card-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.view-chart-hint {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cyan-glow);
+  transition: transform 0.2s ease;
+}
+
+.constellation-card:hover .view-chart-hint {
+  transform: translateX(4px);
+}
+
+/* ==========================================================
+   CONSTELLATION MODAL STYLES
+   ========================================================== */
+.constellation-header .m-badge.constellation-badge {
+  background: rgba(56, 189, 248, 0.3);
+  color: #bae6fd;
+  border-color: #38bdf8;
+}
+
+.constellation-canvas-box {
+  width: 100%;
+  height: 320px;
+  background: radial-gradient(circle at 50% 50%, #0c1228 0%, #04060f 100%);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(56, 189, 248, 0.1);
+}
+
+.constellation-render-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.chart-legend {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.legend-hint {
+  font-size: 0.75rem;
+  color: var(--cyan-glow);
+  background: rgba(6, 8, 20, 0.85);
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+/* Stars Table */
+.stars-table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.6);
+  margin-top: 0.5rem;
+}
+
+.stars-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  text-align: left;
+}
+
+.stars-table th {
+  background: rgba(30, 41, 59, 0.7);
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stars-table td {
+  padding: 0.7rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+}
+
+.mag-badge {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--cyan-glow);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+/* Mythology Narrative */
+.mythology-narrative {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  background: rgba(15, 23, 42, 0.5);
+  border-left: 3px solid var(--purple-glow);
+  padding: 1rem 1.25rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 0.65rem;
+}
+
+/* Viewing Guide Cards */
+.viewing-guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.65rem;
+}
+
+.v-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+}
+
+.v-icon {
+  font-size: 1.6rem;
+}
+
+.v-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.v-detail strong {
+  font-size: 0.88rem;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.v-detail span {
+  font-size: 0.82rem;
+  color: var(--cyan-glow);
+}
+
+/* Deep Sky Targets */
+.deepsky-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.65rem;
+}
+
+.deepsky-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+}
+
+.ds-icon {
+  font-size: 1.1rem;
+}

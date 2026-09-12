@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASTRAVERSE 2.0 — Interactive Cosmic & Constellation Explorer</title>
+  <meta name="description" content="Explore the universe through an interactive hierarchical visual interface from Galaxies, Solar Systems, Stars, Planets to Moons, and journey through ancient constellations." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>" />
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="/src/css/main.css" />
+  <link rel="stylesheet" href="/src/css/cards.css" />
+  <link rel="stylesheet" href="/src/css/constellations.css" />
+  <link rel="stylesheet" href="/src/css/modal.css" />
+  <link rel="stylesheet" href="/src/css/scale.css" />
+</head>
+<body>
+  <!-- Dynamic Starfield Background Canvas -->
+  <canvas id="starfieldCanvas"></canvas>
+
+  <div class="app-container">
+    <!-- Main Top Navigation -->
+    <header class="main-navbar">
+      <div class="brand-group">
+        <div class="brand-logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#00f0ff" stroke-width="2">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/>
+            <path d="M3 12h18"/>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <h1 class="brand-title">ASTRAVERSE</h1>
+          <span class="brand-tagline">Cosmic Explorer 2.0</span>
+        </div>
+      </div>
+
+      <!-- Mode Selector: Hierarchy vs Constellations -->
+      <nav class="mode-toggle-group" aria-label="Exploration Mode">
+        <button class="mode-tab-btn active" id="btnModeHierarchy" aria-pressed="true">
+          <span>🌌</span> Cosmic Hierarchy
+        </button>
+        <button class="mode-tab-btn" id="btnModeConstellations" aria-pressed="false">
+          <span>⭐</span> Constellations
+        </button>
+      </nav>
+
+      <!-- Utility Actions -->
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="btnToggleAudio" title="Toggle cosmic ambient drone sound" aria-label="Toggle Sound">
+          <span class="audio-icon-sym">🔇</span>
+          <span class="btn-label">Sound: OFF</span>
+        </button>
+        <button class="nav-icon-btn" id="btnScaleCompare" title="Compare scale of celestial objects" aria-label="Cosmic Scale Comparison">
+          <span>⚖️</span>
+          <span class="btn-label">Scale Compare</span>
+        </button>
+        <button class="nav-icon-btn" id="btnRandomObject" title="Discover a random celestial body" aria-label="Stargazer's Pick">
+          <span>🎲</span>
+          <span class="btn-label">Random</span>
+        </button>
+        <button class="nav-icon-btn" id="btnOpenFavorites" title="View bookmarked celestial bodies" aria-label="Favorites">
+          <span>⭐</span>
+          <span class="btn-label">Saved</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Control Strip: Search, Breadcrumbs & Level Stepper -->
+    <section class="control-strip">
+      <!-- Search Input -->
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            id="globalSearchInput"
+            class="cosmic-search-input"
+            placeholder="Search planets, stars, galaxies, moons, constellations (e.g. Earth, Europa, Orion, Betelgeuse)..."
+            aria-label="Search astronomical objects"
+          />
+        </div>
+      </div>
+
+      <!-- Breadcrumbs & Quick Scale Level Stepper -->
+      <div class="breadcrumb-strip">
+        <nav class="breadcrumb-nav" id="breadcrumbNav" aria-label="Cosmic Hierarchy Breadcrumb"></nav>
+
+        <div class="level-stepper" aria-label="Quick Level Jump">
+          <button class="level-step-btn active" data-level="universe">Universe</button>
+          <button class="level-step-btn" data-level="galaxies">Galaxies</button>
+          <button class="level-step-btn" data-level="systems">Systems</button>
+          <button class="level-step-btn" data-level="stars">Stars</button>
+          <button class="level-step-btn" data-level="planets">Planets</button>
+          <button class="level-step-btn" data-level="moons">Moons</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Dynamic Viewport -->
+    <main class="main-viewport">
+      <!-- 1. Cosmic Hierarchy Explorer Section -->
+      <section class="section-view active" id="hierarchyExplorerSection">
+        <div class="section-header-row">
+          <div class="section-title-wrap">
+            <h2 id="currentLevelTitle">Exploring: The Universe</h2>
+            <span class="section-count-tag" id="currentLevelCount">6 Astronomical Entities</span>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="filter-chips-wrap" aria-label="Filter by celestial category">
+            <button class="filter-chip active" data-filter="all">All Types</button>
+            <button class="filter-chip" data-filter="galaxy">Galaxies</button>
+            <button class="filter-chip" data-filter="system">Solar Systems</button>
+            <button class="filter-chip" data-filter="star">Stars</button>
+            <button class="filter-chip" data-filter="planet">Planets</button>
+            <button class="filter-chip" data-filter="moon">Moons</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Flashcards Grid -->
+        <div class="cards-grid" id="cosmicCardsGrid"></div>
+      </section>
+
+      <!-- 2. Constellations Section -->
+      <section class="section-view" id="constellationsSection">
+        <div class="section-header-row">
+          <div class="section-title-wrap">
+            <h2>Constellations Sky Chart</h2>
+            <span class="section-count-tag">Interactive celestial star charts & mythological lore</span>
+          </div>
+
+          <!-- Constellation Hemisphere Filter Chips -->
+          <div class="filter-chips-wrap" aria-label="Filter constellations by hemisphere">
+            <button class="c-filter-chip active" data-filter="all">All Constellations</button>
+            <button class="c-filter-chip" data-filter="northern">Northern Sky</button>
+            <button class="c-filter-chip" data-filter="southern">Southern Sky</button>
+            <button class="c-filter-chip" data-filter="zodiac">Zodiac Only</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Constellations Grid -->
+        <div class="constellations-grid" id="constellationsGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Detail Inspector Modal Dialog -->
+  <div class="cosmic-modal-overlay" id="detailInspectorModal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <button class="modal-close-btn" aria-label="Close detailed view">✕</button>
+      <div class="modal-body-wrapper"></div>
+    </div>
+  </div>
+
+  <!-- Cosmic Scale Comparator Modal -->
+  <div class="cosmic-modal-overlay" id="scaleComparatorModal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog scale-comparator-dialog">
+      <button class="modal-close-btn" id="btnCloseScale" aria-label="Close scale comparator">✕</button>
+      <div class="modal-body-wrapper" id="scaleComparatorContainer"></div>
+    </div>
+  </div>
+
+  <!-- Favorites & Bookmarks Drawer Modal -->
+  <div class="cosmic-modal-overlay" id="favoritesModal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog" style="max-width: 580px;">
+      <button class="modal-close-btn" id="btnCloseFavorites" aria-label="Close bookmarks">✕</button>
+      <div class="modal-body-wrapper">
+        <div class="modal-header-bar" style="padding-right: 2rem;">
+          <div class="m-title-group">
+            <span class="m-badge" style="background: rgba(245, 158, 11, 0.3); color: #fef08a; border-color: #f59e0b;">Saved Explorer</span>
+            <h2 class="m-title">Bookmarked Objects</h2>
+            <span class="m-parent">Your personal cosmic collection</span>
+          </div>
+        </div>
+        <div class="favorites-list-wrap" id="favoritesListContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Module Script -->
+  <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>
