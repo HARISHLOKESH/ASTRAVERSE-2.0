@@ -3,7 +3,7 @@
 
 import { isFavorite } from '../utils/storage.js';
 
-export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFavorite) {
+export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFavorite, onNavigateToParent) {
   const card = document.createElement('div');
   card.className = 'cosmic-card';
   card.dataset.id = item.id;
@@ -23,6 +23,7 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
 
   const hasChildren = item.childrenIds && item.childrenIds.length > 0;
   const childrenCount = item.childrenIds ? item.childrenIds.length : 0;
+  const canNavigateParent = Boolean(onNavigateToParent && item.parentId);
 
   card.innerHTML = `
     <div class="card-glass-layer"></div>
@@ -42,9 +43,10 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
     </div>
 
     <div class="card-content">
-      <div class="card-parent-tag">
+      <div class="card-parent-tag ${canNavigateParent ? 'interactive' : ''}" title="${canNavigateParent ? `Jump to ${item.parentName || 'Parent'}` : ''}">
         <span class="parent-dot" style="background-color: ${item.color || '#00f0ff'}"></span>
         <span class="parent-label">${parentTag}</span>
+        ${canNavigateParent ? '<span class="parent-arrow">↗</span>' : ''}
       </div>
 
       <h3 class="card-title">${item.name}</h3>
@@ -107,6 +109,15 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
 
   // Click card or Explore button opens details
   card.addEventListener('click', (e) => {
+    // Parent tag shortcut
+    if (e.target.closest('.card-parent-tag.interactive')) {
+      e.stopPropagation();
+      if (onNavigateToParent && item.parentId) {
+        onNavigateToParent(item.parentId);
+      }
+      return;
+    }
+
     // Avoid triggering if clicked favorite or drilldown button
     if (e.target.closest('.card-fav-btn')) {
       e.stopPropagation();

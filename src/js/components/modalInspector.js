@@ -6,8 +6,10 @@ import { audioEngine } from '../utils/audioSynthesizer.js';
 import { isFavorite, toggleFavorite } from '../utils/storage.js';
 
 export class ModalInspector {
-  constructor(modalContainer) {
+  constructor(modalContainer, onDrillDown = null, onNavigateToParent = null) {
     this.modal = modalContainer;
+    this.onDrillDown = onDrillDown;
+    this.onNavigateToParent = onNavigateToParent;
     this.canvasInstance = null;
     this.currentData = null;
     this.isConstellation = false;
@@ -70,14 +72,29 @@ export class ModalInspector {
     const isFav = isFavorite(item.id);
     const parentText = item.parentName ? (item.category === 'moon' ? `Orbits: ${item.parentName}` : `Part of: ${item.parentName}`) : 'The Cosmos';
 
+    const hasChildren = item.childrenIds && item.childrenIds.length > 0;
+    const childrenCount = item.childrenIds ? item.childrenIds.length : 0;
+    const canNavigateParent = Boolean(this.onNavigateToParent && item.parentId);
+
     this.contentContainer.innerHTML = `
       <div class="modal-header-bar">
         <div class="m-title-group">
           <span class="m-badge category-${item.category}">${item.type}</span>
           <h2 class="m-title">${item.name}</h2>
-          <span class="m-parent">${parentText}</span>
+          ${canNavigateParent ? `
+            <button class="m-parent-btn" id="btnModalParent" title="Navigate to ${item.parentName || 'parent'}">
+              <span>${parentText}</span>
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </button>
+          ` : `<span class="m-parent">${parentText}</span>`}
         </div>
         <div class="m-header-actions">
+          ${hasChildren ? `
+            <button class="btn-modal-explore-children" id="btnModalExploreChildren" title="Explore ${childrenCount} nested celestial entities">
+              <span>Explore (${childrenCount})</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          ` : ''}
           <button class="btn-audio-guide" id="btnAudioGuide" title="Listen to audio overview">
             <span class="audio-icon">🎧</span>
             <span class="audio-text">Audio Guide</span>
@@ -291,6 +308,28 @@ export class ModalInspector {
           const cSvg = cardFav.querySelector('svg');
           cSvg.setAttribute('fill', newState ? '#ef4444' : 'none');
           cSvg.setAttribute('stroke', newState ? '#ef4444' : '#e2e8f0');
+        }
+      });
+    }
+
+    // Hook up Parent jump button
+    const parentBtn = this.contentContainer.querySelector('#btnModalParent');
+    if (parentBtn) {
+      parentBtn.addEventListener('click', () => {
+        this.close();
+        if (this.onNavigateToParent && item.parentId) {
+          this.onNavigateToParent(item.parentId);
+        }
+      });
+    }
+
+    // Hook up Explore sub-entities button
+    const exploreChildrenBtn = this.contentContainer.querySelector('#btnModalExploreChildren');
+    if (exploreChildrenBtn) {
+      exploreChildrenBtn.addEventListener('click', () => {
+        this.close();
+        if (this.onDrillDown) {
+          this.onDrillDown(item);
         }
       });
     }

@@ -1,7 +1,7 @@
 // ASTRAVERSE 2.0 - Main Application Controller
 // Orchestrates cosmic hierarchy navigation, constellation star charts, search, audio, and modals
 
-import { hierarchyData, getAstronomicalObject, getChildrenOf, getLevelForCategory } from './data/hierarchyData.js';
+import { hierarchyData, getAstronomicalObject, getChildrenOf, getLevelForCategory, getObjectsByLevel } from './data/hierarchyData.js';
 import { constellationsData } from './data/constellationsData.js';
 import { StarfieldCanvas } from './components/starfieldCanvas.js';
 import { createAstronomicalCard, createConstellationCard } from './components/cardRenderer.js';
@@ -69,8 +69,12 @@ class AstraverseApp {
       this.starfield = new StarfieldCanvas(bgCanvas);
     }
 
-    // Detail Modal Inspector
-    this.modalInspector = new ModalInspector(this.detailModalEl);
+    // Detail Modal Inspector with Drilldown and Parent Jump navigation
+    this.modalInspector = new ModalInspector(
+      this.detailModalEl,
+      (drillItem) => this.drillDown(drillItem),
+      (parentId) => this.navigateToEntity(parentId)
+    );
 
     // Scale Comparator
     const scaleContainer = document.getElementById('scaleComparatorContainer');
@@ -132,10 +136,7 @@ class AstraverseApp {
     // Category Filter Chips (Hierarchy)
     this.filterChips.forEach(chip => {
       chip.addEventListener('click', () => {
-        this.filterChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        this.activeCategoryFilter = chip.dataset.filter;
-        this.render();
+        this.handleFilterSelect(chip.dataset.filter);
       });
     });
 
@@ -163,7 +164,6 @@ class AstraverseApp {
     this.searchQuery = '';
     if (this.searchInput) this.searchInput.value = '';
     this.activeCategoryFilter = 'all';
-    this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
     this.currentParentId = 'universe';
     this.breadcrumbs = [{ id: 'universe', name: 'The Universe', level: 'universe' }];
     this.switchMode('hierarchy');
@@ -193,6 +193,56 @@ class AstraverseApp {
     }
   }
 
+  handleFilterSelect(filter) {
+    audioEngine.playChime(480, 'sine', 0.04, 0.2);
+
+    if (filter === 'all') {
+      this.activeCategoryFilter = 'all';
+      if (this.currentParentId.startsWith('scale-')) {
+        this.currentParentId = 'universe';
+        this.breadcrumbs = [{ id: 'universe', name: 'The Universe', level: 'universe' }];
+      }
+      this.render();
+      return;
+    }
+
+    const filterToLevel = {
+      galaxy: 'galaxies',
+      system: 'systems',
+      star: 'stars',
+      planet: 'planets',
+      moon: 'moons'
+    };
+
+    if (this.searchQuery) {
+      this.activeCategoryFilter = filter;
+      this.render();
+      return;
+    }
+
+    // Check if the current parent's children contain entities of this category
+    const currentChildren = this.getItemsForCurrentContext();
+    const hasCategory = currentChildren.some(item => item.category === filter);
+
+    if (hasCategory) {
+      this.activeCategoryFilter = filter;
+      this.render();
+    } else {
+      // Directly jump to that scale level so the user gets what they asked for!
+      const targetLevel = filterToLevel[filter] || 'universe';
+      this.jumpToLevel(targetLevel);
+    }
+  }
+
+  getItemsForCurrentContext() {
+    if (this.currentParentId === 'scale-galaxies') return hierarchyData.galaxies;
+    if (this.currentParentId === 'scale-systems') return hierarchyData.systems;
+    if (this.currentParentId === 'scale-stars') return hierarchyData.stars;
+    if (this.currentParentId === 'scale-planets') return hierarchyData.planets;
+    if (this.currentParentId === 'scale-moons') return hierarchyData.moons;
+    return getChildrenOf(this.currentParentId);
+  }
+
   jumpToLevel(level) {
     audioEngine.playLevelTransition();
 
@@ -207,52 +257,61 @@ class AstraverseApp {
       this.constellationsSection.classList.remove('active');
     }
 
+    this.searchQuery = '';
+    if (this.searchInput) this.searchInput.value = '';
+
     if (level === 'universe') {
       this.currentParentId = 'universe';
       this.breadcrumbs = [{ id: 'universe', name: 'The Universe', level: 'universe' }];
+      this.activeCategoryFilter = 'all';
     } else if (level === 'galaxies') {
-      this.currentParentId = 'universe';
+      this.currentParentId = 'scale-galaxies';
       this.breadcrumbs = [
-        { id: 'universe', name: 'The Universe', level: 'universe' }
+        { id: 'universe', name: 'The Universe', level: 'universe' },
+        { id: 'scale-galaxies', name: 'Galaxies', level: 'galaxies' }
       ];
+      this.activeCategoryFilter = 'galaxy';
     } else if (level === 'systems') {
-      this.currentParentId = 'milky-way';
+      this.currentParentId = 'scale-systems';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' }
+        { id: 'scale-systems', name: 'Solar Systems', level: 'systems' }
       ];
+      this.activeCategoryFilter = 'system';
     } else if (level === 'stars') {
-      this.currentParentId = 'solar-system';
+      this.currentParentId = 'scale-stars';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' },
-        { id: 'solar-system', name: 'The Solar System', level: 'system' }
+        { id: 'scale-stars', name: 'Stars', level: 'stars' }
       ];
+      this.activeCategoryFilter = 'star';
     } else if (level === 'planets') {
-      this.currentParentId = 'solar-system';
+      this.currentParentId = 'scale-planets';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' },
-        { id: 'solar-system', name: 'The Solar System', level: 'system' }
+        { id: 'scale-planets', name: 'Planets', level: 'planets' }
       ];
+      this.activeCategoryFilter = 'planet';
     } else if (level === 'moons') {
-      this.currentParentId = 'jupiter';
+      this.currentParentId = 'scale-moons';
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
-        { id: 'milky-way', name: 'Milky Way Galaxy', level: 'galaxy' },
-        { id: 'solar-system', name: 'The Solar System', level: 'system' },
-        { id: 'jupiter', name: 'Jupiter', level: 'planet' }
+        { id: 'scale-moons', name: 'Moons', level: 'moons' }
       ];
+      this.activeCategoryFilter = 'moon';
     }
-    this.searchQuery = '';
-    if (this.searchInput) this.searchInput.value = '';
-    this.activeCategoryFilter = 'all';
-    this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
+
     this.render();
   }
 
   drillDown(item) {
     audioEngine.playLevelTransition();
+
+    if (this.currentParentId.startsWith('scale-')) {
+      this.navigateToEntity(item.id);
+      return;
+    }
+
     this.breadcrumbs.push({
       id: item.id,
       name: item.name,
@@ -262,30 +321,64 @@ class AstraverseApp {
     this.searchQuery = '';
     if (this.searchInput) this.searchInput.value = '';
     this.activeCategoryFilter = 'all';
-    this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
     this.render();
+  }
+
+  navigateToEntity(id) {
+    audioEngine.playLevelTransition();
+
+    if (id === 'universe' || !id) {
+      this.goHome();
+      return;
+    }
+
+    const targetObj = getAstronomicalObject(id);
+    if (!targetObj) return;
+
+    // Build ancestor chain
+    const chain = [targetObj];
+    let curr = targetObj;
+    while (curr && curr.parentId && curr.parentId !== 'universe') {
+      curr = getAstronomicalObject(curr.parentId);
+      if (curr) chain.unshift(curr);
+    }
+
+    this.breadcrumbs = [
+      { id: 'universe', name: 'The Universe', level: 'universe' },
+      ...chain.map(obj => ({
+        id: obj.id,
+        name: obj.name,
+        level: obj.category
+      }))
+    ];
+
+    this.currentParentId = id;
+    this.searchQuery = '';
+    if (this.searchInput) this.searchInput.value = '';
+    this.activeCategoryFilter = 'all';
+    this.switchMode('hierarchy');
   }
 
   navigateToBreadcrumb(index) {
     audioEngine.playLevelTransition();
 
-    // Ensure we switch to hierarchy mode if currently in constellations mode
     if (this.currentMode !== 'hierarchy') {
-      this.currentMode = 'hierarchy';
-      this.modeHierarchyBtn.classList.add('active');
-      this.modeHierarchyBtn.setAttribute('aria-pressed', 'true');
-      this.modeConstellationsBtn.classList.remove('active');
-      this.modeConstellationsBtn.setAttribute('aria-pressed', 'false');
-      this.hierarchySection.classList.add('active');
-      this.constellationsSection.classList.remove('active');
+      this.switchMode('hierarchy');
     }
 
     this.breadcrumbs = this.breadcrumbs.slice(0, index + 1);
-    this.currentParentId = this.breadcrumbs[this.breadcrumbs.length - 1].id;
+    const targetCrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
+    this.currentParentId = targetCrumb.id;
     this.searchQuery = '';
     if (this.searchInput) this.searchInput.value = '';
-    this.activeCategoryFilter = 'all';
-    this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
+
+    if (this.currentParentId === 'scale-galaxies') this.activeCategoryFilter = 'galaxy';
+    else if (this.currentParentId === 'scale-systems') this.activeCategoryFilter = 'system';
+    else if (this.currentParentId === 'scale-stars') this.activeCategoryFilter = 'star';
+    else if (this.currentParentId === 'scale-planets') this.activeCategoryFilter = 'planet';
+    else if (this.currentParentId === 'scale-moons') this.activeCategoryFilter = 'moon';
+    else this.activeCategoryFilter = 'all';
+
     this.render();
   }
 
@@ -335,16 +428,31 @@ class AstraverseApp {
     });
 
     // Update level buttons indicator
-    const currentCrumb = this.breadcrumbs[this.breadcrumbs.length - 1];
-    let levelKey = currentCrumb.level;
-    if (levelKey === 'galaxy') levelKey = 'galaxies';
-    if (levelKey === 'system') levelKey = 'systems';
-    if (levelKey === 'star') levelKey = 'stars';
-    if (levelKey === 'planet') levelKey = 'planets';
-    if (levelKey === 'moon') levelKey = 'moons';
+    let activeLevelKey = 'universe';
+    if (this.currentParentId === 'scale-galaxies') activeLevelKey = 'galaxies';
+    else if (this.currentParentId === 'scale-systems') activeLevelKey = 'systems';
+    else if (this.currentParentId === 'scale-stars') activeLevelKey = 'stars';
+    else if (this.currentParentId === 'scale-planets') activeLevelKey = 'planets';
+    else if (this.currentParentId === 'scale-moons') activeLevelKey = 'moons';
+    else if (this.currentParentId === 'universe') {
+      activeLevelKey = 'universe';
+    } else {
+      const parentObj = getAstronomicalObject(this.currentParentId);
+      if (parentObj) {
+        if (parentObj.childrenLevel === 'systems' || parentObj.category === 'galaxy') activeLevelKey = 'systems';
+        else if (parentObj.childrenLevel === 'stars-planets' || parentObj.category === 'system') activeLevelKey = 'planets';
+        else if (parentObj.childrenLevel === 'moons' || parentObj.category === 'planet') activeLevelKey = 'moons';
+        else activeLevelKey = parentObj.category;
+      }
+    }
 
     this.levelButtons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.level === levelKey);
+      btn.classList.toggle('active', btn.dataset.level === activeLevelKey);
+    });
+
+    // Keep filter chips visual state synchronized
+    this.filterChips.forEach(chip => {
+      chip.classList.toggle('active', chip.dataset.filter === this.activeCategoryFilter);
     });
   }
 
@@ -361,19 +469,45 @@ class AstraverseApp {
       items = this.searchAcrossCatalog(this.searchQuery);
       this.currentLevelTitle.textContent = `Search Results for "${this.searchQuery}"`;
       this.currentLevelCount.textContent = `${items.length} celestial objects found`;
-    } else {
-      // Normal hierarchy drill-down
+    } 
+    // Scale jumps
+    else if (this.currentParentId === 'scale-galaxies') {
+      items = hierarchyData.galaxies;
+      this.currentLevelTitle.textContent = "Galaxies of the Universe";
+      this.currentLevelCount.textContent = "6 major galaxies in the Local Universe";
+    } else if (this.currentParentId === 'scale-systems') {
+      items = hierarchyData.systems;
+      this.currentLevelTitle.textContent = "Star & Planetary Systems";
+      this.currentLevelCount.textContent = "5 stellar & planetary systems";
+    } else if (this.currentParentId === 'scale-stars') {
+      items = hierarchyData.stars;
+      this.currentLevelTitle.textContent = "Stars & Stellar Luminaries";
+      this.currentLevelCount.textContent = "5 stellar objects";
+    } else if (this.currentParentId === 'scale-planets') {
+      items = hierarchyData.planets;
+      this.currentLevelTitle.textContent = "Planets & Exoplanets";
+      this.currentLevelCount.textContent = "12 planetary bodies";
+    } else if (this.currentParentId === 'scale-moons') {
+      items = hierarchyData.moons;
+      this.currentLevelTitle.textContent = "Moons & Natural Satellites";
+      this.currentLevelCount.textContent = "10 celestial moons";
+    } 
+    // Hierarchical navigation
+    else {
       items = getChildrenOf(this.currentParentId);
-
       const parentObj = getAstronomicalObject(this.currentParentId);
-      const parentName = parentObj ? parentObj.name : 'The Universe';
+      const parentName = parentObj ? parentObj.name : 'The Observable Universe';
       this.currentLevelTitle.textContent = `Exploring: ${parentName}`;
       this.currentLevelCount.textContent = `${items.length} astronomical entities`;
     }
 
-    // Apply category filter if not 'all'
-    if (this.activeCategoryFilter !== 'all') {
-      items = items.filter(item => item.category === this.activeCategoryFilter);
+    // Apply category filter if active and not in dedicated scale view
+    if (this.activeCategoryFilter !== 'all' && !this.currentParentId.startsWith('scale-')) {
+      const filtered = items.filter(item => item.category === this.activeCategoryFilter);
+      if (filtered.length > 0) {
+        items = filtered;
+        this.currentLevelCount.textContent = `${items.length} filtered entities`;
+      }
     }
 
     if (items.length === 0) {
@@ -382,17 +516,13 @@ class AstraverseApp {
           <span class="empty-icon">🔭</span>
           <h3>No Astronomical Entities Found</h3>
           <p>No objects match your current search or category filter. Try clearing your filters or navigating up the hierarchy.</p>
-          <button class="btn-clear-search" id="btnClearSearch">Clear Search & Filters</button>
+          <button class="btn-clear-search" id="btnClearSearch">Clear Search & Return Home</button>
         </div>
       `;
       const btn = document.getElementById('btnClearSearch');
       if (btn) {
         btn.addEventListener('click', () => {
-          this.searchInput.value = '';
-          this.searchQuery = '';
-          this.activeCategoryFilter = 'all';
-          this.filterChips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
-          this.render();
+          this.goHome();
         });
       }
       return;
@@ -404,7 +534,8 @@ class AstraverseApp {
         item,
         (selected) => this.modalInspector.open(selected, false),
         (drillItem) => this.drillDown(drillItem),
-        (id) => toggleFavorite(id)
+        (id) => toggleFavorite(id),
+        (parentId) => this.navigateToEntity(parentId)
       );
       this.cardsGrid.appendChild(card);
     });

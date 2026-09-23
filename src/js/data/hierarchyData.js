@@ -766,7 +766,7 @@ export const hierarchyData = {
       parentId: "sun",
       parentName: "The Sun",
       childrenLevel: "moons",
-      childrenIds: ["phobos", "deimos"],
+      childrenIds: ["phobos"],
       diameter: "6,779 km (0.53 Earths)",
       diameterKm: 6779,
       distance: "227.9 million km (1.52 AU) from Sun",
@@ -803,7 +803,7 @@ export const hierarchyData = {
       parentId: "sun",
       parentName: "The Sun",
       childrenLevel: "moons",
-      childrenIds: ["io", "europa", "ganymede", "callisto"],
+      childrenIds: ["io", "europa", "ganymede"],
       diameter: "139,820 km (11.2 Earths)",
       diameterKm: 139820,
       distance: "778.5 million km (5.20 AU) from Sun",
@@ -1476,11 +1476,42 @@ export function getChildrenOf(parentId) {
 export function getLevelForCategory(category) {
   switch (category) {
     case "universe": return "Universe";
+    case "galaxies":
     case "galaxy": return "Galaxies";
+    case "systems":
     case "system": return "Solar Systems";
+    case "stars":
     case "star": return "Stars";
+    case "planets":
     case "planet": return "Planets";
+    case "moons":
     case "moon": return "Moons";
     default: return "Cosmic Entities";
   }
 }
+
+// Get all catalog entities belonging to a specific scale level or category
+export function getObjectsByLevel(level) {
+  switch (level) {
+    case "universe":
+      return hierarchyData.galaxies;
+    case "galaxies":
+    case "galaxy":
+      return hierarchyData.galaxies;
+    case "systems":
+    case "system":
+      return hierarchyData.systems;
+    case "stars":
+    case "star":
+      return hierarchyData.stars;
+    case "planets":
+    case "planet":
+      return hierarchyData.planets;
+    case "moons":
+    case "moon":
+      return hierarchyData.moons;
+    default:
+      return hierarchyData.galaxies;
+  }
+}
+

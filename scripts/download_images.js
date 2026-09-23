@@ -1,3 +1,4 @@
+
 // scripts/download_images.js
 // Downloads authentic NASA / Wikimedia / Astronomy pictures to public/images/
 
@@ -35,8 +36,8 @@ const images = [
   {
     path: 'public/images/triangulum.jpg',
     urls: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/VST_snaps_a_very_detailed_view_of_the_Triangulum_Galaxy.jpg/1280px-VST_snaps_a_very_detailed_view_of_the_Triangulum_Galaxy.jpg',
-      'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80'
+      'http://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001913/GSFC_20171208_Archive_e001913~orig.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/VST_snaps_a_very_detailed_view_of_the_Triangulum_Galaxy.jpg/1280px-VST_snaps_a_very_detailed_view_of_the_Triangulum_Galaxy.jpg'
     ]
   },
   {
@@ -413,7 +414,7 @@ function downloadUrl(url, dest) {
         file.close(() => resolve(true));
       });
       file.on('error', (err) => {
-        fs.unlink(dest, () => {});
+        fs.unlink(dest, () => { });
         reject(err);
       });
     });

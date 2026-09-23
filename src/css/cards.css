@@ -180,6 +180,35 @@
   margin-bottom: 0.4rem;
 }
 
+.card-parent-tag.interactive {
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin-left: -6px;
+  transition: all 0.2s ease;
+}
+
+.card-parent-tag.interactive:hover {
+  background: rgba(0, 240, 255, 0.15);
+}
+
+.card-parent-tag.interactive:hover .parent-label {
+  color: var(--cyan-glow);
+}
+
+.parent-arrow {
+  font-size: 0.75rem;
+  color: var(--cyan-glow);
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.card-parent-tag.interactive:hover .parent-arrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
 .parent-dot {
   width: 7px;
   height: 7px;
