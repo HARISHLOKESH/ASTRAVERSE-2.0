@@ -4,6 +4,8 @@
 import { CelestialCanvas } from './celestialCanvas.js';
 import { audioEngine } from '../utils/audioSynthesizer.js';
 import { isFavorite, toggleFavorite } from '../utils/storage.js';
+import { resolveImageMeta, attachImageFallback, IMAGE_TYPE_LABELS } from '../utils/imageHelper.js';
+import { getAstronomicalObject } from '../data/hierarchyData.js';
 
 export class ModalInspector {
   constructor(modalContainer, onDrillDown = null, onNavigateToParent = null) {
@@ -67,20 +69,98 @@ export class ModalInspector {
     }
   }
 
+  getSimulationPhysicsExplanation(item) {
+  const cat = item.category || 'planet';
+  const id = item.id || '';
+  if (cat === 'black-hole' || id.includes('blackhole') || id === 'sagittarius-a' || id === 'm87-blackhole' || id === 'ton-618' || id === 'cygnus-x1') {
+    return {
+      title: 'General Relativistic Kerr Metric',
+      subtitle: 'Shadow (2.6 Rs), photon ring, warped disk & Doppler beaming',
+      detail: 'Simulates spacetime distortion around a spinning singularity. Deflected photons create the dark central shadow ($r \\approx 2.6 R_s$) bounded by the bright photon ring ($1.5 R_s$). The accretion disk behind the hole is gravitationally warped above and below, and material orbiting toward the viewer is strongly Doppler-beamed.'
+    };
+  }
+  if (cat === 'nebula' || id.includes('nebula') || id === 'pillars-of-creation') {
+    return {
+      title: 'Multi-Band Ionization Gas Dynamics',
+      subtitle: 'H-alpha (656 nm crimson) + [O III] (500 nm teal) + photo-evaporation',
+      detail: 'Simulates high-energy ultraviolet radiation from embedded newborn stars photo-evaporating gas clouds, illuminating hydrogen emission fronts and oxygen ionization bubbles intertwined with dense dark silicates.'
+    };
+  }
+  if (cat === 'stellar-remnant' || id.includes('pulsar') || id.includes('magnetar')) {
+    return {
+      title: 'Relativistic Synchrotron Engine',
+      subtitle: '10¹² Gauss dipole field & sweeping lighthouse beam',
+      detail: 'Simulates a degenerate neutron core rotating at millisecond intervals, funneling ultra-relativistic charged particles along extreme magnetic dipole lines to create sweeping collimated beams.'
+    };
+  }
+  if (cat === 'star') {
+    return {
+      title: 'Magnetohydrodynamic Convective Model',
+      subtitle: 'Plasma granulation cells, limb darkening & coronal loops',
+      detail: 'Simulates thermal convection cells rising from the radiative zone, Eddington limb darkening toward the edge of the photosphere, and twisting magnetic flux lines erupting into coronal loops.'
+    };
+  }
+  if (cat === 'moon') {
+    return {
+      title: 'Tidal Mechanics & Surface Regolith',
+      subtitle: 'Phase-angle terminator, impact crater relief & tidal heating',
+      detail: 'Simulates solar phase illumination, tidally locked synchronous rotation, and morphological surface geology ranging from volcanic sulfur plains to fractured subsurface ocean ice shells.'
+    };
+  }
+  if (cat === 'exoplanet') {
+    return {
+      title: 'Exoplanetary Atmospheric Simulation',
+      subtitle: 'Tidally locked eyeball circulation & Roche tidal distortion',
+      detail: 'Simulates extreme exoplanet environments, including synchronous tidally locked eyeball worlds with twilight habitable rings, superheated magma oceans, and egg-shaped gravitational mass transfer.'
+    };
+  }
+  if (cat === 'galaxy') {
+    return {
+      title: 'Density Wave Theory & Galactic Bulge',
+      subtitle: 'Differential Keplerian spiral arms & central nucleus',
+      detail: 'Simulates Lin-Shu density waves compressing interstellar gas into spiral starburst arms revolving around a dense nuclear stellar bulge.'
+    };
+  }
+  return {
+    title: '3D Spherical Solar Lighting',
+    subtitle: 'Rayleigh atmospheric scattering, axial tilt & planetary bands',
+    detail: 'Simulates realistic physical illumination based on sunlight direction, terminator shadow gradation, axial rotation, and distinct atmospheric cloud and surface compositions.'
+  };
+}
+
   // --- RENDER ASTRONOMICAL ENTITY MODAL ---
   renderAstronomicalModal(item) {
     const isFav = isFavorite(item.id);
-    const parentText = item.parentName ? (item.category === 'moon' ? `Orbits: ${item.parentName}` : `Part of: ${item.parentName}`) : 'The Cosmos';
+    const parentText = item.parentName ? (['moon', 'moons'].includes(item.category) ? `Orbits: ${item.parentName}` : `Part of: ${item.parentName}`) : 'The Cosmos';
 
     const hasChildren = item.childrenIds && item.childrenIds.length > 0;
     const childrenCount = item.childrenIds ? item.childrenIds.length : 0;
     const canNavigateParent = Boolean(this.onNavigateToParent && item.parentId);
 
+    const imgMeta = resolveImageMeta(item);
+    const typeConfig = IMAGE_TYPE_LABELS[imgMeta.imageType] || { label: 'Observation', icon: '📷', class: 'badge-real-obs' };
+    const simPhysics = this.getSimulationPhysicsExplanation(item);
+
     this.contentContainer.innerHTML = `
       <div class="modal-header-bar">
         <div class="m-title-group">
-          <span class="m-badge category-${item.category}">${item.type}</span>
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <span class="m-badge category-${item.category}">${item.subcategory || item.type}</span>
+            <span class="image-type-badge ${typeConfig.class}">
+              <span>${typeConfig.icon}</span> ${typeConfig.label}
+            </span>
+            ${item.source ? `
+              <span style="font-size: 0.72rem; padding: 0.2rem 0.55rem; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: #cbd5e1; font-weight: 500;">
+                🏛️ ${item.source}
+              </span>
+            ` : ''}
+          </div>
           <h2 class="m-title">${item.name}</h2>
+          ${item.aliases && item.aliases.length > 0 ? `
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.15rem;">
+              Also cataloged as: <strong style="color: #cbd5e1;">${item.aliases.join(', ')}</strong>
+            </div>
+          ` : ''}
           ${canNavigateParent ? `
             <button class="m-parent-btn" id="btnModalParent" title="Navigate to ${item.parentName || 'parent'}">
               <span>${parentText}</span>
@@ -114,15 +194,31 @@ export class ModalInspector {
             <div class="visual-canvas-container">
               <canvas id="modalCelestialCanvas" class="celestial-render-canvas"></canvas>
             </div>
-            <div class="visual-controls">
-              <span class="visual-label">Real-Time Procedural Simulation</span>
-              <span class="visual-sub">Live Shading & Rotation</span>
+            <div class="visual-controls" style="padding: 0.85rem 1rem; background: rgba(0,0,0,0.5); border-top: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 0.35rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;">
+                <span class="visual-label" style="font-size: 0.72rem; letter-spacing: 0.08em; font-weight: 700; color: #38bdf8;">PROCEDURAL SIMULATION</span>
+                <span style="font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-weight: 600;">Live Physics Engine</span>
+              </div>
+              <span class="visual-sub" style="font-size: 0.8rem; font-weight: 600; color: #f8fafc; line-height: 1.3;">
+                ${simPhysics.title}: ${simPhysics.subtitle}
+              </span>
+              <p style="font-size: 0.73rem; color: #94a3b8; line-height: 1.4; margin: 0;">
+                ${simPhysics.detail}
+              </p>
             </div>
           </div>
 
           <div class="visual-photo-card">
-            <img src="${item.image}" alt="${item.name}" class="visual-photo-img" />
-            <span class="photo-badge">NASA / ESA Deep Sky Imagery</span>
+            <div style="position: relative; width: 100%; height: 180px; overflow: hidden; border-radius: 12px; background: #03050c;">
+              <img src="${imgMeta.imageUrl}" alt="${imgMeta.altText}" class="visual-photo-img" style="width: 100%; height: 100%; object-fit: cover;" />
+              <span class="image-type-badge ${typeConfig.class}" style="position: absolute; bottom: 0.5rem; left: 0.5rem;">
+                <span>${typeConfig.icon}</span> ${typeConfig.label}
+              </span>
+            </div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.15rem;">
+              <span>📸 <strong>Credit:</strong> ${imgMeta.imageCredit || 'NASA / ESA Heritage'}</span>
+              ${imgMeta.imageSource ? `<span>🏛️ <strong>Source:</strong> ${imgMeta.imageSource}</span>` : ''}
+            </div>
           </div>
         </div>
 
@@ -131,8 +227,8 @@ export class ModalInspector {
           <!-- Tab Navigation -->
           <div class="modal-tab-nav">
             <button class="tab-btn active" data-tab="overview">Overview</button>
-            <button class="tab-btn" data-tab="specs">Physical & Orbit</button>
-            <button class="tab-btn" data-tab="composition">Composition</button>
+            <button class="tab-btn" data-tab="specs">Astrophysical Metrics</button>
+            <button class="tab-btn" data-tab="composition">Composition & Env</button>
             <button class="tab-btn" data-tab="facts">Curiosities & Lore</button>
           </div>
 
@@ -143,27 +239,86 @@ export class ModalInspector {
             <div class="data-matrix">
               <div class="data-item">
                 <span class="d-label">Classification</span>
-                <span class="d-value">${item.type}</span>
+                <span class="d-value">${item.subcategory || item.type}</span>
               </div>
               <div class="data-item">
                 <span class="d-label">Parent Celestial Body</span>
                 <span class="d-value">${item.parentName || 'The Cosmos'}</span>
               </div>
+              ${item.location ? `
+                <div class="data-item">
+                  <span class="d-label">Cosmic Location</span>
+                  <span class="d-value">${item.location}</span>
+                </div>
+              ` : ''}
               <div class="data-item">
                 <span class="d-label">Estimated Age</span>
-                <span class="d-value">${item.age || '4.5 Billion Years'}</span>
+                <span class="d-value">${item.age || 'N/A'}</span>
               </div>
               <div class="data-item">
                 <span class="d-label">Average Temperature</span>
-                <span class="d-value">${item.temperature || 'N/A'}</span>
+                <span class="d-value">${item.temperature || item.equilibriumTemp || 'N/A'}</span>
               </div>
+              ${item.habitableZone !== undefined ? `
+                <div class="data-item">
+                  <span class="d-label">Habitable Zone</span>
+                  <span class="d-value" style="color: ${item.habitableZone ? '#34d399' : '#f59e0b'};">
+                    ${item.habitableZone ? '🌿 Within Habitable Zone' : '❄️ Outside Habitable Zone'}
+                  </span>
+                </div>
+              ` : ''}
+              ${item.hostStar ? `
+                <div class="data-item">
+                  <span class="d-label">Host Star</span>
+                  <span class="d-value">${item.hostStar}</span>
+                </div>
+              ` : ''}
+              ${item.discoveryYear ? `
+                <div class="data-item">
+                  <span class="d-label">Discovery Year</span>
+                  <span class="d-value">${item.discoveryYear} (${item.discoveryMethod || 'Telescopic'})</span>
+                </div>
+              ` : ''}
+              ${item.constellation ? `
+                <div class="data-item">
+                  <span class="d-label">Constellation</span>
+                  <span class="d-value">${item.constellation}</span>
+                </div>
+              ` : ''}
+              ${item.nebulaType ? `
+                <div class="data-item">
+                  <span class="d-label">Nebula Class</span>
+                  <span class="d-value">${item.nebulaType}</span>
+                </div>
+              ` : ''}
+              ${item.source ? `
+                <div class="data-item">
+                  <span class="d-label">Authoritative Source</span>
+                  <span class="d-value">${item.source}</span>
+                </div>
+              ` : ''}
             </div>
 
-            ${item.missions && item.missions.length > 0 ? `
-              <div class="missions-section">
-                <h4 class="section-subtitle">Pioneering Exploration Missions</h4>
+            ${((item.references && item.references.length > 0) || (item.missions && item.missions.length > 0)) ? `
+              <div class="missions-section" style="margin-top: 1rem;">
+                <h4 class="section-subtitle">Pioneering Exploration & Scientific Citations</h4>
                 <div class="mission-tags">
-                  ${item.missions.map(m => `<span class="mission-tag">🚀 ${m}</span>`).join('')}
+                  ${(item.references || item.missions).map(m => `<span class="mission-tag">🚀 ${m}</span>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${hasChildren ? `
+              <div style="margin-top: 1.25rem; padding: 1rem; border-radius: 12px; background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.2);">
+                <h4 style="font-size: 0.85rem; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+                  Nested Celestial Children (${childrenCount})
+                </h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                  ${item.childrenIds.map(cid => {
+                    const cObj = getAstronomicalObject(cid);
+                    const name = cObj ? cObj.name : cid;
+                    return `<button class="modal-child-jump-btn" data-id="${cid}" style="padding: 0.35rem 0.75rem; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.8rem; cursor: pointer;">${name} ↗</button>`;
+                  }).join('')}
                 </div>
               </div>
             ` : ''}
@@ -196,6 +351,36 @@ export class ModalInspector {
                 <span class="d-label">Rotation Period (Day)</span>
                 <span class="d-value">${item.rotationPeriod || 'N/A'}</span>
               </div>
+              ${item.schwarzschildRadius ? `
+                <div class="data-item">
+                  <span class="d-label">Schwarzschild Radius</span>
+                  <span class="d-value">${item.schwarzschildRadius}</span>
+                </div>
+              ` : ''}
+              ${item.eventHorizonRadius ? `
+                <div class="data-item">
+                  <span class="d-label">Event Horizon Radius</span>
+                  <span class="d-value">${item.eventHorizonRadius}</span>
+                </div>
+              ` : ''}
+              ${item.spinParameter ? `
+                <div class="data-item">
+                  <span class="d-label">Spin Parameter (a*)</span>
+                  <span class="d-value">${item.spinParameter}</span>
+                </div>
+              ` : ''}
+              ${item.spectralType ? `
+                <div class="data-item">
+                  <span class="d-label">Spectral Class</span>
+                  <span class="d-value">${item.spectralType}</span>
+                </div>
+              ` : ''}
+              ${item.luminosity ? `
+                <div class="data-item">
+                  <span class="d-label">Luminosity</span>
+                  <span class="d-value">${item.luminosity}</span>
+                </div>
+              ` : ''}
               <div class="data-item">
                 <span class="d-label">Surface Gravity</span>
                 <span class="d-value">${item.gravity !== undefined ? `${item.gravity} m/s² (${item.gravityRatio}x Earth)` : 'N/A'}</span>
@@ -248,7 +433,7 @@ export class ModalInspector {
           <div class="modal-tab-content" id="tab-facts">
             <h4 class="section-subtitle">Fascinating Astronomical Curiosities</h4>
             <ul class="facts-list">
-              ${item.facts.map(f => `
+              ${(item.scientificFacts || item.facts || []).map(f => `
                 <li class="fact-item">
                   <span class="fact-bullet">✦</span>
                   <span class="fact-text">${f}</span>
@@ -358,12 +543,35 @@ export class ModalInspector {
       });
     }
 
-    // Start Procedural Canvas
+    // Hook up child jump buttons
+    this.contentContainer.querySelectorAll('.modal-child-jump-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cid = btn.dataset.id;
+        const cObj = getAstronomicalObject(cid);
+        if (cObj) {
+          this.open(cObj, false);
+        }
+      });
+    });
+
+    // Image fallback handling
+    const photoImg = this.contentContainer.querySelector('.visual-photo-img');
+    if (photoImg) {
+      attachImageFallback(photoImg, item.name, item.category);
+    }
+
+    // Start Procedural Canvas with accurate physics renderType
     const canvasEl = this.contentContainer.querySelector('#modalCelestialCanvas');
     if (canvasEl) {
-      let renderType = 'planet';
-      if (item.category === 'star') renderType = 'star';
-      if (item.category === 'galaxy') renderType = 'galaxy';
+      let renderType = item.category || 'planet';
+      if (['stellar-remnant', 'neutron-stars', 'pulsars', 'magnetars'].includes(item.category) || item.id?.includes('pulsar') || item.id?.includes('magnetar')) renderType = 'neutron-star';
+      else if (['phenomenon', 'space-phenomena', 'quasars', 'active-galactic-nuclei'].includes(item.category)) renderType = 'phenomenon';
+      else if (['black-hole', 'black-holes'].includes(item.category) || item.id?.includes('blackhole') || item.id === 'sagittarius-a' || item.id === 'm87-blackhole' || item.id === 'ton-618' || item.id === 'cygnus-x1') renderType = 'black-hole';
+      else if (['nebula', 'nebulae', 'supernova-remnants'].includes(item.category) || item.id?.includes('nebula') || item.id === 'pillars-of-creation') renderType = 'nebula';
+      else if (['dwarf-planets', 'asteroids', 'comets', 'planet', 'planets', 'exoplanet', 'exoplanets'].includes(item.category)) renderType = 'planet';
+      else if (['moon', 'moons'].includes(item.category)) renderType = 'moon';
+      else if (['star', 'stars', 'stellar-evolution'].includes(item.category)) renderType = 'star';
+      else if (['galaxy', 'galaxies', 'galaxy-structures'].includes(item.category)) renderType = 'galaxy';
       this.canvasInstance = new CelestialCanvas(canvasEl, renderType);
       this.canvasInstance.start(item, renderType);
     }
@@ -555,6 +763,12 @@ export class ModalInspector {
           });
         }
       });
+    }
+
+    // Image fallback handling
+    const cPhotoImg = this.contentContainer.querySelector('.visual-photo-img');
+    if (cPhotoImg) {
+      attachImageFallback(cPhotoImg, c.name, 'constellation');
     }
 
     // Start Constellation Canvas

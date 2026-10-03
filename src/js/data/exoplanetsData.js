@@ -1,0 +1,823 @@
+// ASTRAVERSE 2.0 - Exoplanetary Systems & Alien Worlds Catalog
+// Authoritative catalog of verified multi-planet systems, host stars, and exoplanets with verified parameters
+
+export const exoplanetSystemsData = [
+  // ==========================================
+  // 1. TRAPPIST-1 SYSTEM
+  // ==========================================
+  {
+    id: "trappist-1-system",
+    name: "TRAPPIST-1 System",
+    type: "Ultra-Cool Red Dwarf Planetary System",
+    category: "exoplanet-systems",
+    subcategory: "Ultra-Cool Red Dwarf Planetary System",
+    subtitle: "Seven Earth-sized rocky worlds orbiting an ultra-cool red dwarf",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    childrenLevel: "planets",
+    childrenIds: ["trappist-1-star", "trappist-1b", "trappist-1c", "trappist-1d", "trappist-1e", "trappist-1f", "trappist-1g", "trappist-1h"],
+    constellation: "Aquarius",
+    discoveryYear: 2015,
+    discoveryMethod: "Transit Photometry (TRAPPIST / Spitzer / VLT)",
+    source: "NASA Exoplanet Archive / Spitzer Space Telescope",
+    references: ["Nature (2016)", "Nature (2017)", "NASA JPL-Caltech"],
+    distance: "39.46 ± 0.09 light-years (12.1 pc)",
+    hostStarName: "TRAPPIST-1 (2MASS J23062928-0502285)",
+    spectralClass: "M8V",
+    stellarMass: "0.0898 M☉ (Barely above the hydrogen-burning limit)",
+    stellarRadius: "0.121 R☉ (~1.2 × Jupiter's radius)",
+    stellarLuminosity: "0.00055 L☉ (0.055% of the Sun)",
+    effectiveTemp: "2,566 ± 26 K",
+    confirmedPlanets: 7,
+    habitableZonePlanets: ["trappist-1e", "trappist-1f", "trappist-1g"],
+    image: "/images/trappist-1-system.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1-system.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration Program",
+      altText: "Artist concept lineup of the seven terrestrial worlds of the TRAPPIST-1 system"
+    },
+    color: "#f43f5e",
+    tagline: "The largest collection of Earth-sized planets ever discovered in a single star's habitable zone.",
+    description: "Located 40 light-years away in Aquarius, TRAPPIST-1 is one of the most thoroughly studied planetary systems in modern exoplanet science. Seven terrestrial worlds, all roughly the size of Earth, orbit extraordinarily close to their ultra-cool dwarf host star in a delicate chain of resonant orbits. Three of these worlds (e, f, and g) reside firmly inside the star's habitable zone, where temperatures could permit liquid water.",
+    facts: [
+      "The entire TRAPPIST-1 planetary system is so compact that all seven planets orbit closer to their host star than Mercury orbits the Sun.",
+      "The orbital periods are locked in a near-perfect resonant Laplace chain (24:15:9:6:4:3:2), meaning gravitational nudges periodically align the planets like musical harmonies.",
+      "Because the planets orbit so close together, standing on the surface of TRAPPIST-1e would afford views of neighboring planets appearing larger in the sky than the Moon appears from Earth.",
+      "The host star is only slightly larger than Jupiter in radius, though approximately 94 times more massive."
+    ],
+    missions: ["Spitzer Space Telescope", "TRAPPIST Telescope", "Hubble Space Telescope", "James Webb Space Telescope (JWST)", "VLT"]
+  },
+
+  // Host Star: TRAPPIST-1
+  {
+    id: "trappist-1-star",
+    name: "TRAPPIST-1 (Host Star)",
+    type: "Ultra-Cool Red Dwarf Star (M8V)",
+    category: "star",
+    subtitle: "Host star of seven Earth-sized worlds",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    childrenLevel: "planets",
+    childrenIds: ["trappist-1b", "trappist-1c", "trappist-1d", "trappist-1e", "trappist-1f", "trappist-1g", "trappist-1h"],
+    diameter: "168,000 km (0.121 × Sun / 1.19 × Jupiter)",
+    diameterKm: 168000,
+    distance: "39.46 light-years",
+    mass: "1.79 × 10²⁸ kg (0.0898 Solar Masses)",
+    massRelative: "0.0898 M☉",
+    gravity: 1600,
+    gravityRatio: 163,
+    temperature: "2,566 K",
+    age: "7.6 ± 2.2 billion years (significantly older than our Sun)",
+    orbitalPeriod: "Galactic orbit",
+    rotationPeriod: "3.3 days",
+    composition: [
+      { name: "Hydrogen", percentage: 76, color: "#ef4444" },
+      { name: "Helium", percentage: 23, color: "#f59e0b" },
+      { name: "Metals", percentage: 1, color: "#38bdf8" }
+    ],
+    image: "/images/trappist-1-star.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1-star.jpg",
+      imageType: "SCIENTIFIC_ILLUSTRATION",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration Program",
+      altText: "Scientific illustration of the dim reddish glow of ultra-cool dwarf star TRAPPIST-1"
+    },
+    color: "#f43f5e",
+    tagline: "An ultra-cool red dwarf barely larger than Jupiter that will burn fuel for over 10 trillion years.",
+    description: "TRAPPIST-1 is an ultra-cool red dwarf star possessing just 9% the mass of our Sun. Burning hydrogen at an extraordinarily frugal rate, its total lifespan is projected to exceed 10 trillion years — roughly 700 times longer than the current age of the universe. While quiescent compared to younger flare stars, its high-energy ultraviolet and X-ray emission poses key questions regarding planetary atmospheric retention.",
+    facts: [
+      "TRAPPIST-1 emits less than 0.1% of the total energy of our Sun, mostly in the near-infrared spectrum.",
+      "Because the star is so cool and faint, its habitable zone is located extremely close to the star (between 0.028 and 0.045 AU).",
+      "All seven orbiting planets are believed to be tidally locked, permanently presenting one face in perpetual day and the other in perpetual night.",
+      "The star is named after the Belgian-operated TRAPPIST (TRAnsiting Planets and PlanetesImals Small Telescope) facility in Chile that detected the first planets in 2015."
+    ],
+    missions: ["Spitzer Space Telescope", "JWST", "Kepler (K2)", "Hubble"]
+  },
+
+  // TRAPPIST-1 Planets (b through h)
+  {
+    id: "trappist-1b",
+    name: "TRAPPIST-1b",
+    type: "Terrestrial Exoplanet",
+    category: "exoplanet",
+    subtitle: "The innermost, hottest rocky world",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2016,
+    radius: "1.116 Earth Radii (R⊕)",
+    mass: "1.374 Earth Masses (M⊕)",
+    semiMajorAxis: "0.0115 AU (~1.73 million km from star)",
+    orbitalPeriod: "1.51 Earth days",
+    equilibriumTemp: "503 K (230 °C / 446 °F)",
+    habitableZone: "No (Too hot; interior to inner edge)",
+    atmosphere: "JWST MIRI thermal emission observations in 2023 ruled out a thick CO2 or secondary atmosphere; likely bare rock with zero or extremely thin atmosphere.",
+    status: "Confirmed (JWST photometric confirmation)",
+    image: "/images/trappist-1b.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1b.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of the rocky, baked surface of exoplanet TRAPPIST-1b"
+    },
+    color: "#ef4444",
+    tagline: "The innermost world, receiving 4 times more radiation than Earth; JWST found no thick atmosphere.",
+    description: "TRAPPIST-1b is the innermost planet of the TRAPPIST-1 system. In March 2023, the James Webb Space Telescope measured the thermal emission of TRAPPIST-1b with its MIRI instrument. The dayside temperature was measured at approximately 230 °C (500 K), demonstrating that the planet has almost no atmosphere to redistribute heat from the day side to the night side, behaving as bare rocky terrain.",
+    facts: [
+      "TRAPPIST-1b was the first terrestrial exoplanet to have its thermal emission directly measured by JWST.",
+      "The planet orbits its star at a distance of merely 1.7 million kilometers — about 4.5 times the distance from Earth to the Moon.",
+      "Orbits its host star every 36 hours (1.51 Earth days).",
+      "Receives roughly four times the stellar irradiation that Earth receives from the Sun."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Spitzer Space Telescope"]
+  },
+  {
+    id: "trappist-1c",
+    name: "TRAPPIST-1c",
+    type: "Terrestrial Exoplanet",
+    category: "exoplanet",
+    subtitle: "A Venus-analog candidate rocky world",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2016,
+    radius: "1.097 Earth Radii (R⊕)",
+    mass: "1.308 Earth Masses (M⊕)",
+    semiMajorAxis: "0.0158 AU (~2.36 million km)",
+    orbitalPeriod: "2.42 Earth days",
+    equilibriumTemp: "342 K (69 °C / 156 °F)",
+    habitableZone: "No (Too warm; interior to habitable zone)",
+    atmosphere: "JWST MIRI observations in June 2023 detected a dayside temperature of ~107 °C, ruling out a thick Venus-like carbon dioxide atmosphere; consistent with bare rock or a thin atmosphere with little CO2.",
+    status: "Confirmed (JWST thermal observation)",
+    image: "/images/trappist-1c.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1c.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of the desiccated rocky terrain of exoplanet TRAPPIST-1c"
+    },
+    color: "#f97316",
+    tagline: "Receives similar radiation to Venus; JWST ruled out a dense Venus-like carbon dioxide atmosphere.",
+    description: "TRAPPIST-1c is the second planet in the system. Roughly 10% larger than Earth with 1.3 times Earth's mass, it receives an amount of radiation comparable to planet Venus. In 2023, JWST observations showed its dayside temperature is ~380 K (107 °C), concluding that if an atmosphere exists, it is extremely thin and depleted of carbon dioxide.",
+    facts: [
+      "Orbits TRAPPIST-1 every 2.42 days at a distance of ~2.4 million km.",
+      "JWST's measurement proved that planets orbiting M-dwarfs may struggle to retain thick secondary atmospheres during early stellar active phases.",
+      "High bulk density (5.4 g/cm³) confirms a rocky, iron-rich terrestrial interior.",
+      "Its discovery was announced in May 2016 alongside planets b and d."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Spitzer Space Telescope"]
+  },
+  {
+    id: "trappist-1d",
+    name: "TRAPPIST-1d",
+    type: "Terrestrial Exoplanet",
+    category: "exoplanet",
+    subtitle: "The lightweight terrestrial world near the inner edge",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2016,
+    radius: "0.788 Earth Radii (R⊕ / ~Mars-sized)",
+    mass: "0.388 Earth Masses (M⊕)",
+    semiMajorAxis: "0.022 AU (~3.3 million km)",
+    orbitalPeriod: "4.05 Earth days",
+    equilibriumTemp: "288 K (15 °C / Similar to Earth's effective temperature)",
+    habitableZone: "Borderline / Optimistic inner edge",
+    atmosphere: "Under investigation with JWST transmission spectroscopy; no thick cloud-free hydrogen atmosphere detected by Hubble.",
+    status: "Confirmed (Transit Timing Variations & Transit Photometry)",
+    image: "/images/trappist-1d.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1d.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of the smaller terrestrial world TRAPPIST-1d"
+    },
+    color: "#f59e0b",
+    tagline: "The least massive planet in the system (0.39 M⊕), receiving roughly the same stellar flux as Earth.",
+    description: "TRAPPIST-1d is the third planet from the host star. With a mass roughly 39% of Earth's and a radius 79% of Earth's, it is the least massive planet in the TRAPPIST-1 family. Because it orbits near the inner boundary of the habitable zone, it receives an insolation flux very similar to Earth (1.14 times Earth's solar constant), making it an intriguing candidate for moderate climate modeling.",
+    facts: [
+      "Orbits its host star every 4.05 days at a distance of ~3.3 million kilometers.",
+      "Its equilibrium temperature (288 K / 15 °C) is nearly identical to Earth's average temperature before greenhouse effects.",
+      "Because of its low mass, it is vulnerable to atmospheric stripping by stellar wind, and its atmospheric retention is a primary target of ongoing JWST analysis.",
+      "Transit Timing Variation (TTV) measurements allow astrophysicists to measure its mass with less than 5% uncertainty."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Hubble Space Telescope", "Spitzer"]
+  },
+  {
+    id: "trappist-1e",
+    name: "TRAPPIST-1e",
+    type: "Terrestrial Exoplanet (Prime Habitable Zone World)",
+    category: "exoplanet",
+    subtitle: "The most Earth-like candidate in the TRAPPIST-1 system",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2017,
+    radius: "0.920 Earth Radii (R⊕)",
+    mass: "0.692 Earth Masses (M⊕)",
+    semiMajorAxis: "0.029 AU (~4.38 million km)",
+    orbitalPeriod: "6.10 Earth days",
+    equilibriumTemp: "251 K (-22 °C / Earth is 255 K without atmosphere)",
+    habitableZone: "Yes (Firmly in the conservative Habitable Zone)",
+    atmosphere: "Under intensive JWST NIRSpec/NIRCam transmission investigation. Hubble confirmed absence of a puffy hydrogen/helium envelope, consistent with a compact secondary atmosphere (N2, CO2, H2O).",
+    status: "Confirmed (Prime astrobiology target)",
+    image: "/images/trappist-1e.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1e.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration Program",
+      altText: "Artist concept of habitable-zone rocky planet TRAPPIST-1e showing liquid water and atmospheric clouds"
+    },
+    color: "#10b981",
+    tagline: "The prime astrobiology candidate in the system, possessing Earth-like density, size, and insolation.",
+    description: "TRAPPIST-1e is widely recognized as one of the most promising potentially habitable exoplanets ever discovered. Situated squarely within the conservative circumstellar habitable zone, it receives roughly 66% of the stellar flux that Earth receives from the Sun. Its measured density (5.65 g/cm³) is virtually identical to Earth's (5.51 g/cm³), indicating a rocky composition with an iron-rich metallic core. Climate simulations suggest that with a moderate nitrogen-CO2 atmosphere, liquid surface water could stably persist across its illuminated face.",
+    facts: [
+      "TRAPPIST-1e has an Earth Similarity Index (ESI) of 0.85 — one of the highest among all known exoplanets.",
+      "Surface gravity is estimated at 0.82g (8.0 m/s²), allowing comfortable hypothetical human surface locomotion.",
+      "The planet is tidally locked; atmospheric circulation models indicate strong winds could transport heat from the permanent dayside to the nightside, preventing atmospheric collapse.",
+      "JWST Cycle 1, 2, and 3 programs have dedicated dozens of hours to transmission spectroscopy to search for carbon dioxide, water vapor, and ozone biosignatures."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Hubble Space Telescope", "Spitzer Space Telescope", "VLT"]
+  },
+  {
+    id: "trappist-1f",
+    name: "TRAPPIST-1f",
+    type: "Terrestrial Exoplanet (Habitable Zone)",
+    category: "exoplanet",
+    subtitle: "A potential water-rich world in the outer habitable zone",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2017,
+    radius: "1.045 Earth Radii (R⊕)",
+    mass: "1.039 Earth Masses (M⊕)",
+    semiMajorAxis: "0.038 AU (~5.7 million km)",
+    orbitalPeriod: "9.21 Earth days",
+    equilibriumTemp: "219 K (-54 °C / Cold terrestrial world)",
+    habitableZone: "Yes (Outer Habitable Zone)",
+    atmosphere: "Under ongoing JWST transmission analysis; potential for substantial volatile water ice mantle.",
+    status: "Confirmed",
+    image: "/images/trappist-1f.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1f.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of TRAPPIST-1f as an ice-and-water world with frozen oceans"
+    },
+    color: "#06b6d4",
+    tagline: "An Earth-sized world in the outer habitable zone with a mass almost exactly equal to Earth (1.04 M⊕).",
+    description: "TRAPPIST-1f has almost the exact same mass and radius as Earth (1.04 M⊕, 1.05 R⊕), but receives roughly 38% of the stellar energy that Earth receives from the Sun (similar to Mars). Because its bulk density is slightly lower than pure rock, interior models suggest it may possess a significant volatile-rich water ice layer comprising up to 5% to 10% of its total mass (compared to Earth's 0.02% water fraction).",
+    facts: [
+      "Orbits its host star every 9.2 days at a distance of 5.7 million kilometers.",
+      "If possessing a greenhouse atmosphere of carbon dioxide, liquid water could exist in equatorial regions.",
+      "Tidally locked to TRAPPIST-1, resulting in an 'eyeball planet' configuration with possible ice-free lakes facing the sub-stellar point.",
+      "First announced in February 2017 in a landmark Nature paper based on Spitzer space telescope observations."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Spitzer Space Telescope", "Hubble Space Telescope"]
+  },
+  {
+    id: "trappist-1g",
+    name: "TRAPPIST-1g",
+    type: "Terrestrial Exoplanet (Outer Habitable Zone)",
+    category: "exoplanet",
+    subtitle: "The largest planet in the TRAPPIST-1 system",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2017,
+    radius: "1.129 Earth Radii (R⊕)",
+    mass: "1.321 Earth Masses (M⊕)",
+    semiMajorAxis: "0.047 AU (~7.0 million km)",
+    orbitalPeriod: "12.35 Earth days",
+    equilibriumTemp: "198 K (-75 °C)",
+    habitableZone: "Yes (Outer boundary of Habitable Zone)",
+    atmosphere: "Under investigation with JWST; likely icy ocean world or thick volatile envelope.",
+    status: "Confirmed",
+    image: "/images/trappist-1g.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1g.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of TRAPPIST-1g as a frozen icy exoplanet"
+    },
+    color: "#3b82f6",
+    tagline: "The largest planet in the system (1.13 R⊕), residing on the icy outer fringe of the habitable zone.",
+    description: "TRAPPIST-1g is the largest planet in the TRAPPIST-1 family. Located on the outer edge of the circumstellar habitable zone, it receives roughly 25% of Earth's solar radiation. Models suggest it is an icy ocean world covered by a thick global water-ice shell overlying a deep subsurface ocean.",
+    facts: [
+      "Orbits its star in 12.35 Earth days.",
+      "Receives about the same stellar energy flux as the Asteroid Belt receives from our Sun.",
+      "Requires a dense carbon dioxide greenhouse atmosphere to sustain surface liquid water.",
+      "Confirmed through joint NASA Spitzer and ESO ground-based transit surveys."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Spitzer Space Telescope"]
+  },
+  {
+    id: "trappist-1h",
+    name: "TRAPPIST-1h",
+    type: "Icy Terrestrial Exoplanet",
+    category: "exoplanet",
+    subtitle: "The frigid outermost world of the system",
+    parentId: "trappist-1-system",
+    parentName: "TRAPPIST-1 System",
+    hostStar: "TRAPPIST-1",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2017,
+    radius: "0.755 Earth Radii (R⊕)",
+    mass: "0.326 Earth Masses (M⊕)",
+    semiMajorAxis: "0.062 AU (~9.27 million km)",
+    orbitalPeriod: "18.77 Earth days",
+    equilibriumTemp: "173 K (-100 °C)",
+    habitableZone: "No (Too cold; beyond outer edge)",
+    atmosphere: "Likely airless or frozen volatile ice crust.",
+    status: "Confirmed",
+    image: "/images/trappist-1h.jpg",
+    imageMeta: {
+      imageUrl: "/images/trappist-1h.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of the frozen outer world TRAPPIST-1h"
+    },
+    color: "#6366f1",
+    tagline: "The outermost and coldest planet in the system, completing the resonant Laplace orbital chain.",
+    description: "TRAPPIST-1h is the outermost known planet of the TRAPPIST-1 system. A small, frigid terrestrial body roughly three-quarters the size of Earth, it orbits at a distance of ~9.3 million km with an orbital period of 18.77 days. Surface temperatures average -100 °C, locking any surface water into permanent glacial ice.",
+    facts: [
+      "Its discovery completed the mathematical 7-planet resonant Laplace chain predicted by orbital dynamicists.",
+      "Receives only about 13% of the stellar flux that Earth receives from the Sun.",
+      "Surface gravity is estimated at approximately 0.57g.",
+      "Detected during extended Spitzer Space Telescope staring observations in 2016–2017."
+    ],
+    missions: ["Spitzer Space Telescope", "K2 (Kepler)", "James Webb Space Telescope (JWST)"]
+  },
+
+  // ==========================================
+  // 2. PROXIMA CENTAURI SYSTEM
+  // ==========================================
+  {
+    id: "alpha-centauri-system",
+    name: "Proxima Centauri System",
+    type: "Triple Star System with Exoplanets",
+    category: "exoplanet-systems",
+    subcategory: "Triple Star System with Exoplanets",
+    subtitle: "Our closest stellar neighbors (4.24 light-years away)",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    childrenLevel: "planets",
+    childrenIds: ["proxima-centauri", "proxima-centauri-b"],
+    constellation: "Centaurus",
+    discoveryYear: 2016,
+    discoveryMethod: "Radial Velocity (ESO HARPS / ESPRESSO)",
+    source: "European Southern Observatory (ESO)",
+    references: ["Nature (2016)", "ESO Science Archive"],
+    distance: "4.2465 light-years (1.302 pc)",
+    hostStarName: "Proxima Centauri (Alpha Centauri C)",
+    spectralClass: "M5.5Ve",
+    stellarMass: "0.122 M☉",
+    confirmedPlanets: 3,
+    habitableZonePlanets: ["proxima-centauri-b"],
+    image: "/images/alpha-centauri-system.jpg",
+    imageMeta: {
+      imageUrl: "/images/alpha-centauri-system.jpg",
+      imageType: "CONCEPT_VISUALIZATION",
+      imageCredit: "ESO / L. Calçada / Nick Risinger",
+      imageSource: "European Southern Observatory Press Archive",
+      altText: "Visualization of the Alpha Centauri triple star system with Proxima in the foreground"
+    },
+    color: "#ef4444",
+    tagline: "The closest star system to Earth, hosting terrestrial exoplanet Proxima b.",
+    description: "The Alpha Centauri system consists of a tight binary of Sun-like stars (Rigil Kentaurus and Toliman) orbited at a distance of 0.21 light-years by the red dwarf Proxima Centauri. Proxima is our Sun's closest stellar neighbor, hosting at least three detected exoplanets: Proxima b (in the habitable zone), Proxima c (a sub-Neptune candidate), and Proxima d (a sub-Earth planet).",
+    facts: [
+      "Proxima Centauri is 4.24 light-years from Earth, meaning radio signals travel there in just 4.24 years.",
+      "The Breakthrough Starshot initiative aims to send laser-propelled microchip lightsails to Proxima Centauri at 20% the speed of light, arriving in roughly 20 years.",
+      "Proxima b receives about 65% of Earth's solar radiation, but suffers from intense stellar flares from its host red dwarf."
+    ],
+    missions: ["VLT (HARPS / ESPRESSO)", "Hubble Space Telescope", "CHEOPS (ESA)"]
+  },
+  {
+    id: "proxima-centauri-b",
+    name: "Proxima Centauri b",
+    type: "Terrestrial Exoplanet (Habitable Zone)",
+    category: "exoplanet",
+    subtitle: "The closest known exoplanet to Earth",
+    parentId: "alpha-centauri-system",
+    parentName: "Proxima Centauri System",
+    hostStar: "Proxima Centauri",
+    discoveryMethod: "Radial Velocity (Doppler Spectroscopy)",
+    discoveryYear: 2016,
+    radius: "1.03 to 1.15 Earth Radii (R⊕, derived from mass models)",
+    mass: "1.07 ± 0.06 Earth Masses (M⊕ / Minimum mass m sin i)",
+    semiMajorAxis: "0.0485 AU (~7.25 million km)",
+    orbitalPeriod: "11.186 Earth days",
+    equilibriumTemp: "234 K (-39 °C / Without greenhouse effect)",
+    habitableZone: "Yes (Circumstellar Habitable Zone)",
+    atmosphere: "Under investigation; subject to intense stellar ultraviolet and X-ray flares that may have eroded its atmosphere over billions of years.",
+    status: "Confirmed (ESPRESSO / HARPS radial velocity confirmation)",
+    image: "/images/proxima-centauri-b.jpg",
+    imageMeta: {
+      imageUrl: "/images/proxima-centauri-b.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "ESO / M. Kornmesser",
+      imageSource: "European Southern Observatory Discovery Release (2016)",
+      altText: "Artist concept of the rocky surface of Proxima Centauri b with the Alpha Centauri binary in the sky"
+    },
+    color: "#ef4444",
+    tagline: "The closest alien world to humanity, orbiting in the habitable zone just 4.24 light-years away.",
+    description: "Discovered in August 2016 by the Pale Red Dot collaboration led by Guillem Anglada-Escudé using ESO's HARPS spectrograph, Proxima Centauri b is an Earth-mass planet orbiting within the habitable zone of our nearest stellar neighbor. With an orbital period of 11.2 days, it receives about 65% of the energy flux that Earth receives from the Sun. However, Proxima Centauri regularly unleashes violent superflares, bombarding the planet with 400 times more X-ray and extreme UV radiation than Earth experiences from the Sun.",
+    facts: [
+      "At 4.24 light-years distance, Proxima b is the prime candidate for humanity's first interstellar flyby mission.",
+      "The planet is almost certainly tidally locked to its host star, with a permanent daytime hemisphere facing Proxima and a permanent frozen nightside.",
+      "Confirmed in 2020 by the ultra-precise ESPRESSO spectrograph on the VLT, constraining its minimum mass to 1.17 Earth masses.",
+      "Because Proxima b does not transit its star as viewed from Earth, its atmosphere cannot be studied via transit spectroscopy, requiring next-generation direct imaging telescopes like the ELT."
+    ],
+    missions: ["ESO 3.6m HARPS", "VLT ESPRESSO", "Hubble Space Telescope", "Extremely Large Telescope (ELT, in construction)"]
+  },
+
+  // ==========================================
+  // 3. KEPLER-90 SYSTEM
+  // ==========================================
+  {
+    id: "kepler-90-system",
+    name: "Kepler-90 System",
+    type: "Multi-Planet Planetary System (8 Planets)",
+    category: "exoplanet-systems",
+    subcategory: "Multi-Planet Planetary System (8 Planets)",
+    subtitle: "The 8-planet planetary system discovered using machine learning",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    childrenLevel: "planets",
+    childrenIds: ["kepler-90i"],
+    constellation: "Draco",
+    discoveryYear: 2013,
+    discoveryMethod: "Transit Photometry (Kepler Space Telescope / Google AI)",
+    source: "NASA Ames / Google Machine Learning Exoplanet Team",
+    references: ["Astronomical Journal (2017)", "NASA Kepler Archive"],
+    distance: "2,840 light-years (870 pc)",
+    hostStarName: "Kepler-90 (KOI-351)",
+    spectralClass: "G0V (Sun-like star)",
+    stellarMass: "1.20 M☉",
+    confirmedPlanets: 8,
+    habitableZonePlanets: ["kepler-90h"],
+    image: "/images/kepler-90-system.jpg",
+    imageMeta: {
+      imageUrl: "/images/kepler-90-system.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / Ames / JPL-Caltech",
+      imageSource: "NASA Kepler Discovery Press Release",
+      altText: "Artist concept comparing the 8-planet Kepler-90 system to our Solar System"
+    },
+    color: "#f59e0b",
+    tagline: "The only known star system with eight confirmed planets, matching our Solar System in planet count.",
+    description: "Kepler-90 is a Sun-like G-type star located 2,840 light-years away in Draco. In December 2017, NASA and Google AI announced the discovery of Kepler-90i, an eighth planet identified by training a deep neural network on Kepler transit data. This tied Kepler-90 with our Solar System for the record of the most confirmed planets in a single planetary system.",
+    facts: [
+      "All eight planets in the Kepler-90 system are crammed inside an orbital distance roughly equal to Earth's distance from the Sun (1.0 AU).",
+      "The system mimics the architectural layout of our Solar System: small rocky planets close in (b, c, i, d, e), and giant gas planets farther out (f, g, h).",
+      "Kepler-90i orbits its star every 14.4 days with a blistering surface temperature of ~436 °C (817 °F).",
+      "Kepler-90h is a gas giant located within the star's habitable zone (1.01 AU), where potential large exomoons could support liquid water."
+    ],
+    missions: ["Kepler Space Telescope (NASA)", "Google Machine Learning Exoplanet Team"]
+  },
+  {
+    id: "kepler-90i",
+    name: "Kepler-90i",
+    type: "Super-Earth Exoplanet (Machine Learning Discovery)",
+    category: "exoplanet",
+    subtitle: "The 8th planet discovered via deep learning neural networks",
+    parentId: "kepler-90-system",
+    parentName: "Kepler-90 System",
+    hostStar: "Kepler-90",
+    discoveryMethod: "Transit Photometry with Deep Learning (Google AI / NASA)",
+    discoveryYear: 2017,
+    radius: "1.32 Earth Radii (R⊕)",
+    mass: "Estimated ~2.5 Earth Masses (M⊕)",
+    semiMajorAxis: "0.123 AU (~18.4 million km)",
+    orbitalPeriod: "14.45 Earth days",
+    equilibriumTemp: "709 K (436 °C / 817 °F)",
+    habitableZone: "No (Searing hot super-Earth)",
+    atmosphere: "Likely rocky with stripped volatile envelope due to intense stellar insolation.",
+    status: "Confirmed (Landmark AI discovery)",
+    image: "/images/kepler-90i.jpg",
+    imageMeta: {
+      imageUrl: "/images/kepler-90i.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / Ames / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration / Google AI Announcement",
+      altText: "Artist concept of the scorching super-Earth Kepler-90i orbiting close to its star"
+    },
+    color: "#f59e0b",
+    tagline: "Discovered in 2017 using a neural network trained by Google AI on weak Kepler signals.",
+    description: "Kepler-90i is a sizzling super-Earth orbiting the Sun-like star Kepler-90 every 14.4 days. Its discovery was a milestone in astronomical history: researchers trained a convolutional neural network on thousands of Kepler transit signals to identify weak signals previously missed by automated software and human vetting. Finding Kepler-90i proved that the Kepler-90 system has 8 planets, matching our Solar System's total.",
+    facts: [
+      "Kepler-90i is the first exoplanet discovered using deep learning algorithms trained on Kepler spacecraft archival data.",
+      "The planet is roughly 32% larger than Earth, with an estimated surface temperature exceeding 436 °C (817 °F).",
+      "Its orbit lies between planets c and d in the Kepler-90 system, demonstrating the tight packing of multi-planet architectures around other stars.",
+      "All 8 planets of Kepler-90 orbit closer to their host star than Earth orbits the Sun."
+    ],
+    missions: ["Kepler Space Telescope", "NASA Ames Research Center", "Google AI"]
+  },
+
+  // ==========================================
+  // 4. KEPLER-186 SYSTEM & 186f
+  // ==========================================
+  {
+    id: "kepler-186-system",
+    name: "Kepler-186 System",
+    type: "Five-Planet M-Dwarf System",
+    category: "exoplanet-systems",
+    subcategory: "Five-Planet M-Dwarf System",
+    subtitle: "Home to the first Earth-sized planet discovered in a habitable zone",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    childrenLevel: "planets",
+    childrenIds: ["kepler-186f"],
+    constellation: "Cygnus",
+    discoveryYear: 2014,
+    discoveryMethod: "Transit Photometry (Kepler Space Telescope)",
+    source: "NASA Ames / SETI Institute",
+    references: ["Science (2014)", "NASA Exoplanet Archive"],
+    distance: "582 ± 10 light-years (178.5 pc)",
+    hostStarName: "Kepler-186",
+    spectralClass: "M1V (Red dwarf)",
+    stellarMass: "0.54 M☉",
+    confirmedPlanets: 5,
+    habitableZonePlanets: ["kepler-186f"],
+    image: "/images/kepler-186-system.jpg",
+    imageMeta: {
+      imageUrl: "/images/kepler-186-system.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / Ames / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of the Kepler-186 five-planet system and host red dwarf star"
+    },
+    color: "#10b981",
+    tagline: "The historic system where the first validated Earth-size habitable-zone exoplanet was discovered.",
+    description: "Located roughly 580 light-years away in Cygnus, Kepler-186 is an M-dwarf star orbited by five confirmed transiting planets. In April 2014, NASA announced Kepler-186f, the first confirmed Earth-sized exoplanet orbiting within the circumstellar habitable zone of another star.",
+    facts: [
+      "The inner four planets (b, c, d, e) orbit very close to the star with periods under 23 days, while Kepler-186f orbits at 0.43 AU with a period of 130 days.",
+      "Kepler-186f is only 11% larger than Earth in radius (1.11 R⊕), confirming it is a rocky terrestrial world.",
+      "The host star is half the mass of our Sun, meaning its habitable zone is pulled inward to roughly Mercury's distance.",
+      "At high noon on Kepler-186f, the host star appears about 30% dimmer than the Sun appears on Earth on an overcast day."
+    ],
+    missions: ["Kepler Space Telescope (NASA)", "Gemini North Observatory", "Keck Observatory"]
+  },
+  {
+    id: "kepler-186f",
+    name: "Kepler-186f",
+    type: "Terrestrial Exoplanet (Habitable Zone)",
+    category: "exoplanet",
+    subtitle: "The historic first Earth-sized world in another star's habitable zone",
+    parentId: "kepler-186-system",
+    parentName: "Kepler-186 System",
+    hostStar: "Kepler-186",
+    discoveryMethod: "Transit Photometry",
+    discoveryYear: 2014,
+    radius: "1.11 ± 0.14 Earth Radii (R⊕)",
+    mass: "Estimated ~1.44 Earth Masses (M⊕)",
+    semiMajorAxis: "0.432 AU (~64.6 million km)",
+    orbitalPeriod: "129.9 Earth days",
+    equilibriumTemp: "188 K (-85 °C / Similar to Mars without atmosphere)",
+    habitableZone: "Yes (Conservative Habitable Zone)",
+    atmosphere: "Unknown / Under investigation; theoretical models indicate plausible liquid water with modest CO2 greenhouse.",
+    status: "Confirmed (First validated Earth-sized habitable-zone planet)",
+    image: "/images/kepler-186f.jpg",
+    imageMeta: {
+      imageUrl: "/images/kepler-186f.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / Ames / JPL-Caltech",
+      imageSource: "NASA Ames Discovery Press Release (2014)",
+      altText: "Artist concept of Kepler-186f showing red-hued vegetation and liquid water oceans under a red sun"
+    },
+    color: "#10b981",
+    tagline: "Discovered in 2014, proving for the first time that Earth-sized worlds exist in alien habitable zones.",
+    description: "Announced on April 17, 2014, Kepler-186f was a watershed milestone in the history of astronomy: the very first Earth-sized planet confirmed to reside inside its host star's habitable zone. Orbiting its red dwarf host star every 130 days, Kepler-186f receives approximately one-third of the stellar flux that Earth receives from the Sun (similar to the energy Mars receives). With a radius of 1.11 R⊕, it has a high statistical probability of being a rocky world with a solid surface.",
+    facts: [
+      "Prior to Kepler-186f, all known habitable-zone exoplanets were at least 40% larger than Earth (super-Earths), with uncertain rocky versus gaseous compositions.",
+      "The star shines primarily in orange-red and near-infrared wavelengths, so any hypothetical photosynthetic life on Kepler-186f might absorb different light frequencies, appearing orange or black.",
+      "Dynamic simulations indicate that Kepler-186f's axial tilt is remarkably stable against chaotic orbital perturbations, helping maintain stable climate epochs.",
+      "Because the star is located 582 light-years away, studying its atmospheric transmission requires next-generation extremely large observatories."
+    ],
+    missions: ["Kepler Space Telescope", "Gemini Observatory", "Keck Observatory", "Hubble Space Telescope"]
+  },
+
+  // ==========================================
+  // 5. 55 CANCRI SYSTEM & 55 CANCRI e
+  // ==========================================
+  {
+    id: "55-cancri-system",
+    name: "55 Cancri System (Copernicus)",
+    type: "Five-Planet Binary Star System",
+    category: "exoplanet-systems",
+    subcategory: "Five-Planet Binary Star System",
+    subtitle: "A naked-eye yellow dwarf orbited by five diverse worlds",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    childrenLevel: "planets",
+    childrenIds: ["55-cancri-e"],
+    constellation: "Cancer",
+    discoveryYear: 1996,
+    discoveryMethod: "Radial Velocity (Lick Observatory / California Planet Survey)",
+    source: "NASA Exoplanet Archive / McDonald Observatory",
+    references: ["Astrophysical Journal", "NASA JPL"],
+    distance: "41.06 light-years (12.59 pc)",
+    hostStarName: "55 Cancri A (Copernicus)",
+    spectralClass: "G8V (Sun-like)",
+    stellarMass: "0.905 M☉",
+    confirmedPlanets: 5,
+    habitableZonePlanets: ["55-cancri-f"],
+    image: "/images/55-cancri-system.jpg",
+    imageMeta: {
+      imageUrl: "/images/55-cancri-system.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration",
+      altText: "Artist concept of the 55 Cancri system with super-Earth Janssen in close orbit"
+    },
+    color: "#f59e0b",
+    tagline: "A nearby Sun-like star visible to the naked eye, hosting five planets including the lava world 55 Cancri e.",
+    description: "55 Cancri is a binary star system located just 41 light-years away in the constellation Cancer. The primary star, 55 Cancri A (officially named Copernicus), is an ancient Sun-like yellow dwarf orbited by five known planets: four gas giants and the famous ultra-short-period super-Earth 55 Cancri e (Janssen).",
+    facts: [
+      "The primary star 55 Cancri A is visible to the naked human eye from a dark sky site (apparent magnitude 5.95).",
+      "55 Cancri was one of the first multi-planet systems discovered outside our Solar System, with planets detected between 1996 and 2007.",
+      "The outermost planet, 55 Cancri d, orbits at 5.7 AU with a period of 14 years — remarkably similar to Jupiter's orbit in our Solar System."
+    ],
+    missions: ["Lick Observatory", "Keck Observatory", "Spitzer Space Telescope", "James Webb Space Telescope (JWST)"]
+  },
+  {
+    id: "55-cancri-e",
+    name: "55 Cancri e (Janssen)",
+    type: "Super-Earth / Ultra-Short-Period Lava World",
+    category: "exoplanet",
+    subtitle: "The ultra-dense, scorching super-Earth with possible magma oceans",
+    parentId: "55-cancri-system",
+    parentName: "55 Cancri System",
+    hostStar: "55 Cancri A",
+    discoveryMethod: "Radial Velocity (2004) & Transit Photometry (2011)",
+    discoveryYear: 2004,
+    radius: "1.875 Earth Radii (R⊕)",
+    mass: "7.99 Earth Masses (M⊕)",
+    semiMajorAxis: "0.0154 AU (~2.3 million km from star)",
+    orbitalPeriod: "17 hours, 41 minutes (0.736 Earth days)",
+    equilibriumTemp: "2,200 K to 2,700 K (1,900 °C to 2,400 °C)",
+    habitableZone: "No (Extreme furnace world)",
+    atmosphere: "JWST NIRCam/MIRI thermal emission observations in May 2024 detected evidence of a substantial secondary atmosphere rich in carbon dioxide (CO2) or carbon monoxide (CO), bubbled up from a global magma ocean.",
+    status: "Confirmed (First super-Earth discovered around a main-sequence star)",
+    image: "/images/55-cancri-e.jpg",
+    imageMeta: {
+      imageUrl: "/images/55-cancri-e.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / JPL-Caltech",
+      imageSource: "NASA Exoplanet Exploration (2024)",
+      altText: "Artist concept of the molten lava world 55 Cancri e with glowing magma fractures"
+    },
+    color: "#f59e0b",
+    tagline: "Orbits its star in 18 hours; JWST in 2024 confirmed it holds a carbon-rich atmosphere over a magma ocean.",
+    description: "55 Cancri e (Janssen) is one of the most exotic super-Earths in the galaxy. Orbiting merely 2.3 million km from its parent star once every 17.7 hours, its surface is heated to over 2,000 °C — hot enough to melt silicate and iron rocks into global lava oceans. In May 2024, landmark James Webb Space Telescope observations confirmed that 55 Cancri e possesses a true volatile atmosphere composed of carbon monoxide or carbon dioxide, outgassed from its churning magma ocean.",
+    facts: [
+      "A complete year on 55 Cancri e lasts less than 18 Earth hours.",
+      "Early interior models suggested it was a carbon-rich 'diamond planet', composed largely of diamond and graphite under extreme interior pressures.",
+      "The JWST 2024 detection of an atmosphere on 55 Cancri e was the first time an atmosphere has been confirmed on any rocky exoplanet.",
+      "The planet is tidally locked, with its dayside completely molten and covered in bubbling lava lakes."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Spitzer Space Telescope", "MOST Space Telescope", "CHEOPS"]
+  },
+
+  // ==========================================
+  // 6. WASP-39 & WASP-39b (JWST Benchmark)
+  // ==========================================
+  {
+    id: "wasp-39b",
+    name: "WASP-39b (Bocaprins)",
+    type: "Hot Saturn / Inflated Gas Giant Exoplanet",
+    category: "exoplanet",
+    subtitle: "The landmark exoplanet where JWST first detected CO2 and SO2 photochemistry",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    hostStar: "WASP-39 (Malmok, G8V star, 700 ly away)",
+    discoveryMethod: "Transit Photometry (SuperWASP)",
+    discoveryYear: 2011,
+    radius: "1.27 Jupiter Radii (R_Jup / Highly inflated puffball)",
+    mass: "0.28 Jupiter Masses (M_Jup / Roughly Saturn's mass)",
+    semiMajorAxis: "0.0486 AU (~7.3 million km)",
+    orbitalPeriod: "4.05 Earth days",
+    equilibriumTemp: "1,170 K (~900 °C)",
+    habitableZone: "No (Blistering gas giant)",
+    atmosphere: "The most comprehensively characterized exoplanet atmosphere in history: confirmed detections of Carbon Dioxide (CO2), Water Vapor (H2O), Sulfur Dioxide (SO2 from photochemistry), Carbon Monoxide (CO), Sodium (Na), and Potassium (K).",
+    status: "Confirmed (Benchmark JWST Early Release Science exoplanet)",
+    image: "/images/wasp-39b.jpg",
+    imageMeta: {
+      imageUrl: "/images/wasp-39b.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA, ESA, CSA, and J. Olmsted (STScI)",
+      imageSource: "JWST Transiting Exoplanet Community ERS Team Release",
+      altText: "Artist concept of hot inflated gas giant WASP-39b showing steam and sulfur clouds"
+    },
+    color: "#f59e0b",
+    tagline: "JWST's premier atmospheric benchmark: First clear detection of carbon dioxide and photochemistry on an alien world.",
+    description: "WASP-39b is a 'Hot Saturn' exoplanet orbiting a Sun-like star 700 light-years away in Virgo. Possessing the mass of Saturn but inflated by intense stellar irradiation to 1.3 times the volume of Jupiter, its puffy, translucent atmosphere makes it the ultimate target for transmission spectroscopy. In August and November 2022, the James Webb Space Telescope used WASP-39b to produce the first indisputable detection of carbon dioxide (CO2) and the first evidence of photochemical reactions (producing sulfur dioxide, SO2) on an exoplanet.",
+    facts: [
+      "WASP-39b provided the first definitive, high-confidence detection of CO2 in an alien atmosphere, resolving a multi-decade quest in exoplanet spectroscopy.",
+      "The detection of sulfur dioxide (SO2) provided the first direct proof of photochemical reactions — molecules created by stellar light, analogous to Earth's ozone layer formation.",
+      "Despite being roughly the mass of Saturn, its atmosphere is so heavily inflated by heat that it is nearly 30% wider than Jupiter.",
+      "JWST's four separate instrument channels (NIRSpec, NIRCam, NIRISS) observed its transits, producing the most complete chemical inventory of an exoplanet ever compiled."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Hubble Space Telescope", "Spitzer Space Telescope", "SuperWASP"]
+  },
+
+  // ==========================================
+  // 7. K2-18 & K2-18b (Hycean Candidate)
+  // ==========================================
+  {
+    id: "k2-18b",
+    name: "K2-18b",
+    type: "Sub-Neptune / Hycean Candidate World",
+    category: "exoplanet",
+    subtitle: "A habitable-zone sub-Neptune with carbon-bearing atmospheric signatures",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    hostStar: "K2-18 (Red dwarf, 124 ly away in Leo)",
+    discoveryMethod: "Transit Photometry (Kepler K2 Mission)",
+    discoveryYear: 2015,
+    radius: "2.61 Earth Radii (R⊕)",
+    mass: "8.63 Earth Masses (M⊕)",
+    semiMajorAxis: "0.1429 AU (~21.4 million km)",
+    orbitalPeriod: "32.94 Earth days",
+    equilibriumTemp: "255 K to 279 K (-18 °C to 6 °C / Similar to Earth)",
+    habitableZone: "Yes (Habitable Zone of red dwarf K2-18)",
+    atmosphere: "Hydrogen-rich atmosphere with confirmed detections by JWST in 2023 of Methane (CH4) and Carbon Dioxide (CO2), with an absence of Ammonia (NH3), consistent with a Hycean world (hydrogen atmosphere over a water ocean). Tenuous signature of dimethyl sulfide (DMS) remains unconfirmed and under active investigation.",
+    status: "Confirmed (High-priority JWST astrobiological target)",
+    image: "/images/k2-18b.jpg",
+    imageMeta: {
+      imageUrl: "/images/k2-18b.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / CSA / ESA / J. Olmsted (STScI)",
+      imageSource: "NASA Exoplanet Exploration / Webb Science Release",
+      altText: "Artist concept of candidate ocean world K2-18b with deep water ocean under a hydrogen-rich sky"
+    },
+    color: "#06b6d4",
+    tagline: "A habitable-zone sub-Neptune where JWST confirmed methane and CO2, testing the Hycean ocean world hypothesis.",
+    description: "Located 124 light-years away in Leo, K2-18b orbits within the habitable zone of a cool M-dwarf star. With 8.6 times Earth's mass and 2.6 times Earth's radius, K2-18b belongs to the 'sub-Neptune' class — worlds with sizes between Earth and Neptune that do not exist in our Solar System. In September 2023, JWST revealed carbon-bearing molecules (methane and carbon dioxide) and a distinct scarcity of ammonia, sparking international interest in the hypothesis that K2-18b may be a 'Hycean' world — a planet possessing a thick hydrogen atmosphere overlaying a global liquid water ocean.",
+    facts: [
+      "In 2019, Hubble detected water vapor in K2-18b's atmosphere, making it the first habitable-zone sub-Neptune with confirmed atmospheric volatiles.",
+      "JWST's 2023 spectra revealed abundant methane (CH4) and carbon dioxide (CO2), but almost zero ammonia (NH3) — an expected chemical signature if ammonia is dissolved in a vast liquid water ocean.",
+      "A potential trace signature of Dimethyl Sulfide (DMS) — on Earth produced almost exclusively by marine phytoplankton — was tentatively spotted, but NASA and scientists explicitly emphasize that this is unconfirmed and under active investigation.",
+      "Whether K2-18b has a liquid ocean or is an uninhabitable gas-rich mini-Neptune with a superheated supercritical fluid mantle remains actively debated."
+    ],
+    missions: ["James Webb Space Telescope (JWST)", "Hubble Space Telescope", "Kepler Space Telescope (K2 Mission)"]
+  },
+
+  // ==========================================
+  // 8. WASP-12b (Tidally Disrupted Hot Jupiter)
+  // ==========================================
+  {
+    id: "wasp-12b",
+    name: "WASP-12b",
+    type: "Ultra-Hot Jupiter / Cannibalized Exoplanet",
+    category: "exoplanet",
+    subtitle: "The doomed, pitch-black gas giant being devoured by its star",
+    parentId: "milky-way",
+    parentName: "Milky Way Galaxy",
+    hostStar: "WASP-12 (Late F-type dwarf, 1,400 ly away in Auriga)",
+    discoveryMethod: "Transit Photometry (SuperWASP)",
+    discoveryYear: 2008,
+    radius: "1.90 Jupiter Radii (R_Jup / Stretched egg shape)",
+    mass: "1.47 Jupiter Masses (M_Jup)",
+    semiMajorAxis: "0.0229 AU (~3.4 million km)",
+    orbitalPeriod: "1.09 Earth days (26.2 hours)",
+    equilibriumTemp: "2,500 K (~2,200 °C / Surface hot as red dwarf star)",
+    habitableZone: "No (Extreme furnace)",
+    atmosphere: "Superheated, carbon-rich atmosphere being actively stripped away by tidal gravity into an accretion stream flowing directly onto the host star.",
+    status: "Confirmed (Orbital decay directly measured)",
+    image: "/images/wasp-12b.jpg",
+    imageMeta: {
+      imageUrl: "/images/wasp-12b.jpg",
+      imageType: "ARTIST_CONCEPT",
+      imageCredit: "NASA / ESA / G. Bacon (STScI)",
+      imageSource: "Hubble Space Telescope Discovery Release",
+      altText: "Artist concept of egg-shaped gas giant WASP-12b being stripped of gas by its host star"
+    },
+    color: "#f43f5e",
+    tagline: "Stretched into an egg by tidal forces, this pitch-black gas giant will be completely consumed in ~3 million years.",
+    description: "WASP-12b is one of the most extreme Hot Jupiters known. Orbiting so close to its star that a year lasts barely 26 hours, intense tidal gravitational forces have distorted the planet from a sphere into an elongated egg. The star's gravity is stripping roughly 189 quadrillion tons of gas from the planet every year, funneling it into an accretion stream onto the star. High-precision transit timing has confirmed that WASP-12b's orbit is decaying by 29 milliseconds per year, meaning the planet will be completely consumed by its star in approximately 3 million years.",
+    facts: [
+      "WASP-12b was the first exoplanet whose orbital decay was directly measured in real-time by astronomers.",
+      "The planet has an albedo of less than 0.064 — reflecting less than 6% of light — making it as dark as fresh asphalt.",
+      "Its dayside temperature reaches roughly 2,200 °C, hot enough to break down molecular hydrogen into atomic hydrogen.",
+      "Hubble observations revealed a vast cloud of stripped material enveloping the entire star-planet system."
+    ],
+    missions: ["Hubble Space Telescope", "Spitzer Space Telescope", "SuperWASP", "TESS"]
+  }
+];

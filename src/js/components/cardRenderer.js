@@ -2,6 +2,7 @@
 // Generates responsive, 3D-tilt glassmorphic flashcards with quick metrics and drill-down shortcuts
 
 import { isFavorite } from '../utils/storage.js';
+import { resolveImageMeta, attachImageFallback, IMAGE_TYPE_LABELS } from '../utils/imageHelper.js';
 
 export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFavorite, onNavigateToParent) {
   const card = document.createElement('div');
@@ -12,28 +13,46 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
   const isFav = isFavorite(item.id);
   const parentTag = item.parentName ? (item.category === 'moon' ? `Orbits: ${item.parentName}` : `In: ${item.parentName}`) : 'The Cosmos';
 
-  // Category Icon
+  // Category Icon (supporting all 27 categories)
   let icon = '🪐';
-  if (item.category === 'universe') icon = '🌌';
-  if (item.category === 'galaxy') icon = '🌀';
-  if (item.category === 'system') icon = '☀️';
-  if (item.category === 'star') icon = '✨';
-  if (item.category === 'planet') icon = item.id === 'earth' ? '🌍' : '🪐';
-  if (item.category === 'moon') icon = '🌙';
+  const cat = item.category || '';
+  if (cat === 'universe') icon = '🌌';
+  else if (['galaxy', 'galaxies', 'galaxy-structures'].includes(cat)) icon = '🌀';
+  else if (['system', 'systems', 'solar-system', 'exoplanet-systems', 'kuiper-belt', 'oort-cloud'].includes(cat)) icon = '☀️';
+  else if (['star', 'stars', 'stellar-evolution'].includes(cat)) icon = '✨';
+  else if (['neutron-stars', 'pulsars', 'magnetars'].includes(cat)) icon = '⚡';
+  else if (cat === 'black-hole' || cat === 'black-holes') icon = '🕳️';
+  else if (['nebula', 'nebulae', 'supernova-remnants'].includes(cat)) icon = '🌫️';
+  else if (cat === 'planet' || cat === 'planets') icon = item.id === 'earth' ? '🌍' : '🪐';
+  else if (['dwarf-planets', 'asteroids', 'comets'].includes(cat)) icon = '☄️';
+  else if (cat === 'moon' || cat === 'moons') icon = '🌙';
+  else if (cat === 'exoplanet' || cat === 'exoplanets') icon = '🪐';
+  else if (['phenomenon', 'space-phenomena', 'quasars', 'active-galactic-nuclei'].includes(cat)) icon = '⚡';
+  else if (['mission', 'space-missions'].includes(cat)) icon = '🚀';
+  else if (['constellation', 'constellations'].includes(cat)) icon = '⭐';
+  else if (['concept', 'astronomy-concepts'].includes(cat)) icon = '📚';
 
-  const hasChildren = item.childrenIds && item.childrenIds.length > 0;
-  const childrenCount = item.childrenIds ? item.childrenIds.length : 0;
-  const canNavigateParent = Boolean(onNavigateToParent && item.parentId);
+  const imgMeta = resolveImageMeta(item);
+  const typeConfig = IMAGE_TYPE_LABELS[imgMeta.imageType] || { label: 'Observation', icon: '📷', class: 'badge-real-obs' };
+
+  const childList = item.childObjects || item.childrenIds || [];
+  const hasChildren = childList.length > 0;
+  const childrenCount = childList.length;
+  const parentId = item.parentObject || item.parentId;
+  const canNavigateParent = Boolean(onNavigateToParent && parentId);
 
   card.innerHTML = `
     <div class="card-glass-layer"></div>
     <div class="card-glare"></div>
 
     <div class="card-media">
-      <img src="${item.image}" alt="${item.name}" loading="lazy" class="card-img" />
+      <img src="${imgMeta.imageUrl}" alt="${imgMeta.altText}" loading="lazy" class="card-img" />
       <div class="card-gradient-overlay"></div>
       <span class="card-badge category-${item.category}">
-        <span class="badge-icon">${icon}</span> ${item.type}
+        <span class="badge-icon">${icon}</span> ${item.subcategory || item.type}
+      </span>
+      <span class="image-type-badge ${typeConfig.class}" style="position: absolute; top: 0.75rem; left: 0.75rem;">
+        <span>${typeConfig.icon}</span> ${typeConfig.label}
       </span>
       <button class="card-fav-btn ${isFav ? 'active' : ''}" title="${isFav ? 'Remove from favorites' : 'Save to favorites'}" aria-label="Favorite">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="${isFav ? '#ef4444' : 'none'}" stroke="${isFav ? '#ef4444' : '#e2e8f0'}" stroke-width="2">
@@ -50,16 +69,16 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
       </div>
 
       <h3 class="card-title">${item.name}</h3>
-      <p class="card-tagline">${item.tagline || item.subtitle || ''}</p>
+      <p class="card-tagline">${item.shortDescription || item.tagline || item.subtitle || ''}</p>
 
       <div class="card-quick-metrics">
         <div class="metric-chip">
           <span class="metric-label">Diameter</span>
-          <span class="metric-value">${item.diameter ? item.diameter.split('(')[0].trim() : 'N/A'}</span>
+          <span class="metric-value">${item.diameter ? item.diameter.split('(')[0].trim() : (item.area || 'N/A')}</span>
         </div>
         <div class="metric-chip">
           <span class="metric-label">Distance</span>
-          <span class="metric-value">${item.distance ? item.distance.split('(')[0].trim() : 'N/A'}</span>
+          <span class="metric-value">${item.distance ? item.distance.split('(')[0].trim() : (item.location ? item.location.split('(')[0].trim() : 'N/A')}</span>
         </div>
       </div>
 
@@ -112,8 +131,8 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
     // Parent tag shortcut
     if (e.target.closest('.card-parent-tag.interactive')) {
       e.stopPropagation();
-      if (onNavigateToParent && item.parentId) {
-        onNavigateToParent(item.parentId);
+      if (onNavigateToParent && parentId) {
+        onNavigateToParent(parentId);
       }
       return;
     }
@@ -143,6 +162,11 @@ export function createAstronomicalCard(item, onExplore, onDrillDown, onToggleFav
       onExplore(item);
     }
   });
+
+  const cardImg = card.querySelector('.card-img');
+  if (cardImg) {
+    attachImageFallback(cardImg, item.name, item.category);
+  }
 
   return card;
 }
@@ -236,6 +260,11 @@ export function createConstellationCard(constellation, onSelect) {
   card.addEventListener('click', () => {
     if (onSelect) onSelect(constellation);
   });
+
+  const cImg = card.querySelector('.constellation-img');
+  if (cImg) {
+    attachImageFallback(cImg, constellation.name, 'constellation');
+  }
 
   return card;
 }

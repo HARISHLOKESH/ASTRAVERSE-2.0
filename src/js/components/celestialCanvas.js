@@ -1,12 +1,13 @@
-// ASTRAVERSE 2.0 - Celestial Canvas Engine
-// Renders procedural rotating 3D planets/stars & interactive constellation star charts
+// ASTRAVERSE 2.0 - Advanced Celestial Canvas Engine
+// High-fidelity procedural simulation engine for Black Holes, Nebulae, Stars, Neutron Stars, Planets, Moons, and Exoplanets
 
 export class CelestialCanvas {
   constructor(canvasElement, type = 'planet') {
     this.canvas = canvasElement;
     this.ctx = canvasElement.getContext('2d');
-    this.type = type; // 'planet' | 'constellation' | 'galaxy'
+    this.type = type; // 'black-hole' | 'nebula' | 'neutron-star' | 'star' | 'planet' | 'moon' | 'exoplanet' | 'galaxy' | 'constellation' | 'phenomenon'
     this.rotation = 0;
+    this.pulsePhase = 0;
     this.animationId = null;
     this.currentData = null;
     this.hoveredStar = null;
@@ -61,9 +62,11 @@ export class CelestialCanvas {
     this.type = type;
     this.resize();
     this.rotation = 0;
+    this.pulsePhase = 0;
 
     const renderLoop = () => {
-      this.rotation += 0.008;
+      this.rotation += 0.012;
+      this.pulsePhase += 0.03;
       this.render();
       this.animationId = requestAnimationFrame(renderLoop);
     };
@@ -80,38 +83,461 @@ export class CelestialCanvas {
   render() {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
-    if (this.type === 'constellation') {
+    const category = this.currentData?.category || this.type;
+    const id = this.currentData?.id || '';
+
+    // Route to physically accurate procedural simulation
+    if (this.type === 'constellation' || category === 'constellations') {
       this.renderConstellation();
-    } else if (this.type === 'star') {
+    } else if (category === 'black-hole' || category === 'black-holes' || id.includes('blackhole') || id === 'sagittarius-a' || id === 'm87-blackhole' || id === 'ton-618' || id === 'cygnus-x1') {
+      this.renderBlackHole();
+    } else if (category === 'nebula' || category === 'nebulae' || category === 'supernova-remnants' || id.includes('nebula') || id === 'pillars-of-creation') {
+      this.renderNebula();
+    } else if (['neutron-stars', 'pulsars', 'magnetars', 'stellar-remnant'].includes(category) || id.includes('pulsar') || id.includes('neutron') || id.includes('magnetar')) {
+      this.renderNeutronStar();
+    } else if (['star', 'stars', 'stellar-evolution'].includes(category) || this.type === 'star') {
       this.renderStar();
-    } else if (this.type === 'galaxy') {
+    } else if (['galaxy', 'galaxies', 'galaxy-structures'].includes(category) || this.type === 'galaxy') {
       this.renderGalaxy();
+    } else if (['phenomenon', 'space-phenomena', 'quasars', 'active-galactic-nuclei'].includes(category) || this.type === 'phenomenon') {
+      this.renderPhenomenon();
+    } else if (category === 'exoplanet' || category === 'exoplanets' || this.type === 'exoplanet') {
+      this.renderExoplanet();
+    } else if (category === 'moon' || category === 'moons' || this.type === 'moon') {
+      this.renderMoon();
     } else {
       this.renderPlanet();
     }
   }
 
-  // --- RENDER PLANET SPHERE ---
-  renderPlanet() {
+  // =========================================================================
+  // 1. RELATIVISTIC KERR BLACK HOLE SIMULATION
+  // General Relativistic ray-tracing approximation:
+  // - Gravitationally lensed accretion disk (warped over and under the horizon)
+  // - Doppler beaming asymmetry (approaching plasma is blueshifted & brighter)
+  // - Lensed Photon Sphere ring
+  // - Absolute pitch-black event horizon shadow
+  // - Relativistic synchrotron polar plasma jets
+  // =========================================================================
+  renderBlackHole() {
     const cx = this.width / 2;
     const cy = this.height / 2;
-    const radius = Math.min(this.width, this.height) * 0.36;
-    const id = this.currentData ? this.currentData.id : 'earth';
+    const rShadow = Math.min(this.width, this.height) * 0.16; // Event horizon shadow radius (~2.6 Rs)
+    const rPhoton = rShadow * 1.15; // Photon sphere ring (~1.5 Rs lensed)
+    const diskRMax = Math.min(this.width, this.height) * 0.42;
 
     this.ctx.save();
 
-    // Outer atmospheric glow
-    const glowGrad = this.ctx.createRadialGradient(cx, cy, radius * 0.9, cx, cy, radius * 1.35);
-    const glowColor = this.currentData?.color || '#38bdf8';
-    glowGrad.addColorStop(0, `${glowColor}55`);
-    glowGrad.addColorStop(0.5, `${glowColor}20`);
-    glowGrad.addColorStop(1, 'rgba(0,0,0,0)');
-    this.ctx.fillStyle = glowGrad;
+    // 1. Relativistic Polar Jets (shooting from poles perpendicular to disk)
+    const jetLength = this.height * 0.48;
+    const jetWidth = rShadow * 0.35;
+    
+    // North jet
+    const nJetGrad = this.ctx.createLinearGradient(cx, cy, cx, cy - jetLength);
+    nJetGrad.addColorStop(0, 'rgba(56, 189, 248, 0.85)');
+    nJetGrad.addColorStop(0.3, 'rgba(99, 102, 241, 0.45)');
+    nJetGrad.addColorStop(0.8, 'rgba(168, 85, 247, 0.15)');
+    nJetGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = nJetGrad;
     this.ctx.beginPath();
-    this.ctx.arc(cx, cy, radius * 1.35, 0, Math.PI * 2);
+    this.ctx.moveTo(cx - jetWidth * 0.3, cy);
+    this.ctx.lineTo(cx - jetWidth * 1.2, cy - jetLength);
+    this.ctx.lineTo(cx + jetWidth * 1.2, cy - jetLength);
+    this.ctx.lineTo(cx + jetWidth * 0.3, cy);
+    this.ctx.closePath();
     this.ctx.fill();
 
-    // If Saturn, draw back half of rings
+    // South jet
+    const sJetGrad = this.ctx.createLinearGradient(cx, cy, cx, cy + jetLength);
+    sJetGrad.addColorStop(0, 'rgba(56, 189, 248, 0.85)');
+    sJetGrad.addColorStop(0.3, 'rgba(99, 102, 241, 0.45)');
+    sJetGrad.addColorStop(0.8, 'rgba(168, 85, 247, 0.15)');
+    sJetGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = sJetGrad;
+    this.ctx.beginPath();
+    this.ctx.moveTo(cx - jetWidth * 0.3, cy);
+    this.ctx.lineTo(cx - jetWidth * 1.2, cy + jetLength);
+    this.ctx.lineTo(cx + jetWidth * 1.2, cy + jetLength);
+    this.ctx.lineTo(cx + jetWidth * 0.3, cy);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    // 2. Warped Top Halo of Accretion Disk (General relativistic deflection of rear disk over the shadow)
+    const topHaloGrad = this.ctx.createRadialGradient(cx, cy, rShadow * 0.9, cx, cy, diskRMax * 0.85);
+    topHaloGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+    topHaloGrad.addColorStop(0.2, 'rgba(245, 158, 11, 0.85)');
+    topHaloGrad.addColorStop(0.6, 'rgba(239, 68, 68, 0.45)');
+    topHaloGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = topHaloGrad;
+    this.ctx.beginPath();
+    this.ctx.ellipse(cx, cy - rShadow * 0.2, diskRMax * 0.72, diskRMax * 0.55, 0, Math.PI, Math.PI * 2);
+    this.ctx.fill();
+
+    // 3. Main Equatorial Accretion Disk (with differential Keplerian rotation & Doppler beaming)
+    const diskTilt = 0.32; // Inclination angle
+    this.ctx.save();
+    this.ctx.translate(cx, cy);
+
+    const streamCount = 75;
+    for (let i = 0; i < streamCount; i++) {
+      const dist = rPhoton + (i / streamCount) * (diskRMax - rPhoton);
+      const speed = Math.sqrt(200 / dist); // Keplerian orbital speed
+      const angle = this.rotation * speed * 2 + (i * 0.35);
+
+      // Doppler beaming: approaching side (cos(angle) < 0 => left side) is intense white/cyan, receding is dim red
+      const px = Math.cos(angle) * dist;
+      const py = Math.sin(angle) * dist * diskTilt;
+      
+      const isApproaching = px < 0;
+      const dopplerFactor = isApproaching ? Math.min(1, Math.abs(px) / dist + 0.3) : Math.max(0.1, 1 - (px / dist) * 0.8);
+
+      let pColor;
+      if (dopplerFactor > 0.85) {
+        pColor = '#ffffff'; // Relativistic blueshift intense glow
+      } else if (dopplerFactor > 0.5) {
+        pColor = '#f59e0b'; // Incandescent gold
+      } else {
+        pColor = '#ef4444'; // Redshifted receding plasma
+      }
+
+      this.ctx.fillStyle = pColor;
+      this.ctx.globalAlpha = Math.max(0.15, dopplerFactor * (1 - (dist / diskRMax) * 0.5));
+      this.ctx.beginPath();
+      this.ctx.arc(px, py, Math.random() * 2.2 + 1.2, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+    this.ctx.restore();
+
+    // 4. Lensed Bottom Arc of Accretion Disk (warped underneath the event horizon)
+    const botHaloGrad = this.ctx.createRadialGradient(cx, cy, rShadow * 0.9, cx, cy, diskRMax * 0.75);
+    botHaloGrad.addColorStop(0, 'rgba(245, 158, 11, 0.7)');
+    botHaloGrad.addColorStop(0.5, 'rgba(239, 68, 68, 0.3)');
+    botHaloGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = botHaloGrad;
+    this.ctx.beginPath();
+    this.ctx.ellipse(cx, cy + rShadow * 0.25, diskRMax * 0.65, diskRMax * 0.42, 0, 0, Math.PI);
+    this.ctx.fill();
+
+    // 5. Razor-thin Photon Sphere Ring (Unstable circular photon orbit at r = 1.5 Rs)
+    this.ctx.strokeStyle = '#ffffff';
+    this.ctx.lineWidth = 2.5;
+    this.ctx.shadowColor = '#f59e0b';
+    this.ctx.shadowBlur = 12;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, rPhoton, 0, Math.PI * 2);
+    this.ctx.stroke();
+    this.ctx.shadowBlur = 0;
+
+    // 6. Absolute Pitch-Black Event Horizon Shadow (Singularity boundary of no return)
+    this.ctx.fillStyle = '#010206';
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, rShadow, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // Subtle edge gradient on the black hole shadow
+    const shadowBorder = this.ctx.createRadialGradient(cx, cy, rShadow * 0.92, cx, cy, rShadow);
+    shadowBorder.addColorStop(0, '#000000');
+    shadowBorder.addColorStop(1, '#050711');
+    this.ctx.fillStyle = shadowBorder;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, rShadow, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 2. VOLUMETRIC EMISSION NEBULA SIMULATION
+  // Multi-frequency turbulent interstellar gas clouds:
+  // - Hydrogen-Alpha crimson (656.3 nm)
+  // - Oxygen-III teal/cyan (500.7 nm)
+  // - Sulfur-II golden dust lanes
+  // - Central infant open cluster of stars
+  // =========================================================================
+  renderNebula() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const maxR = Math.min(this.width, this.height) * 0.44;
+
+    this.ctx.save();
+
+    // 1. Deep Hydrogen-Alpha Background Glow
+    const hAlphaGrad = this.ctx.createRadialGradient(cx, cy, 10, cx, cy, maxR);
+    hAlphaGrad.addColorStop(0, 'rgba(244, 63, 94, 0.4)');
+    hAlphaGrad.addColorStop(0.4, 'rgba(168, 85, 247, 0.25)');
+    hAlphaGrad.addColorStop(0.8, 'rgba(59, 130, 246, 0.12)');
+    hAlphaGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = hAlphaGrad;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, maxR, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // 2. Volumetric Gas Puffs (Multi-layered Sinusoidal Turbulence)
+    const puffCount = 42;
+    for (let i = 0; i < puffCount; i++) {
+      const angle = (i / puffCount) * Math.PI * 2 + (this.rotation * 0.15);
+      const radDist = (Math.sin(i * 3 + this.pulsePhase * 0.5) * 0.35 + 0.5) * maxR * 0.85;
+      const px = cx + Math.cos(angle) * radDist;
+      const py = cy + Math.sin(angle) * radDist * 0.75;
+      const puffRadius = (Math.sin(i * 1.5) * 0.25 + 0.5) * (maxR * 0.35);
+
+      const isOIII = i % 2 === 0;
+      const puffGrad = this.ctx.createRadialGradient(px, py, 2, px, py, puffRadius);
+      if (isOIII) {
+        puffGrad.addColorStop(0, 'rgba(6, 182, 212, 0.35)'); // Oxygen-III teal
+        puffGrad.addColorStop(0.6, 'rgba(59, 130, 246, 0.15)');
+      } else {
+        puffGrad.addColorStop(0, 'rgba(244, 63, 94, 0.35)'); // H-alpha crimson
+        puffGrad.addColorStop(0.6, 'rgba(236, 72, 153, 0.15)');
+      }
+      puffGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      this.ctx.fillStyle = puffGrad;
+      this.ctx.beginPath();
+      this.ctx.arc(px, py, puffRadius, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+
+    // 3. Dark Molecular Absorption Dust Pillars
+    this.ctx.fillStyle = 'rgba(3, 5, 12, 0.55)';
+    this.ctx.beginPath();
+    this.ctx.moveTo(cx - maxR * 0.35, cy + maxR * 0.5);
+    this.ctx.quadraticCurveTo(cx - maxR * 0.1, cy - maxR * 0.2, cx - maxR * 0.05, cy - maxR * 0.4);
+    this.ctx.quadraticCurveTo(cx + maxR * 0.05, cy - maxR * 0.1, cx - maxR * 0.15, cy + maxR * 0.5);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    // 4. Embedded Stellar Nursery Star Cluster (Infant proto-stars)
+    const starCount = 35;
+    for (let s = 0; s < starCount; s++) {
+      const sx = cx + (Math.sin(s * 7) * maxR * 0.65);
+      const sy = cy + (Math.cos(s * 11) * maxR * 0.55);
+      const twinkle = Math.sin(this.pulsePhase * 3 + s) * 0.35 + 0.65;
+
+      this.ctx.fillStyle = s % 4 === 0 ? '#67e8f9' : (s % 3 === 0 ? '#fef08a' : '#ffffff');
+      this.ctx.globalAlpha = twinkle;
+      this.ctx.beginPath();
+      this.ctx.arc(sx, sy, (s % 5 === 0 ? 2.5 : 1.2), 0, Math.PI * 2);
+      this.ctx.fill();
+
+      // Diffraction cross on primary bright stars
+      if (s % 7 === 0) {
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        this.ctx.lineWidth = 1;
+        this.ctx.beginPath();
+        this.ctx.moveTo(sx - 6, sy);
+        this.ctx.lineTo(sx + 6, sy);
+        this.ctx.moveTo(sx, sy - 6);
+        this.ctx.lineTo(sx, sy + 6);
+        this.ctx.stroke();
+      }
+    }
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 3. ULTRA-DENSE NEUTRON STAR / PULSAR / MAGNETAR SIMULATION
+  // - 10^6 K blue-white core
+  // - Intense curved magnetic dipole loops
+  // - Relativistic synchrotron lighthouse beams rotating past line of sight
+  // =========================================================================
+  renderNeutronStar() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const coreR = Math.min(this.width, this.height) * 0.12;
+
+    this.ctx.save();
+
+    // 1. Relativistic Sweeping Lighthouse Beams
+    const beamAngle = this.rotation * 4.5; // Rapid spin frequency
+    const beamLength = this.width * 0.46;
+    const beamSpread = 0.28;
+
+    this.ctx.save();
+    this.ctx.translate(cx, cy);
+    this.ctx.rotate(beamAngle);
+
+    // North synchrotron beam
+    const nBeam = this.ctx.createRadialGradient(0, 0, coreR * 0.5, 0, -beamLength, beamLength);
+    nBeam.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+    nBeam.addColorStop(0.3, 'rgba(56, 189, 248, 0.75)');
+    nBeam.addColorStop(0.7, 'rgba(99, 102, 241, 0.25)');
+    nBeam.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = nBeam;
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, 0);
+    this.ctx.lineTo(-Math.sin(beamSpread) * beamLength, -Math.cos(beamSpread) * beamLength);
+    this.ctx.lineTo(Math.sin(beamSpread) * beamLength, -Math.cos(beamSpread) * beamLength);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    // South synchrotron beam
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, 0);
+    this.ctx.lineTo(-Math.sin(beamSpread) * beamLength, Math.cos(beamSpread) * beamLength);
+    this.ctx.lineTo(Math.sin(beamSpread) * beamLength, Math.cos(beamSpread) * beamLength);
+    this.ctx.closePath();
+    this.ctx.fill();
+
+    this.ctx.restore();
+
+    // 2. Magnetic Dipole Field Lines (Curved loops)
+    this.ctx.strokeStyle = 'rgba(168, 85, 247, 0.4)';
+    this.ctx.lineWidth = 1.5;
+    const loopCount = 4;
+    for (let l = 1; l <= loopCount; l++) {
+      const loopWidth = coreR * (1.6 + l * 0.7);
+      const loopHeight = coreR * (2.0 + l * 0.85);
+
+      // East loop
+      this.ctx.beginPath();
+      this.ctx.ellipse(cx + loopWidth * 0.5, cy, loopWidth * 0.5, loopHeight * 0.65, 0, 0, Math.PI * 2);
+      this.ctx.stroke();
+
+      // West loop
+      this.ctx.beginPath();
+      this.ctx.ellipse(cx - loopWidth * 0.5, cy, loopWidth * 0.5, loopHeight * 0.65, 0, 0, Math.PI * 2);
+      this.ctx.stroke();
+    }
+
+    // 3. Outer Radiant Corona & Degeneracy Glow
+    const coronaGrad = this.ctx.createRadialGradient(cx, cy, coreR * 0.8, cx, cy, coreR * 2.5);
+    coronaGrad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    coronaGrad.addColorStop(0.3, 'rgba(56, 189, 248, 0.7)');
+    coronaGrad.addColorStop(0.7, 'rgba(99, 102, 241, 0.3)');
+    coronaGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = coronaGrad;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, coreR * 2.5, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // 4. Ultra-dense core sphere
+    this.ctx.fillStyle = '#ffffff';
+    this.ctx.shadowColor = '#38bdf8';
+    this.ctx.shadowBlur = 20;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.shadowBlur = 0;
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 4. THERMONUCLEAR STAR SIMULATION
+  // - Spectral classification coloring (O/B blue to M red giant)
+  // - Dynamic convective boiling granules
+  // - Solar magnetic prominences leaping from the limb
+  // =========================================================================
+  renderStar() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const radius = Math.min(this.width, this.height) * 0.32;
+    const color = this.currentData?.color || '#f59e0b';
+    const id = this.currentData?.id || '';
+
+    this.ctx.save();
+
+    // 1. Dynamic Coronal Solar Flares & Prominences
+    const prominenceCount = 10;
+    for (let p = 0; p < prominenceCount; p++) {
+      const angle = (p / prominenceCount) * Math.PI * 2 + (this.rotation * 0.3);
+      const flareHeight = (Math.sin(this.pulsePhase * 2 + p * 1.5) * 0.25 + 0.35) * radius * 0.6;
+      const lx = cx + Math.cos(angle) * (radius + flareHeight);
+      const ly = cy + Math.sin(angle) * (radius + flareHeight);
+
+      const flareGrad = this.ctx.createRadialGradient(lx, ly, 2, lx, ly, flareHeight * 0.8);
+      flareGrad.addColorStop(0, '#ffffff');
+      flareGrad.addColorStop(0.4, color);
+      flareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      this.ctx.fillStyle = flareGrad;
+      this.ctx.beginPath();
+      this.ctx.arc(lx, ly, flareHeight * 0.8, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+
+    // 2. Radiant Outer Corona
+    const coronaGrad = this.ctx.createRadialGradient(cx, cy, radius * 0.85, cx, cy, radius * 1.6);
+    coronaGrad.addColorStop(0, `${color}88`);
+    coronaGrad.addColorStop(0.4, `${color}44`);
+    coronaGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = coronaGrad;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, radius * 1.6, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // 3. Stellar Photosphere (Spherical limb darkening)
+    const starGrad = this.ctx.createRadialGradient(cx * 0.95, cy * 0.95, radius * 0.1, cx, cy, radius);
+    starGrad.addColorStop(0, '#ffffff'); // Core hot spot
+    starGrad.addColorStop(0.35, '#fffbeb');
+    starGrad.addColorStop(0.7, color);
+    starGrad.addColorStop(1, '#78350f'); // Limb darkening
+
+    this.ctx.fillStyle = starGrad;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // 4. Convective Granulation Cells (Boiling plasma)
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    this.ctx.clip();
+
+    const granuleCount = 50;
+    for (let g = 0; g < granuleCount; g++) {
+      const gx = cx + Math.sin(g * 5 + this.rotation) * (radius * 0.85);
+      const gy = cy + Math.cos(g * 7 + this.pulsePhase * 0.8) * (radius * 0.85);
+      const gSize = Math.sin(g * 2 + this.pulsePhase) * 4 + 8;
+
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+      this.ctx.beginPath();
+      this.ctx.arc(gx, gy, gSize, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+    this.ctx.restore();
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 5. PLANETARY & GAS GIANT SIMULATION
+  // - 3D Spherical light terminator
+  // - Earth: realistic oceans, continents, and rotating clouds with drop shadows
+  // - Jupiter: dynamic atmospheric bands and Great Red Spot storm
+  // - Saturn: realistic tilted concentric rings with Cassini division & shadow
+  // - Mars: iron oxide surface and white polar ice caps
+  // =========================================================================
+  renderPlanet() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const radius = Math.min(this.width, this.height) * 0.34;
+    const id = this.currentData ? this.currentData.id : 'earth';
+    const color = this.currentData?.color || '#38bdf8';
+
+    this.ctx.save();
+
+    // Atmospheric Ray Light Glow
+    const atmosGlow = this.ctx.createRadialGradient(cx, cy, radius * 0.95, cx, cy, radius * 1.3);
+    atmosGlow.addColorStop(0, `${color}40`);
+    atmosGlow.addColorStop(0.5, `${color}15`);
+    atmosGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    this.ctx.fillStyle = atmosGlow;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, radius * 1.3, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // If Saturn, draw rear half of tilted rings before drawing planet sphere
     if (id === 'saturn') {
       this.drawSaturnRings(cx, cy, radius, true);
     }
@@ -121,225 +547,326 @@ export class CelestialCanvas {
     this.ctx.arc(cx, cy, radius, 0, Math.PI * 2);
     this.ctx.clip();
 
-    // Base planetary fill
-    this.drawPlanetSurface(cx, cy, radius, id);
+    // Base surface color
+    this.ctx.fillStyle = this.getPlanetBaseColor(id);
+    this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
 
-    // Day/Night 3D spherical shadow terminator
-    const shadowGrad = this.ctx.createRadialGradient(
+    // Surface details by planet
+    if (id === 'earth') {
+      this.renderEarthSurface(cx, cy, radius);
+    } else if (id === 'jupiter') {
+      this.renderJupiterBands(cx, cy, radius);
+    } else if (id === 'mars') {
+      this.renderMarsSurface(cx, cy, radius);
+    } else {
+      this.renderGenericBands(cx, cy, radius, color);
+    }
+
+    // 3D Spherical Sunlight & Night-side Terminator
+    // Light source coming from top-left (0.35, 0.35)
+    const lightGrad = this.ctx.createRadialGradient(
       cx - radius * 0.35, cy - radius * 0.35, radius * 0.1,
-      cx + radius * 0.25, cy + radius * 0.25, radius * 1.1
+      cx, cy, radius
     );
-    shadowGrad.addColorStop(0, 'rgba(255,255,255,0.18)');
-    shadowGrad.addColorStop(0.45, 'rgba(0,0,0,0)');
-    shadowGrad.addColorStop(0.75, 'rgba(0,0,0,0.55)');
-    shadowGrad.addColorStop(1, 'rgba(0,0,0,0.92)');
+    lightGrad.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
+    lightGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0)');
+    lightGrad.addColorStop(0.85, 'rgba(0, 0, 0, 0.65)');
+    lightGrad.addColorStop(1, 'rgba(0, 0, 0, 0.92)');
 
-    this.ctx.fillStyle = shadowGrad;
+    this.ctx.fillStyle = lightGrad;
     this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
 
     this.ctx.restore();
 
-    // If Saturn, draw front half of rings
+    // If Saturn, draw front half of tilted rings on top of the planet
     if (id === 'saturn') {
       this.drawSaturnRings(cx, cy, radius, false);
     }
   }
 
-  drawPlanetSurface(cx, cy, radius, id) {
-    if (id === 'earth') {
-      // Ocean base
-      this.ctx.fillStyle = '#0f3d6c';
-      this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+  getPlanetBaseColor(id) {
+    if (id === 'earth') return '#1d4ed8'; // Ocean blue
+    if (id === 'mars') return '#b91c1c'; // Rust iron oxide
+    if (id === 'venus') return '#fde047'; // Sulfuric cream
+    if (id === 'mercury') return '#64748b'; // Basalt grey
+    if (id === 'jupiter') return '#d97706'; // Banded ochre
+    if (id === 'saturn') return '#fef08a'; // Golden amber
+    if (id === 'uranus') return '#38bdf8'; // Cyan methane
+    if (id === 'neptune') return '#1e40af'; // Deep azure
+    return '#38bdf8';
+  }
 
-      // Rotating continents
-      this.ctx.fillStyle = '#15803d';
-      for (let i = -2; i < 4; i++) {
-        const ox = cx + Math.sin(this.rotation + i * 1.4) * (radius * 0.85);
-        this.ctx.beginPath();
-        this.ctx.arc(ox, cy + i * 20, radius * 0.45, 0, Math.PI * 2);
-        this.ctx.fill();
-      }
-
-      // Swirling cloud layer
-      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-      for (let i = -2; i < 4; i++) {
-        const ox = cx + Math.sin(this.rotation * 1.25 + i * 1.1) * (radius * 0.9);
-        this.ctx.beginPath();
-        this.ctx.ellipse(ox, cy + i * 28, radius * 0.6, radius * 0.15, 0.2, 0, Math.PI * 2);
-        this.ctx.fill();
-      }
-    } else if (id === 'mars') {
-      this.ctx.fillStyle = '#c2410c';
-      this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
-
-      // Dark volcanic basalt patches
-      this.ctx.fillStyle = '#7c2d12';
-      for (let i = -1; i < 3; i++) {
-        const ox = cx + Math.sin(this.rotation + i * 1.6) * (radius * 0.7);
-        this.ctx.beginPath();
-        this.ctx.arc(ox, cy + i * 30, radius * 0.35, 0, Math.PI * 2);
-        this.ctx.fill();
-      }
-      // White polar ice cap
-      this.ctx.fillStyle = '#f8fafc';
+  renderEarthSurface(cx, cy, radius) {
+    // Continents
+    const rot = (this.rotation * 0.8) % (Math.PI * 2);
+    this.ctx.fillStyle = '#15803d'; // Green continents
+    for (let c = 0; c < 5; c++) {
+      const xOffset = Math.sin(rot + c * 1.3) * radius * 0.8;
+      const yOffset = Math.cos(c * 1.7) * radius * 0.45;
       this.ctx.beginPath();
-      this.ctx.ellipse(cx, cy - radius * 0.82, radius * 0.35, radius * 0.12, 0, 0, Math.PI * 2);
+      this.ctx.ellipse(cx + xOffset, cy + yOffset, radius * 0.35, radius * 0.22, 0.2, 0, Math.PI * 2);
       this.ctx.fill();
-    } else if (id === 'jupiter') {
-      // Banded gas giant
-      const bands = ['#d97706', '#fed7aa', '#b45309', '#fde68a', '#c2410c', '#ffedd5', '#9a3412'];
-      const sliceH = (radius * 2) / bands.length;
-      for (let b = 0; b < bands.length; b++) {
-        this.ctx.fillStyle = bands[b];
-        this.ctx.fillRect(cx - radius, (cy - radius) + b * sliceH, radius * 2, sliceH + 1);
-      }
-      // Great Red Spot
-      const grsX = cx + Math.sin(this.rotation) * (radius * 0.75);
-      const grsY = cy + radius * 0.25;
-      this.ctx.fillStyle = '#b91c1c';
+    }
+
+    // Swirling Cloud Cover (rotating slightly faster than continents)
+    const cloudRot = (this.rotation * 1.1) % (Math.PI * 2);
+    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+    for (let w = 0; w < 7; w++) {
+      const cxOffset = Math.sin(cloudRot + w * 0.9) * radius * 0.85;
+      const cyOffset = Math.cos(w * 1.2) * radius * 0.65;
       this.ctx.beginPath();
-      this.ctx.ellipse(grsX, grsY, radius * 0.22, radius * 0.12, 0, 0, Math.PI * 2);
+      this.ctx.arc(cx + cxOffset, cy + cyOffset, radius * 0.22, 0, Math.PI * 2);
       this.ctx.fill();
-    } else if (id === 'saturn') {
-      const bands = ['#eab308', '#fef08a', '#ca8a04', '#fef9c3', '#a16207'];
-      const sliceH = (radius * 2) / bands.length;
-      for (let b = 0; b < bands.length; b++) {
-        this.ctx.fillStyle = bands[b];
-        this.ctx.fillRect(cx - radius, (cy - radius) + b * sliceH, radius * 2, sliceH + 1);
-      }
-    } else if (id === 'venus') {
-      this.ctx.fillStyle = '#f59e0b';
-      this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
-      this.ctx.fillStyle = 'rgba(254, 243, 199, 0.4)';
-      for (let i = -2; i < 3; i++) {
-        const ox = cx + Math.sin(this.rotation * 0.8 + i) * (radius * 0.8);
-        this.ctx.beginPath();
-        this.ctx.ellipse(ox, cy + i * 35, radius * 0.7, radius * 0.2, -0.3, 0, Math.PI * 2);
-        this.ctx.fill();
-      }
-    } else if (id === 'europa') {
-      // Ice world with red/brown lineae fractures
-      this.ctx.fillStyle = '#e2e8f0';
-      this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
-      this.ctx.strokeStyle = 'rgba(154, 52, 18, 0.6)';
-      this.ctx.lineWidth = 2;
-      for (let i = -2; i < 3; i++) {
-        const ox = cx + Math.sin(this.rotation + i) * (radius * 0.8);
-        this.ctx.beginPath();
-        this.ctx.moveTo(ox - radius * 0.5, cy + i * 30 - 20);
-        this.ctx.bezierCurveTo(ox, cy + i * 30 + 10, ox + 30, cy + i * 30 - 30, ox + radius * 0.5, cy + i * 30 + 20);
-        this.ctx.stroke();
-      }
-    } else {
-      // General procedural sphere
-      const baseGrad = this.ctx.createLinearGradient(cx - radius, cy, cx + radius, cy);
-      baseGrad.addColorStop(0, this.currentData?.color || '#38bdf8');
-      baseGrad.addColorStop(1, '#1e293b');
-      this.ctx.fillStyle = baseGrad;
-      this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
     }
   }
 
-  drawSaturnRings(cx, cy, radius, isBack) {
-    this.ctx.save();
-    this.ctx.translate(cx, cy);
-    this.ctx.rotate(-0.35); // 20 degree tilt
+  renderJupiterBands(cx, cy, radius) {
+    // Alternating atmospheric belts and zones
+    const bandCount = 14;
+    for (let b = 0; b < bandCount; b++) {
+      const y = cy - radius + (b / bandCount) * radius * 2;
+      const bHeight = (radius * 2) / bandCount;
+      const isBelt = b % 2 === 0;
 
-    // Clip half if back vs front
-    this.ctx.beginPath();
-    if (isBack) {
-      this.ctx.rect(-radius * 2.6, -radius * 2.6, radius * 5.2, radius * 2.6);
-    } else {
-      this.ctx.rect(-radius * 2.6, 0, radius * 5.2, radius * 2.6);
+      this.ctx.fillStyle = isBelt ? '#9a3412' : '#fef3c7';
+      this.ctx.fillRect(cx - radius, y, radius * 2, bHeight);
     }
-    this.ctx.clip();
 
-    // Ring A & B with Cassini division
+    // Great Red Spot (Anticyclonic oval storm)
+    const grsRot = (this.rotation * 0.6) % (Math.PI * 2);
+    const grsX = cx + Math.sin(grsRot) * radius * 0.65;
+    const grsY = cy + radius * 0.22;
+
+    this.ctx.fillStyle = '#b91c1c';
     this.ctx.beginPath();
-    this.ctx.ellipse(0, 0, radius * 2.2, radius * 0.55, 0, 0, Math.PI * 2);
-    this.ctx.strokeStyle = 'rgba(234, 179, 8, 0.7)';
-    this.ctx.lineWidth = radius * 0.45;
-    this.ctx.stroke();
-
-    // Cassini Division dark line
-    this.ctx.beginPath();
-    this.ctx.ellipse(0, 0, radius * 2.05, radius * 0.51, 0, 0, Math.PI * 2);
-    this.ctx.strokeStyle = 'rgba(10, 13, 30, 0.9)';
-    this.ctx.lineWidth = 3;
-    this.ctx.stroke();
-
-    this.ctx.restore();
+    this.ctx.ellipse(grsX, grsY, radius * 0.18, radius * 0.11, 0.1, 0, Math.PI * 2);
+    this.ctx.fill();
   }
 
-  // --- RENDER STAR ---
-  renderStar() {
-    const cx = this.width / 2;
-    const cy = this.height / 2;
-    const radius = Math.min(this.width, this.height) * 0.32;
-    const color = this.currentData?.color || '#ffd700';
-
-    this.ctx.save();
-
-    // Corona rays pulsating
-    const rayCount = 16;
-    for (let i = 0; i < rayCount; i++) {
-      const angle = (i / rayCount) * Math.PI * 2 + this.rotation * 0.5;
-      const rayLen = radius * (1.3 + Math.sin(this.rotation * 3 + i) * 0.18);
-      const grad = this.ctx.createRadialGradient(cx, cy, radius * 0.5, cx, cy, rayLen);
-      grad.addColorStop(0, color);
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-
-      this.ctx.fillStyle = grad;
-      this.ctx.beginPath();
-      this.ctx.moveTo(cx, cy);
-      this.ctx.arc(cx, cy, rayLen, angle - 0.12, angle + 0.12);
-      this.ctx.closePath();
-      this.ctx.fill();
-    }
-
-    // Fiery body
-    const bodyGrad = this.ctx.createRadialGradient(
-      cx - radius * 0.2, cy - radius * 0.2, radius * 0.1,
-      cx, cy, radius
-    );
-    bodyGrad.addColorStop(0, '#ffffff');
-    bodyGrad.addColorStop(0.4, color);
-    bodyGrad.addColorStop(0.85, '#ea580c');
-    bodyGrad.addColorStop(1, '#9a3412');
-
-    this.ctx.fillStyle = bodyGrad;
+  renderMarsSurface(cx, cy, radius) {
+    // Dark volcanic regions (Syrtis Major)
+    this.ctx.fillStyle = '#7f1d1d';
     this.ctx.beginPath();
-    this.ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    this.ctx.arc(cx + Math.sin(this.rotation) * radius * 0.4, cy, radius * 0.35, 0, Math.PI * 2);
     this.ctx.fill();
 
-    // Solar flares
-    for (let f = 0; f < 4; f++) {
-      const fAngle = this.rotation * 1.5 + (f * Math.PI / 2);
-      const fx = cx + Math.cos(fAngle) * radius;
-      const fy = cy + Math.sin(fAngle) * radius;
-      const fH = 15 + Math.sin(this.rotation * 4 + f) * 8;
+    // North & South Polar Ice Caps (CO2 & Water Ice)
+    this.ctx.fillStyle = '#ffffff';
+    this.ctx.beginPath();
+    this.ctx.ellipse(cx, cy - radius * 0.88, radius * 0.35, radius * 0.12, 0, 0, Math.PI * 2);
+    this.ctx.fill();
 
-      this.ctx.fillStyle = '#ffedd5';
-      this.ctx.beginPath();
-      this.ctx.arc(fx + Math.cos(fAngle) * fH * 0.5, fy + Math.sin(fAngle) * fH * 0.5, fH * 0.4, 0, Math.PI * 2);
-      this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.ellipse(cx, cy + radius * 0.9, radius * 0.28, radius * 0.1, 0, 0, Math.PI * 2);
+    this.ctx.fill();
+  }
+
+  renderGenericBands(cx, cy, radius, baseColor) {
+    for (let i = 0; i < 8; i++) {
+      const y = cy - radius + (i / 8) * radius * 2;
+      this.ctx.fillStyle = i % 2 === 0 ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+      this.ctx.fillRect(cx - radius, y, radius * 2, (radius * 2) / 8);
     }
+  }
+
+  drawSaturnRings(cx, cy, radius, isBackHalf) {
+    this.ctx.save();
+    this.ctx.translate(cx, cy);
+    this.ctx.rotate(-0.35); // Saturn's 26.7-degree axial tilt
+
+    const ringOuterA = radius * 2.2;
+    const ringOuterB = radius * 0.65;
+    const ringInnerA = radius * 1.35;
+    const ringInnerB = radius * 0.4;
+    const cassiniA = radius * 1.75;
+    const cassiniB = radius * 0.52;
+
+    this.ctx.beginPath();
+    if (isBackHalf) {
+      // Upper back half (behind the planet)
+      this.ctx.ellipse(0, 0, ringOuterA, ringOuterB, 0, Math.PI, Math.PI * 2);
+      this.ctx.ellipse(0, 0, ringInnerA, ringInnerB, 0, Math.PI * 2, Math.PI, true);
+    } else {
+      // Lower front half (in front of the planet)
+      this.ctx.ellipse(0, 0, ringOuterA, ringOuterB, 0, 0, Math.PI);
+      this.ctx.ellipse(0, 0, ringInnerA, ringInnerB, 0, Math.PI, 0, true);
+    }
+    this.ctx.closePath();
+
+    const ringGrad = this.ctx.createRadialGradient(0, 0, ringInnerA, 0, 0, ringOuterA);
+    ringGrad.addColorStop(0, 'rgba(254, 240, 138, 0.85)');
+    ringGrad.addColorStop(0.45, 'rgba(217, 119, 6, 0.8)');
+    ringGrad.addColorStop(0.55, 'rgba(15, 23, 42, 0.9)'); // Cassini Division gap!
+    ringGrad.addColorStop(0.65, 'rgba(245, 158, 11, 0.75)');
+    ringGrad.addColorStop(1, 'rgba(254, 240, 138, 0.2)');
+
+    this.ctx.fillStyle = ringGrad;
+    this.ctx.fill();
 
     this.ctx.restore();
   }
 
-  // --- RENDER GALAXY ---
+  // =========================================================================
+  // 6. MOON & NATURAL SATELLITE SIMULATION
+  // Basalt craters, terminator shadows, volcanic sulfur for Io, ice cracks for Europa
+  // =========================================================================
+  renderMoon() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const radius = Math.min(this.width, this.height) * 0.34;
+    const id = this.currentData ? this.currentData.id : 'moon';
+
+    this.ctx.save();
+
+    // Clip to spherical disc
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    this.ctx.clip();
+
+    // Base color
+    let baseColor = '#94a3b8'; // Grey regolith
+    if (id === 'io') baseColor = '#eab308'; // Volcanic yellow-orange sulfur
+    if (id === 'europa') baseColor = '#f1f5f9'; // Bright icy white
+    if (id === 'titan') baseColor = '#f59e0b'; // Dense orange nitrogen haze
+
+    this.ctx.fillStyle = baseColor;
+    this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+
+    // Io volcanic calderas
+    if (id === 'io') {
+      this.ctx.fillStyle = '#7f1d1d';
+      for (let p = 0; p < 8; p++) {
+        const px = cx + Math.sin(p * 2) * radius * 0.65;
+        const py = cy + Math.cos(p * 3) * radius * 0.65;
+        this.ctx.beginPath();
+        this.ctx.arc(px, py, radius * 0.12, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+    } 
+    // Europa ice tectonic fracture lineae
+    else if (id === 'europa') {
+      this.ctx.strokeStyle = '#b91c1c';
+      this.ctx.lineWidth = 1.5;
+      for (let f = 0; f < 6; f++) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(cx - radius * 0.8, cy + (f - 3) * radius * 0.25);
+        this.ctx.bezierCurveTo(cx - radius * 0.2, cy + radius * 0.3, cx + radius * 0.3, cy - radius * 0.3, cx + radius * 0.8, cy + (f - 2) * radius * 0.25);
+        this.ctx.stroke();
+      }
+    }
+    // Basaltic Impact Craters
+    else {
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+      const craterCount = 18;
+      for (let c = 0; c < craterCount; c++) {
+        const kx = cx + Math.sin(c * 4 + this.rotation * 0.2) * radius * 0.75;
+        const ky = cy + Math.cos(c * 6) * radius * 0.75;
+        const cRadius = (Math.sin(c) * 0.08 + 0.1) * radius;
+
+        this.ctx.beginPath();
+        this.ctx.arc(kx, ky, cRadius, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+    }
+
+    // 3D Spherical Light Terminator
+    const lightGrad = this.ctx.createRadialGradient(
+      cx - radius * 0.4, cy - radius * 0.4, radius * 0.1,
+      cx, cy, radius
+    );
+    lightGrad.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
+    lightGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0)');
+    lightGrad.addColorStop(0.85, 'rgba(0, 0, 0, 0.75)');
+    lightGrad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
+
+    this.ctx.fillStyle = lightGrad;
+    this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 7. EXOPLANET & ALIEN WORLD SIMULATION
+  // Tidally locked eyeball worlds, ultra-hot Jupiters, magma worlds
+  // =========================================================================
+  renderExoplanet() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const radius = Math.min(this.width, this.height) * 0.34;
+    const id = this.currentData ? this.currentData.id : 'trappist-1e';
+
+    this.ctx.save();
+
+    // WASP-12b: Egg-shaped tidal distortion with mass-loss stream
+    if (id === 'wasp-12b') {
+      // Mass-loss stream to star
+      const streamGrad = this.ctx.createLinearGradient(cx, cy, this.width, cy);
+      streamGrad.addColorStop(0, 'rgba(239, 68, 68, 0.8)');
+      streamGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+      this.ctx.fillStyle = streamGrad;
+      this.ctx.beginPath();
+      this.ctx.moveTo(cx, cy - radius * 0.4);
+      this.ctx.lineTo(this.width, cy - radius * 0.8);
+      this.ctx.lineTo(this.width, cy + radius * 0.8);
+      this.ctx.lineTo(cx, cy + radius * 0.4);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      // Prolate egg-shaped distortion
+      this.ctx.fillStyle = '#7f1d1d';
+      this.ctx.beginPath();
+      this.ctx.ellipse(cx, cy, radius * 1.35, radius * 0.85, 0, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      this.ctx.restore();
+      return;
+    }
+
+    // Tidally locked Eyeball World (e.g. TRAPPIST-1e, Kepler-186f, Proxima b)
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    this.ctx.clip();
+
+    // Night side: dark frozen ice
+    this.ctx.fillStyle = '#0f172a';
+    this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+
+    // Dayside: open water ocean under the permanent stellar zenith
+    const daysideGrad = this.ctx.createRadialGradient(cx - radius * 0.3, cy, 5, cx - radius * 0.3, cy, radius * 0.85);
+    daysideGrad.addColorStop(0, '#0284c7'); // Temperate ocean
+    daysideGrad.addColorStop(0.6, '#0f766e'); // Temperate vegetative twilight zone
+    daysideGrad.addColorStop(0.85, '#e2e8f0'); // Glacial ice ring
+    daysideGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = daysideGrad;
+    this.ctx.beginPath();
+    this.ctx.arc(cx - radius * 0.3, cy, radius * 0.85, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // Atmospheric Rayleigh haze
+    const atmosGrad = this.ctx.createRadialGradient(cx - radius * 0.3, cy, radius * 0.8, cx, cy, radius * 1.15);
+    atmosGrad.addColorStop(0, 'rgba(56, 189, 248, 0.4)');
+    atmosGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    this.ctx.fillStyle = atmosGrad;
+    this.ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 8. SPIRAL GALAXY SIMULATION
+  // =========================================================================
   renderGalaxy() {
     const cx = this.width / 2;
     const cy = this.height / 2;
-    const maxR = Math.min(this.width, this.height) * 0.42;
-    const color = this.currentData?.color || '#a855f7';
+    const maxR = Math.min(this.width, this.height) * 0.44;
+    const color = this.currentData?.color || '#38bdf8';
 
     this.ctx.save();
     this.ctx.translate(cx, cy);
     this.ctx.rotate(this.rotation * 0.3);
 
-    // Glowing Core
+    // Glowing Galactic Core
     const coreGrad = this.ctx.createRadialGradient(0, 0, 0, 0, 0, maxR * 0.35);
     coreGrad.addColorStop(0, '#ffffff');
     coreGrad.addColorStop(0.3, '#fef08a');
@@ -373,13 +900,53 @@ export class CelestialCanvas {
     this.ctx.restore();
   }
 
-  // --- RENDER CONSTELLATION CHART ---
+  // =========================================================================
+  // 9. COSMIC PHENOMENON SIMULATION (Supernovae, Gravitational Waves, etc.)
+  // =========================================================================
+  renderPhenomenon() {
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    const maxR = Math.min(this.width, this.height) * 0.42;
+
+    this.ctx.save();
+
+    // Expanding concentric shockwave shells
+    const ringCount = 5;
+    for (let r = 0; r < ringCount; r++) {
+      const phase = (this.pulsePhase * 0.8 + (r / ringCount)) % 1;
+      const ringRadius = phase * maxR;
+      const alpha = Math.max(0, 1 - phase);
+
+      this.ctx.strokeStyle = `rgba(244, 63, 94, ${alpha * 0.8})`;
+      this.ctx.lineWidth = 2.5;
+      this.ctx.beginPath();
+      this.ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
+      this.ctx.stroke();
+    }
+
+    // Incandescent central blast core
+    const coreGrad = this.ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.35);
+    coreGrad.addColorStop(0, '#ffffff');
+    coreGrad.addColorStop(0.3, '#38bdf8');
+    coreGrad.addColorStop(0.7, '#a855f7');
+    coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = coreGrad;
+    this.ctx.beginPath();
+    this.ctx.arc(cx, cy, maxR * 0.35, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    this.ctx.restore();
+  }
+
+  // =========================================================================
+  // 10. CONSTELLATION STAR CHART
+  // =========================================================================
   renderConstellation() {
     if (!this.currentData || !this.currentData.stars) return;
 
     this.ctx.save();
 
-    // Celestial Grid background rings
     const cx = this.width / 2;
     const cy = this.height / 2;
     this.ctx.strokeStyle = 'rgba(56, 189, 248, 0.08)';
@@ -389,7 +956,6 @@ export class CelestialCanvas {
     this.ctx.arc(cx, cy, this.width * 0.25, 0, Math.PI * 2);
     this.ctx.stroke();
 
-    // Map stars to coordinate lookup
     const starMap = {};
     for (const star of this.currentData.stars) {
       starMap[star.id] = {
@@ -399,14 +965,13 @@ export class CelestialCanvas {
       };
     }
 
-    // 1. Draw glowing constellation lines
+    // Glowing constellation lines
     if (this.currentData.lines) {
       for (const line of this.currentData.lines) {
         const s1 = starMap[line[0]];
         const s2 = starMap[line[1]];
         if (!s1 || !s2) continue;
 
-        // Outer glow
         this.ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
         this.ctx.lineWidth = 3.5;
         this.ctx.beginPath();
@@ -414,7 +979,6 @@ export class CelestialCanvas {
         this.ctx.lineTo(s2.px, s2.py);
         this.ctx.stroke();
 
-        // Inner sharp starlight line
         this.ctx.strokeStyle = 'rgba(224, 242, 254, 0.85)';
         this.ctx.lineWidth = 1.4;
         this.ctx.beginPath();
@@ -424,62 +988,28 @@ export class CelestialCanvas {
       }
     }
 
-    // 2. Draw stars
-    for (const s of Object.values(starMap)) {
-      const isHovered = this.hoveredStar && this.hoveredStar.id === s.id;
-      const baseR = Math.max(2.5, 6 - s.mag * 0.8);
-      const r = isHovered ? baseR * 1.8 : baseR;
+    // Draw Major Stars
+    for (const star of this.currentData.stars) {
+      const s = starMap[star.id];
+      const radius = Math.max(2.5, 7.5 - star.mag * 1.2);
+      const isHovered = this.hoveredStar && this.hoveredStar.id === star.id;
 
       // Glow halo
-      this.ctx.fillStyle = isHovered ? 'rgba(255, 255, 255, 0.45)' : 'rgba(56, 189, 248, 0.35)';
+      this.ctx.fillStyle = isHovered ? 'rgba(0, 240, 255, 0.85)' : 'rgba(255, 255, 255, 0.35)';
       this.ctx.beginPath();
-      this.ctx.arc(s.px, s.py, r * 2.6, 0, Math.PI * 2);
+      this.ctx.arc(s.px, s.py, radius * (isHovered ? 2.8 : 2), 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Star core
-      this.ctx.fillStyle = s.color || '#ffffff';
+      // Sharp core
+      this.ctx.fillStyle = '#ffffff';
       this.ctx.beginPath();
-      this.ctx.arc(s.px, s.py, r, 0, Math.PI * 2);
+      this.ctx.arc(s.px, s.py, radius, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Diffraction cross spike on bright stars or hovered
-      if (s.mag < 2.0 || isHovered) {
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-        this.ctx.lineWidth = 1;
-        const spikeLen = r * 3;
-        this.ctx.beginPath();
-        this.ctx.moveTo(s.px - spikeLen, s.py);
-        this.ctx.lineTo(s.px + spikeLen, s.py);
-        this.ctx.moveTo(s.px, s.py - spikeLen);
-        this.ctx.lineTo(s.px, s.py + spikeLen);
-        this.ctx.stroke();
-      }
-
-      // Star label
-      this.ctx.font = isHovered ? 'bold 12px "Inter", sans-serif' : '10px "Inter", sans-serif';
-      this.ctx.fillStyle = isHovered ? '#00f0ff' : 'rgba(226, 232, 240, 0.75)';
-      this.ctx.fillText(s.name, s.px + r + 6, s.py + 3);
-    }
-
-    // Hover tooltip
-    if (this.hoveredStar) {
-      const s = starMap[this.hoveredStar.id];
-      if (s) {
-        const ttText = `${s.name} (Mag: ${s.mag})`;
-        this.ctx.font = '11px "Inter", sans-serif';
-        const tw = this.ctx.measureText(ttText).width;
-
-        this.ctx.fillStyle = 'rgba(6, 8, 20, 0.9)';
-        this.ctx.strokeStyle = '#00f0ff';
-        this.ctx.lineWidth = 1;
-        this.ctx.beginPath();
-        this.ctx.roundRect(s.px - tw / 2 - 8, s.py - 34, tw + 16, 22, 4);
-        this.ctx.fill();
-        this.ctx.stroke();
-
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.fillText(ttText, s.px - tw / 2, s.py - 19);
-      }
+      // Star Label
+      this.ctx.font = isHovered ? 'bold 12px Inter, sans-serif' : '10px Inter, sans-serif';
+      this.ctx.fillStyle = isHovered ? '#00f0ff' : 'rgba(226, 232, 240, 0.85)';
+      this.ctx.fillText(star.name, s.px + radius + 4, s.py + 3);
     }
 
     this.ctx.restore();

@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/src/css/constellations.css" />
   <link rel="stylesheet" href="/src/css/modal.css" />
   <link rel="stylesheet" href="/src/css/scale.css" />
+  <link rel="stylesheet" href="/src/css/explorers.css" />
 </head>
 <body>
   <!-- Dynamic Starfield Background Canvas -->
@@ -35,10 +36,31 @@
         </div>
       </div>
 
-      <!-- Mode Selector: Hierarchy vs Constellations -->
+      <!-- Mode Selector: Hierarchy, Milky Way, Black Holes, Exoplanets, Knowledge, Timeline, Missions, Constellations -->
       <nav class="mode-toggle-group" aria-label="Exploration Mode">
         <button class="mode-tab-btn active" id="btnModeHierarchy" aria-pressed="true">
-          <span>🌌</span> Cosmic Hierarchy
+          <span>🌌</span> Hierarchy
+        </button>
+        <button class="mode-tab-btn" id="btnModeMilkyWay" aria-pressed="false">
+          <span>🌀</span> Milky Way
+        </button>
+        <button class="mode-tab-btn" id="btnModeBlackHoles" aria-pressed="false">
+          <span>🕳️</span> Black Holes
+        </button>
+        <button class="mode-tab-btn" id="btnModeNebulae" aria-pressed="false">
+          <span>🌫️</span> Nebulae
+        </button>
+        <button class="mode-tab-btn" id="btnModeExoplanets" aria-pressed="false">
+          <span>🪐</span> Exoplanets
+        </button>
+        <button class="mode-tab-btn" id="btnModeKnowledge" aria-pressed="false">
+          <span>📚</span> Knowledge
+        </button>
+        <button class="mode-tab-btn" id="btnModeTimeline" aria-pressed="false">
+          <span>⏳</span> Timeline & Scale
+        </button>
+        <button class="mode-tab-btn" id="btnModeMissions" aria-pressed="false">
+          <span>🚀</span> Missions
         </button>
         <button class="mode-tab-btn" id="btnModeConstellations" aria-pressed="false">
           <span>⭐</span> Constellations
@@ -79,7 +101,7 @@
             type="search"
             id="globalSearchInput"
             class="cosmic-search-input"
-            placeholder="Search planets, stars, galaxies, moons, constellations (e.g. Earth, Europa, Orion, Betelgeuse)..."
+            placeholder="Search galaxies, black holes, stars, nebulae, planets, moons, exoplanets, missions (e.g. Earth, Sgr A*, Orion, JWST, Trappist-1)..."
             aria-label="Search astronomical objects"
           />
         </div>
@@ -107,17 +129,21 @@
         <div class="section-header-row">
           <div class="section-title-wrap">
             <h2 id="currentLevelTitle">Exploring: The Universe</h2>
-            <span class="section-count-tag" id="currentLevelCount">6 Astronomical Entities</span>
+            <span class="section-count-tag" id="currentLevelCount">All Cosmic Entities</span>
           </div>
 
           <!-- Category Filter Pills -->
           <div class="filter-chips-wrap" aria-label="Filter by celestial category">
             <button class="filter-chip active" data-filter="all">All Types</button>
             <button class="filter-chip" data-filter="galaxy">Galaxies</button>
+            <button class="filter-chip" data-filter="black-hole">Black Holes</button>
             <button class="filter-chip" data-filter="system">Solar Systems</button>
-            <button class="filter-chip" data-filter="star">Stars</button>
+            <button class="filter-chip" data-filter="star">Stars & Remnants</button>
+            <button class="filter-chip" data-filter="nebula">Nebulae</button>
             <button class="filter-chip" data-filter="planet">Planets</button>
+            <button class="filter-chip" data-filter="exoplanet">Exoplanets</button>
             <button class="filter-chip" data-filter="moon">Moons</button>
+            <button class="filter-chip" data-filter="phenomenon">Phenomena</button>
           </div>
         </div>
 
@@ -125,7 +151,28 @@
         <div class="cards-grid" id="cosmicCardsGrid"></div>
       </section>
 
-      <!-- 2. Constellations Section -->
+      <!-- 2. Dedicated Milky Way Explorer Section -->
+      <section class="section-view" id="milkyWaySection"></section>
+
+      <!-- 3. Dedicated Black Hole Explorer Section -->
+      <section class="section-view" id="blackHoleSection"></section>
+
+      <!-- 4. Dedicated Nebulae Explorer Section -->
+      <section class="section-view" id="nebulaeSection"></section>
+
+      <!-- 5. Dedicated Exoplanet Systems Explorer Section -->
+      <section class="section-view" id="exoplanetSection"></section>
+
+      <!-- 5. Dedicated Cosmic Knowledge Base Section -->
+      <section class="section-view" id="knowledgeSection"></section>
+
+      <!-- 6. Cosmic Timeline & Powers of 10 Scale Section -->
+      <section class="section-view" id="timelineScaleSection"></section>
+
+      <!-- 7. Space Missions Fleet Section -->
+      <section class="section-view" id="missionsSection"></section>
+
+      <!-- 8. Constellations Section -->
       <section class="section-view" id="constellationsSection">
         <div class="section-header-row">
           <div class="section-title-wrap">
