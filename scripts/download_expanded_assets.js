@@ -8,19 +8,19 @@ const assets = [
   // Galaxies
   {
     path: 'public/images/smc.jpg',
-    urls: ['https://images-assets.nasa.gov/image/PIA15254/PIA15254~orig.jpg'] // Small Magellanic Cloud NASA
+    urls: ['https://cdn.eso.org/images/screen/eso1008a.jpg'] // Small Magellanic Cloud ESO / DSS2
   },
   {
     path: 'public/images/m87-galaxy.jpg',
-    urls: ['https://images-assets.nasa.gov/image/PIA14447/PIA14447~orig.jpg'] // M87 galaxy & jet
+    urls: ['https://upload.wikimedia.org/wikipedia/commons/3/39/M87_jet.jpg'] // M87 galaxy & Hubble relativistic jet
   },
   {
     path: 'public/images/pinwheel.jpg',
-    urls: ['https://images-assets.nasa.gov/image/PIA08012/PIA08012~orig.jpg'] // M101 Pinwheel
+    urls: ['https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/M101_hires_STScI-PRC2006-10a.jpg/1280px-M101_hires_STScI-PRC2006-10a.jpg'] // M101 Pinwheel Hubble 51-exposure mosaic
   },
   {
     path: 'public/images/cigar-galaxy.jpg',
-    urls: ['https://images-assets.nasa.gov/image/PIA08035/PIA08035~orig.jpg'] // M82 Cigar
+    urls: ['https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/M82_HST_ACS_2006-14-a-large_web.jpg/1280px-M82_HST_ACS_2006-14-a-large_web.jpg'] // M82 Cigar Hubble 16th Anniversary starburst mosaic
   },
 
   // Stellar Remnants & Pulsars

@@ -20,9 +20,8 @@ const images = [
   {
     path: 'public/images/milky-way.jpg',
     urls: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/ESO-VLT-Full-Array.jpg/1280px-ESO-VLT-Full-Array.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/0/09/Milky_Way_Night_Sky_Black_Rock_Desert_Nevada.jpg',
-      'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80'
+      'https://cdn.eso.org/images/screen/eso0932a.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/0/09/Milky_Way_Night_Sky_Black_Rock_Desert_Nevada.jpg'
     ]
   },
   {
@@ -57,8 +56,8 @@ const images = [
   {
     path: 'public/images/lmc.jpg',
     urls: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Large.mc.arp.750pix.jpg/1280px-Large.mc.arp.750pix.jpg',
-      'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80'
+      'https://cdn.eso.org/images/screen/eso1914a.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Large.mc.arp.750pix.jpg/1280px-Large.mc.arp.750pix.jpg'
     ]
   },
 

@@ -210,9 +210,9 @@ export const galaxiesData = [
     imageMeta: {
       imageUrl: "/images/smc.jpg",
       imageType: "TELESCOPE_IMAGE",
-      imageCredit: "NASA / JPL-Caltech / STScI",
-      imageSource: "Spitzer Space Telescope Infrared SMC Mosaic",
-      altText: "Infrared view of the Small Magellanic Cloud revealing young star-forming dust clouds"
+      imageCredit: "ESO / Digitized Sky Survey 2",
+      imageSource: "ESO / DSS2 Deep Panoramic View of the Small Magellanic Cloud",
+      altText: "Deep sky view of the Small Magellanic Cloud with active star clusters"
     },
     color: "#fb923c",
     tagline: "A low-metallicity dwarf galaxy serving as an analog to early-universe galaxies.",
