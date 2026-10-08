@@ -121,13 +121,13 @@ export const blackHolesData = [
     composition: [
       { name: "Gravitational Singularity", percentage: 100, color: "#9333ea" }
     ],
-    image: "/images/ton-618.jpg",
+    image: "/images/ton-618.png",
     imageMeta: {
-      imageUrl: "/images/ton-618.jpg",
+      imageUrl: "/images/ton-618.png",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "NASA / ESA / ESO",
-      imageSource: "Ultramassive Black Hole Accretion Engine Model",
-      altText: "Blinding hyperluminous quasar accretion disk outshining 140 trillion suns"
+      imageCredit: "Astronomical Relativistic Modeling",
+      imageSource: "TON 618 Ultramassive Black Hole & Quasar Accretion Disk Model",
+      altText: "Blinding relativistic quasar accretion disk swirling around ultramassive black hole TON 618"
     },
     color: "#9333ea",
     tagline: "Containing 66 billion times the mass of the Sun, its event horizon could swallow 40 solar systems side-by-side.",
@@ -174,9 +174,9 @@ export const blackHolesData = [
     imageMeta: {
       imageUrl: "/images/oj-287.jpg",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "NASA / JPL-Caltech",
-      imageSource: "NASA Spitzer Space Telescope OJ 287 Binary Model",
-      altText: "Secondary black hole plunging through the massive accretion disk of primary black hole OJ 287"
+      imageCredit: "NASA / JPL-Caltech / Spitzer Space Telescope",
+      imageSource: "NASA Spitzer Space Telescope OJ 287 Binary Black Hole Flare Model (PIA23687)",
+      altText: "Secondary black hole piercing through the colossal accretion disk of primary black hole OJ 287 creating a blinding flare"
     },
     color: "#ec4899",
     tagline: "A 12-year relativistic cosmic clock where a companion black hole punctures the main accretion disk twice per orbit.",
@@ -309,9 +309,9 @@ export const blackHolesData = [
     imageMeta: {
       imageUrl: "/images/holmberg-15a.jpg",
       imageType: "TELESCOPE_IMAGE",
-      imageCredit: "ESO / VLT / MUSE / K. Mehrgan et al.",
-      imageSource: "VLT and astronomical survey view of galaxy cluster Abell 85 centered on supergiant elliptical galaxy Holmberg 15A",
-      altText: "Massive diffuse core of giant elliptical galaxy Holmberg 15A"
+      imageCredit: "NASA / CXC / SAO / SDSS",
+      imageSource: "Chandra X-ray Observatory and SDSS Composite of Abell 85 Centered on Holmberg 15A",
+      altText: "Glowing core and diffuse X-ray halo of giant elliptical galaxy Holmberg 15A harboring a 40-billion solar mass black hole"
     },
     color: "#6366f1",
     tagline: "One of the largest directly measured black holes in the local universe, with an event horizon 1,580 times Earth's orbit.",
@@ -575,9 +575,9 @@ export const blackHolesData = [
     imageMeta: {
       imageUrl: "/images/gw150914.jpg",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "ESO / L. Calçada / SXS / LIGO Collaboration",
-      imageSource: "Numerical Relativity Simulation of GW150914 Binary Merger",
-      altText: "Two binary black holes orbiting each other into collision, sending ripples across spacetime"
+      imageCredit: "SXS Collaboration / LIGO / Caltech-MIT",
+      imageSource: "SXS Numerical Relativity Simulation of GW150914 Binary Black Hole Coalescence and Gravitational Lensing",
+      altText: "Two merging black holes warping the background starlight through gravitational lensing during the historic GW150914 coalescence"
     },
     color: "#00f0ff",
     tagline: "On Sept 14, 2015, LIGO detected spacetime ripples from two black holes colliding 1.3 billion light-years away.",
@@ -709,9 +709,9 @@ export const blackHolesData = [
     imageMeta: {
       imageUrl: "/images/black-hole-accretion.jpg",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "NASA / Goddard Space Flight Center / GRMHD Simulation",
-      imageSource: "General Relativistic Magnetohydrodynamic Simulation of Black Hole Accretion",
-      altText: "Cross-section of an accretion disk showing differential rotation and magnetic turbulence"
+      imageCredit: "NASA's Goddard Space Flight Center / Jeremy Schnittman",
+      imageSource: "NASA Ray-Traced Relativistic Black Hole Accretion Disk Simulation with Photon Ring & Doppler Beaming",
+      altText: "NASA ray-traced relativistic accretion disk warped by extreme gravity, showing photon ring, shadow, and Doppler beaming"
     },
     color: "#f59e0b",
     tagline: "Converting rest mass into radiant energy with up to 42% efficiency — over 50 times more efficient than hydrogen nuclear fusion.",

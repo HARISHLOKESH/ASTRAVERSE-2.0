@@ -26,14 +26,16 @@ const items = [
   {
     id: 'ton-618',
     name: 'TON 618',
-    dest: 'public/images/ton-618.jpg',
-    urls: ['https://cdn.eso.org/images/screen/eso1548a.jpg']
+    dest: 'public/images/ton-618.png',
+    wikiTitle: 'File:Ton618.png',
+    urls: ['https://upload.wikimedia.org/wikipedia/commons/3/30/Ton618.png']
   },
   {
     id: 'oj-287',
     name: 'OJ 287 (Binary SMBH)',
     dest: 'public/images/oj-287.jpg',
-    urls: ['https://cdn.eso.org/images/screen/eso0844a.jpg']
+    urls: ['https://photojournal.jpl.nasa.gov/jpeg/PIA23687.jpg'],
+    wikiTitle: 'File:PIA23687-OJ287-BlackHoles-20200428.jpg'
   },
   {
     id: 'centaurus-a-bh',
@@ -51,8 +53,8 @@ const items = [
     id: 'holmberg-15a',
     name: 'Holmberg 15A*',
     dest: 'public/images/holmberg-15a.jpg',
-    urls: ['https://cdn.eso.org/images/screen/eso1440a.jpg'],
-    wikiTitle: 'File:Abell 85.jpg'
+    urls: ['https://chandra.harvard.edu/photo/2002/0157/0157_xray.jpg'],
+    wikiTitle: 'File:Abell 85 Chandra.jpg'
   },
   {
     id: 'ngc-1277-bh',
@@ -82,13 +84,15 @@ const items = [
     id: 'v404-cygni',
     name: 'V404 Cygni',
     dest: 'public/images/v404-cygni.jpg',
-    urls: ['https://cdn.eso.org/images/screen/eso1526a.jpg']
+    urls: ['https://chandra.harvard.edu/photo/2015/v404cyg/v404cyg_xray_opt.jpg'],
+    wikiTitle: 'File:V404 Cygni Chandra.jpg'
   },
   {
     id: 'gw150914',
     name: 'GW150914 (Historic Merger Remnant)',
     dest: 'public/images/gw150914.jpg',
-    urls: ['https://cdn.eso.org/images/screen/eso1608a.jpg']
+    wikiTitle: 'File:Binary black hole merger (GW150914).jpg',
+    urls: ['https://upload.wikimedia.org/wikipedia/commons/5/52/Binary_black_hole_merger_%28GW150914%29.jpg']
   },
   {
     id: 'gw190521',
@@ -106,7 +110,7 @@ const items = [
     id: 'bh-accretion-disks',
     name: 'Relativistic Accretion Disks',
     dest: 'public/images/black-hole-accretion.jpg',
-    wikiTitle: 'File:General relativistic magnetohydrodynamic simulation of black hole accretion.jpg'
+    urls: ['https://images-assets.nasa.gov/image/GSFC_20190925_m13264_BlackHole/GSFC_20190925_m13264_BlackHole~orig.jpg']
   },
   {
     id: 'relativistic-jets',
