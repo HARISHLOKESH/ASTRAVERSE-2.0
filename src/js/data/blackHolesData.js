@@ -305,12 +305,12 @@ export const blackHolesData = [
     composition: [
       { name: "Gravitational Singularity", percentage: 100, color: "#6366f1" }
     ],
-    image: "/images/m87-galaxy.jpg",
+    image: "/images/holmberg-15a.jpg",
     imageMeta: {
-      imageUrl: "/images/m87-galaxy.jpg",
+      imageUrl: "/images/holmberg-15a.jpg",
       imageType: "TELESCOPE_IMAGE",
       imageCredit: "ESO / VLT / MUSE / K. Mehrgan et al.",
-      imageSource: "VLT High-Resolution Stellar Kinematics Survey of Holm 15A",
+      imageSource: "VLT and astronomical survey view of galaxy cluster Abell 85 centered on supergiant elliptical galaxy Holmberg 15A",
       altText: "Massive diffuse core of giant elliptical galaxy Holmberg 15A"
     },
     color: "#6366f1",
@@ -348,12 +348,12 @@ export const blackHolesData = [
     composition: [
       { name: "Gravitational Singularity", percentage: 100, color: "#a855f7" }
     ],
-    image: "/images/universe.jpg",
+    image: "/images/ngc-1277.jpg",
     imageMeta: {
-      imageUrl: "/images/universe.jpg",
+      imageUrl: "/images/ngc-1277.jpg",
       imageType: "TELESCOPE_IMAGE",
-      imageCredit: "NASA / ESA / STScI",
-      imageSource: "Hubble Space Telescope Deep Imaging of Perseus Cluster Relic",
+      imageCredit: "NASA / ESA / Hubble Space Telescope",
+      imageSource: "Hubble Space Telescope Deep Imaging of Perseus Cluster Relic NGC 1277",
       altText: "Compact red lenticular galaxy NGC 1277 hosting an overwhelmingly massive black hole"
     },
     color: "#a855f7",
@@ -571,11 +571,11 @@ export const blackHolesData = [
     composition: [
       { name: "Kerr Gravitational Singularity", percentage: 100, color: "#00f0ff" }
     ],
-    image: "/images/gravitational-waves.jpg",
+    image: "/images/gw150914.jpg",
     imageMeta: {
-      imageUrl: "/images/gravitational-waves.jpg",
+      imageUrl: "/images/gw150914.jpg",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "LIGO / Caltech / MIT / SXS",
+      imageCredit: "ESO / L. Calçada / SXS / LIGO Collaboration",
       imageSource: "Numerical Relativity Simulation of GW150914 Binary Merger",
       altText: "Two binary black holes orbiting each other into collision, sending ripples across spacetime"
     },
@@ -614,11 +614,11 @@ export const blackHolesData = [
     composition: [
       { name: "Kerr Gravitational Singularity", percentage: 100, color: "#a855f7" }
     ],
-    image: "/images/gravitational-waves.jpg",
+    image: "/images/gw190521.jpg",
     imageMeta: {
-      imageUrl: "/images/gravitational-waves.jpg",
+      imageUrl: "/images/gw190521.jpg",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "LIGO / Virgo / Caltech",
+      imageCredit: "LIGO / Virgo / Swinburne University / Mark Myers",
       imageSource: "GW190521 Discovery Publication Simulation",
       altText: "Direct gravitational merger of two heavy black holes in the pair-instability mass gap"
     },
@@ -657,12 +657,12 @@ export const blackHolesData = [
     composition: [
       { name: "Gravitational Singularity", percentage: 100, color: "#6366f1" }
     ],
-    image: "/images/chandra.jpg",
+    image: "/images/hlx-1.jpg",
     imageMeta: {
-      imageUrl: "/images/chandra.jpg",
+      imageUrl: "/images/hlx-1.jpg",
       imageType: "TELESCOPE_IMAGE",
-      imageCredit: "NASA / CXC / STScI",
-      imageSource: "Chandra X-ray Observatory High-Energy Discovery of HLX-1",
+      imageCredit: "NASA / ESA / STScI / Chandra (ESO 243-49)",
+      imageSource: "Hubble and Chandra High-Energy Discovery of HLX-1 in ESO 243-49",
       altText: "Chandra X-ray source HLX-1 offset from the edge of lenticular galaxy ESO 243-49"
     },
     color: "#6366f1",
@@ -705,12 +705,12 @@ export const blackHolesData = [
       { name: "Ionized Relativistic Plasma", percentage: 90, color: "#f59e0b" },
       { name: "Magnetic Flux Tubes", percentage: 10, color: "#00f0ff" }
     ],
-    image: "/images/sagittarius-a.jpg",
+    image: "/images/black-hole-accretion.jpg",
     imageMeta: {
-      imageUrl: "/images/sagittarius-a.jpg",
+      imageUrl: "/images/black-hole-accretion.jpg",
       imageType: "SCIENTIFIC_ILLUSTRATION",
-      imageCredit: "NASA / Goddard Space Flight Center",
-      imageSource: "Relativistic Accretion Disk Physics Model",
+      imageCredit: "NASA / Goddard Space Flight Center / GRMHD Simulation",
+      imageSource: "General Relativistic Magnetohydrodynamic Simulation of Black Hole Accretion",
       altText: "Cross-section of an accretion disk showing differential rotation and magnetic turbulence"
     },
     color: "#f59e0b",
@@ -749,9 +749,9 @@ export const blackHolesData = [
       { name: "Relativistic Electrons & Positrons", percentage: 80, color: "#38bdf8" },
       { name: "Magnetic Helical Flux", percentage: 20, color: "#6366f1" }
     ],
-    image: "/images/blazar.jpg",
+    image: "/images/relativistic-jets.jpg",
     imageMeta: {
-      imageUrl: "/images/blazar.jpg",
+      imageUrl: "/images/relativistic-jets.jpg",
       imageType: "TELESCOPE_IMAGE",
       imageCredit: "NASA / ESA / Hubble Heritage Team",
       imageSource: "Hubble Space Telescope image of M87's 5,000-light-year relativistic jet",
