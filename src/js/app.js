@@ -318,7 +318,21 @@ class AstraverseApp {
       return;
     }
 
-    // Check if current context contains entities of this category
+    // At top-level Universe (or when already browsing by category/scale),
+    // selecting a category filter should display the full catalog across the cosmos!
+    if (this.currentParentId === 'universe' || this.currentParentId.startsWith('category-') || this.currentParentId.startsWith('scale-')) {
+      this.currentParentId = `category-${filter}`;
+      const filterLabel = this.getCategoryLabel(filter);
+      this.breadcrumbs = [
+        { id: 'universe', name: 'The Universe', level: 'universe' },
+        { id: `category-${filter}`, name: filterLabel, level: filter }
+      ];
+      this.render();
+      return;
+    }
+
+    // When drilled into a specific entity (e.g. Milky Way, Solar System):
+    // Check if the current scoped children contain entities of this category
     const currentChildren = this.getItemsForCurrentContext();
     const hasCategory = currentChildren.some(item => matchesCategory(item.category, filter));
 
@@ -327,13 +341,37 @@ class AstraverseApp {
     } else {
       // Direct jump to this category across the cosmos
       this.currentParentId = `category-${filter}`;
-      const filterLabel = filter.replace('-', ' ').toUpperCase();
+      const filterLabel = this.getCategoryLabel(filter);
       this.breadcrumbs = [
         { id: 'universe', name: 'The Universe', level: 'universe' },
         { id: `category-${filter}`, name: filterLabel, level: filter }
       ];
       this.render();
     }
+  }
+
+  getCategoryLabel(filter) {
+    const labels = {
+      'galaxy': 'Galaxies',
+      'galaxies': 'Galaxies',
+      'black-hole': 'Black Holes',
+      'black-holes': 'Black Holes',
+      'system': 'Solar & Planetary Systems',
+      'systems': 'Solar & Planetary Systems',
+      'star': 'Stars & Remnants',
+      'stars': 'Stars & Remnants',
+      'nebula': 'Nebulae',
+      'nebulae': 'Nebulae',
+      'planet': 'Planets & Dwarf Planets',
+      'planets': 'Planets & Dwarf Planets',
+      'exoplanet': 'Exoplanets',
+      'exoplanets': 'Exoplanets',
+      'moon': 'Moons & Satellites',
+      'moons': 'Moons & Satellites',
+      'phenomenon': 'Space Phenomena',
+      'phenomena': 'Space Phenomena'
+    };
+    return labels[filter] || filter.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
   }
 
   getItemsForCurrentContext() {
@@ -476,6 +514,7 @@ class AstraverseApp {
     else if (this.currentParentId === 'scale-stars') this.activeCategoryFilter = 'star';
     else if (this.currentParentId === 'scale-planets') this.activeCategoryFilter = 'planet';
     else if (this.currentParentId === 'scale-moons') this.activeCategoryFilter = 'moon';
+    else if (this.currentParentId.startsWith('category-')) this.activeCategoryFilter = this.currentParentId.replace('category-', '');
     else this.activeCategoryFilter = 'all';
 
     this.render();
@@ -487,6 +526,7 @@ class AstraverseApp {
     const modeTitles = {
       milkyway: 'Milky Way Observatory',
       blackholes: 'Black Hole Explorer',
+      nebulae: 'Nebulae Stellar Nurseries',
       exoplanets: 'Exoplanet Systems',
       knowledge: 'Astrophysics Knowledge Base',
       timeline: 'Cosmic Timeline & Powers of 10',
@@ -583,7 +623,7 @@ class AstraverseApp {
     else if (this.currentParentId.startsWith('category-')) {
       const cat = this.currentParentId.replace('category-', '');
       items = getAllAstronomicalObjects().filter(o => matchesCategory(o.category, cat));
-      const catLabel = cat.replace('-', ' ').toUpperCase();
+      const catLabel = this.getCategoryLabel(cat);
       this.currentLevelTitle.textContent = `${catLabel} of the Cosmos`;
       this.currentLevelCount.textContent = `${items.length} celestial objects`;
     }
