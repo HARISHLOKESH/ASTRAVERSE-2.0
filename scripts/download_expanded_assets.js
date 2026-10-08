@@ -197,7 +197,7 @@ function downloadUrl(url, dest) {
         file.close(() => resolve(true));
       });
       file.on('error', (err) => {
-        fs.unlink(dest, () => {});
+        fs.unlink(dest, () => { });
         reject(err);
       });
     });
